@@ -40,7 +40,7 @@ class Fighter:    #int(((self.ad + self.ad + self.ad*0.55) / (100/(100+target.de
         if self.uturn > 0:
             self.uturn -= 1
         self.turn += 1
-        passive()
+        passive(self)
 
     
     def damageskill(self, target):
@@ -65,7 +65,7 @@ class Fighter:    #int(((self.ad + self.ad + self.ad*0.55) / (100/(100+target.de
                     slow_print(f'{self.name}이/가 [왼손]으로 강력한 훅을 날렸습니다!')
                     slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
                 else:
-                    a = int((self.ad + 50 + (target.hp/100)*(1+(self.ad*0.03))) * (100/(100+target.de))*2)
+                    damm = int((self.ad + 50 + (target.hp/100)*(1+(self.ad*0.03))) * (100/(100+target.de))*2)
                     target.hp -= damm
                     slow_print(f'{self.name}이/가 [왼손]으로 [폐]를 강타했습니다!')
                     slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
@@ -81,7 +81,7 @@ class Fighter:    #int(((self.ad + self.ad + self.ad*0.55) / (100/(100+target.de
             if self.uturn > 0:
                 self.uturn -= 1
             self.turn += 1
-            passive()
+            passive(self)
 
     def buffdebuff(self, target):
         global passive
@@ -110,7 +110,7 @@ class Fighter:    #int(((self.ad + self.ad + self.ad*0.55) / (100/(100+target.de
             print()
             self.bdbturn += 999999999999999999999999999999999999999999999999999999999999999
             self.turn += 1
-            passive()
+            passive(self)
             
     def ultimate(self, target):
         global passive
@@ -139,7 +139,7 @@ class Fighter:    #int(((self.ad + self.ad + self.ad*0.55) / (100/(100+target.de
                 slow_print(f'{target.name}이/가 사망하였습니다!')
             print()
             self.turn += 1
-            passive()
+            passive(self)
 
     def explanation(self):
         slow_print('[패시브]는 턴이 지날수록 공격력이 증가합니다.')
@@ -169,7 +169,7 @@ class Gambler:
         self.ultimatename = '???'
 
     def normal(self, target):
-        damm = random.choice(1, 2000)
+        damm = random.randint(1, 2000)
         target.hp -= damm
         slow_print(f'{self.name}이/가 ??? 을 시도합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
@@ -218,7 +218,7 @@ class Gambler:
             self.turn -= 1
             
     def damageskill(self, target):
-        damm = random.choice(1, 2000)
+        damm = random.randint(1, 2000)
         target.hp -= damm
         slow_print(f'{self.name}이/가 ??? 을 시도합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
@@ -266,7 +266,7 @@ class Gambler:
             self.turn -= 1
             
     def buffdebuff(self, target):
-        damm = random.choice(1, 2000)
+        damm = random.randint(1, 2000)
         target.hp -= damm
         slow_print(f'{self.name}이/가 ??? 을 시도합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
@@ -315,7 +315,7 @@ class Gambler:
 
     
     def ultimate(self, target):
-        damm = random.choice(1, 2000)
+        damm = random.randint(1, 2000)
         target.hp -= damm
         slow_print(f'{self.name}이/가 ??? 을 시도합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
