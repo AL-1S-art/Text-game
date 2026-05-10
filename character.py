@@ -100,7 +100,7 @@ class Fighter:    #int(((self.ad + self.ad + self.ad*0.55) / (100/(100+target.de
             normal(self, target)
         else:
             self.de *= 1.5
-            self.ad *= 2
+            self.ad *= 1.5
             slow_print(f'{self.name}이/가 영구적으로 방어력과 공격력이 1.5배로 증가합니다.')
             print()
             self.mp += self.rmp - 80
@@ -160,6 +160,8 @@ class Gambler:
         self.hhp = random.randint(1670, 3388)
         self.hp = self.hhp
         self.de = random.randint(93, 126)
+        self.bdbturn = 0
+        self.uturn = 0
         self.turn = 0
         self.normalname = '???'
         self.damageskillname = '???'
