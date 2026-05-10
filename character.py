@@ -159,6 +159,7 @@ class Gambler:
         self.name = name
         self.hhp = random.randint(1670, 3388)
         self.hp = self.hhp
+        self.ad = 0
         self.de = random.randint(93, 126)
         self.hmp = 0
         self.mp = 0
