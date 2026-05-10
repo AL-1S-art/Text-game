@@ -227,7 +227,7 @@ if sequence == 'player1':
         slow_print('플레이어들 1의 상태')
         print(f'현재 체력: [ {player1.hp} / {player1.hhp} ], 현재 마나: [ {player1.mp} / {player1.hmp} ] ')
         print(f'현재 공격력 / 방어력: [ {player1.ad} / {player1.de} ], 현재 (디)버프 / 궁극기쿨타임: [ {player1.bdbturn} / {player1.uturn} ]')
-        pritn()
+        print()
         slow_print('플레이어들 2의 상태')
         print(f'현재 체력: [ {player2.hp} / {player2.hhp} ], 현재 마나: [ {player2.mp} / {player2.hmp} ] ')
         print(f'현재 공격력 / 방어력: [ {player2.ad} / {player2.de} ], 현재 (디)버프 / 궁극기쿨타임: [ {player2.bdbturn} / {player2.uturn} ]')
