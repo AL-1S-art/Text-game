@@ -160,6 +160,8 @@ class Gambler:
         self.hhp = random.randint(1670, 3388)
         self.hp = self.hhp
         self.de = random.randint(93, 126)
+        self.hmp = 0
+        self.mp = 0
         self.bdbturn = 0
         self.uturn = 0
         self.turn = 0
