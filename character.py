@@ -35,6 +35,7 @@ class Fighter:    #int(((self.ad + self.ad + self.ad*0.55) / (100/(100+target.de
             slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
         else:
             slow_print(f'{target.name}이/가 사망하였습니다!')
+            return
         print()
         if self.uturn > 0:
             self.uturn -= 1
@@ -74,6 +75,7 @@ class Fighter:    #int(((self.ad + self.ad + self.ad*0.55) / (100/(100+target.de
                 slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
             else:
                 slow_print(f'{target.name}이/가 사망하였습니다!')
+                return
             print()
             if self.uturn > 0:
                 self.uturn -= 1
@@ -130,6 +132,7 @@ class Fighter:    #int(((self.ad + self.ad + self.ad*0.55) / (100/(100+target.de
                 slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
             else:
                 slow_print(f'{target.name}이/가 사망하였습니다!')
+                return
             print()
             self.turn += 1
             self.passive()
@@ -173,6 +176,7 @@ class Gambler:
             slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
         else:
             slow_print(f'{target.name}이/가 사망하였습니다!')
+            return
         print()
 
         
@@ -222,6 +226,7 @@ class Gambler:
             slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
         else:
             slow_print(f'{target.name}이/가 사망하였습니다!')
+            return
         print()
 
         moreslow_print(f'료이키텐카이... [ 좌 살 박 도 ]')
@@ -270,6 +275,7 @@ class Gambler:
             slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
         else:
             slow_print(f'{target.name}이/가 사망하였습니다!')
+            return
         print()
 
         moreslow_print(f'료이키텐카이... [ 좌 살 박 도 ]')
@@ -319,6 +325,7 @@ class Gambler:
             slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
         else:
             slow_print(f'{target.name}이/가 사망하였습니다!')
+            return
         print()
 
         moreslow_print(f'료이키텐카이... [ 좌 살 박 도 ]')
