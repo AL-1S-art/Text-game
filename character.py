@@ -60,7 +60,7 @@ class Fighter:    #int(((self.ad + self.ad + self.ad*0.55) / (100/(100+target.de
             elif a == 'l':
                 b = random.randint(1, 100)
                 if b < 90:
-                    damm = int((self.ad + 50 + (target.hp/100)*(1+(self.ad*0.03))) * (100/(100+target.de))
+                    damm = int((self.ad + 50 + (target.hp/100)*(1+(self.ad*0.03))) * (100/(100+target.de)))
                     target.hp -= damm
                     slow_print(f'{self.name}이/가 [왼손]으로 강력한 훅을 날렸습니다!')
                     slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
