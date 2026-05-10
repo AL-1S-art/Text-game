@@ -31,7 +31,7 @@ player2 = character.Fighter(f'{player2_name}')
 
 def player1_pick():
     global player1
-    character_list = ['[기사]', '[무사]', '[격투가]']
+    character_list = ['[도박꾼]', '[격투가]']
     slow_print(f'{player1_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -43,10 +43,8 @@ def player1_pick():
     slow_print(f'{player1_name}이/가 [{pick1}]를 선택했습니다.')
     player1_character.append(f'[{pick1}]')
     character_list.remove(f'[{pick1}]')
-    if pick1 == '기사':
-        player1 = character.Knight(f'{player1_name}')
-    elif pick1 == '무사':
-        player1 = character.Samurai(f'{player1_name}')
+    if pick1 == '도박꾼':
+        player1 = character.Gambler(f'{player1_name}')
     elif pick1 == '격투가':
         player1 = character.Fighter(f'{player1_name}')
     print()
@@ -57,7 +55,7 @@ def player1_pick():
 
 def player2_pick():
     global player2
-    character_list = ['[기사]', '[무사]', '[격투가]']
+    character_list = ['[도박꾼]', '[격투가]']
     slow_print(f'{player2_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -69,10 +67,8 @@ def player2_pick():
     slow_print(f'{player2_name}이/가 [{pick1}]를 선택했습니다.')
     player2_character.append(f'[{pick1}]')
     character_list.remove(f'[{pick1}]')
-    if pick1 == '기사':
-        player2 = character.Knight(f'{player2_name}')
-    elif pick1 == '무사':
-        player2 = character.Samurai(f'{player2_name}')
+    if pick1 == '도박꾼':
+        player2 = character.Gambler(f'{player2_name}')
     elif pick1 == '격투가':
         player2 = character.Fighter(f'{player2_name}')
     print()
