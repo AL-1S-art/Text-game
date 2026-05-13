@@ -510,3 +510,256 @@ class Naturalist:
 
 
 
+class Blackdeath:
+    def __init__(self, name):
+        self.namee = name
+        self.hhp = 4682
+        self.hp = self.hhp
+        self.ad = 120
+        self.de = 160
+        self.hmp = 330
+        self.mp = self.hmp
+        self.rmp = 8
+        self.bdbturn = 0
+        self.uturn = 3
+        self.turn = 0
+        self.passivename = '보균' #흑사병에 걸려서 매턴 체력 감소
+        self.normalname = '평타'
+        self.damageskillname = '찌르기' #자신의 체력을 소비하여 대상을 찌름
+        self.buffdebuffname = '기침' #패시브 보균을 자신의 주변과 대상의 주변으로 옮김
+        self.ultimatename = '항생제' #대상을 지정해 흑사병을 치료(최대 3번)
+   
+    def passive(self):
+        damm = int()
+        self.hp -= damm
+   
+    def passivetarget(self, target):
+        damm = int()
+        target.hp -= damm
+   
+   
+    def normal(self, target):
+        damm = int((self.ad * (100/(100+target.de)))*2)
+        target.hp -= damm
+        slow_print(f'{self.name}이/가 공격을 시도합니다!')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        print()
+        self.mp += self.rmp
+        slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+        print()
+        if target.hp > 0:
+            slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+        else:
+            slow_print(f'{target.name}이/가 사망하였습니다!')
+            return
+        print()
+        if self.uturn > 0:
+            self.uturn -= 1
+        self.turn += 1
+        self.passive()
+            
+    def damageskill(self, target):
+        if self.mp - 50 < 0:
+            slow_print('사용 가능한 마나 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            normal(target)
+        else:
+            damm = int((self.ad + 50 + (target.hp/100)*(1+(self.ad*0.03))) * (100/(100+target.de))*2)
+            target.hp -= damm
+            slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            print()
+            self.mp += self.rmp - 50
+            slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            if target.hp > 0:
+                slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+            else:
+                slow_print(f'{target.name}이/가 사망하였습니다!')
+                break
+            print()
+            if self.uturn > 0:
+                self.uturn -= 1
+   
+   
+    def buffdebuff(self, target):
+       if self.mp - 50 < 0:
+            slow_print()
+            slow_print()
+            normal(target)
+       elif bdbturn > 0:
+            slow_print('(디)버프 쿨타임 입니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            normal(target)
+        else:
+            slow_print(f'{self.name}이/가 {self.buffdebuffname}을/를 사용했습니다!')
+            slow_print(f'흑사병이 퍼져서 모든 플레이어가 {self.name}의 패시브를 가집니다.')
+            print()
+            slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            slow_print(f'한번 더 공격할 수 있습니다.')
+            print()
+            self.bdbturn += 999999999999999999999999999999999999999999999999999999999999999
+   
+    def ultimate(self, target):
+       if self.mp - 100 < 0:
+            slow_print('사용 가능한 마나 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            normal(target)
+        if self.uturn = 0:
+            slow_print('궁극기 횟수가 다하였습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+        else:
+            slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.ultimatename}를 사용합니다!')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            print()
+            self.mp += self.rmp - 100
+            slow_print(f'{self.name}의 마나가 100 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            self.turn += 1
+            print()
+            if target.hp > 0:
+                slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+            else:
+                slow_print(f'{target.name}이/가 사망하였습니다!')
+            print()
+   
+    def explanation(self):
+        slow_print(f'[{self.passivename}]은/는 매턴 마다 자기 자신에게 피해를 입히는 패시브입니다.')
+        slow_print(f'[{self.damageskillname}]은/는 의료 도구로 상대를 공격하는 기본 스킬입니다.')
+        slow_print(f'[{self.buffdebuffname}]은/는 [{self.passivename}] 효과를 모든 플레이어에게 (디)버프 스킬입니다.')
+        slow_print(f'[{self.ultimatename}]은/는 자신을 포함해 최대 세번 [{self.passivename}] 효과를 치유하는 궁극기 입니다.')
+        slow_print(f'(디)버프는 쿨타임이 존재하고 궁극기 사용은 최대 3번 입니다.')
+        print()
+
+
+
+
+
+class Rider:
+    def __init__(self, name):
+        self.namee = name
+        self.hhp =
+        self.hp = self.hhp
+        self.ad =
+        self.de =
+        self.hmp =
+        self.mp = self.hmp
+        self.rmp =
+        self.passiveturn = 0
+        self.bdbturn = 0
+        self.uturn = 0
+        self.turn = 0
+        self.passivename = '바이크' #매 라운드가
+        self.normalname = '평타'
+        self.damageskillname = '발가락 골절' #상대를 밟고 간다
+        self.buffdebuffname = '윌리' #앞바퀴를 들어올려 방어력을 낮추고 공격력을 높임
+        self.ultimatename = '준자살' #교통사고 속력 비례 대미지 입히고 3턴동안 휠체어를 타서 방어력을 높인다
+   
+    def passive(self, target):
+        self.passiveturn += 1
+        self.ad += self.passiveturn * 2
+        
+    def normal(self, target):
+        damm = int((self.ad * (100/(100+target.de)))*2)
+        target.hp -= damm
+        slow_print(f'{self.name}이/가 공격을 시도합니다!')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        print()
+        self.mp += self.rmp
+        slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+        print()
+        if target.hp > 0:
+            slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+        else:
+            slow_print(f'{target.name}이/가 사망하였습니다!')
+            return
+        print()
+        if self.uturn > 0:
+            self.uturn -= 1
+        if self.bdbturn > 0:
+         selself.bdbturn -= 1
+        self.turn += 1
+        self.passive()
+   
+    def damageskill(self, target):
+        if self.mp - 50 < 0:
+            slow_print('사용 가능한 마나 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            normal(target)
+        else:
+            damm = int((self.ad + 50 + (target.hp/100)*(1+(self.ad*0.03))) * (100/(100+target.de))*2)
+            target.hp -= damm
+            slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            print()
+            self.mp += self.rmp - 50
+            slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            if target.hp > 0:
+                slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+            else:
+                slow_print(f'{target.name}이/가 사망하였습니다!')
+                break
+            print()
+            if self.uturn > 0:
+                self.uturn -= 1
+   
+    def buffdebuff(self, target):
+        if self.mp - 80 < 0 :
+            slow_print('사용 가능한 마나 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            self.normal(target)
+        elif self.bdbturn > 0:
+            slow_print('(디)버프 쿨타임 입니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            self.normal(target)
+        else:
+            self.de *= 1.5
+            self.ad *= 1.5
+            slow_print(f'{self.name}이/가 {self.buffdebuffname}을/를 사용합니다!')
+            slow_print(f'{self.name}이/가 영구적으로 방어력과 공격력이 1.5배로 증가합니다.')
+            print()
+            self.mp += self.rmp - 80
+            slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            self.bdbturn += 2
+            self.turn += 1
+            self.passive()
+   
+    def ultimate(self, target):
+        if self.mp - 50 < 0:
+            slow_print('사용 가능한 마나 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            normal(target)
+        if self.uturn > 0:
+            slow_print('궁극기 쿨타임 입니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            normal(target)
+        else:
+            damm = int()
+            target.hp -= damm
+            slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.damageskillname}을/를 사용했습니다!')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            print()
+            self.mp += self.rmp - 50
+            slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            if target.hp > 0:
+                slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+            else:
+                slow_print(f'{target.name}이/가 사망하였습니다!')
+                break
+            print()
+            if self.uturn > 0:
+                self.uturn -= 1
+   
+    def explanation(self):
+        slow_print(f'[{self.passivename}]은/는 매턴 마다 자기 자신에게 피해를 입히는 패시브입니다.')
+        slow_print(f'[{self.damageskillname}]은/는 오토바이로 대상의 발가락을 밟고가 골절 시키는 기본 스킬입니다.')
+        slow_print(f'[{self.buffdebuffname}]은/는 2턴 동안 방어력이 0.5배가 증가하고 공격력을 2배로 증가시키는 (디)버프 스킬입니다.')
+        slow_print(f'[{self.ultimatename}]은/는 속력에 비례해 상대방에게 들이 박고 3턴 동안 휠체어를 타 방어력을 높이는 궁극기 입니다.')
+        slow_print(f'(디)버프와 궁극기는 쿨타임이 존재합니다.')
+        print()
+
+
+
