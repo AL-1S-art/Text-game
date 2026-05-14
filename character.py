@@ -6,10 +6,10 @@ from Util import *
 class Fighter:
     def __init__(self, name):
         self.name = name
-        self.hhp = 2608
+        self.hhp = 4908
         self.hp = self.hhp
-        self.ad = 128
-        self.de = 113
+        self.ad = 407
+        self.de = 163
         self.hmp = 295
         self.mp = self.hmp
         self.rmp = 8
@@ -380,7 +380,7 @@ class Gambler:
 class Naturalist:
     def __init__(self, name):
         self.name = name
-        self.hhp = 2100
+        self.hhp = 2109
         self.hp = self.hhp
         self.ad = 89
         self.de = 104
@@ -397,6 +397,11 @@ class Naturalist:
         self.ultimatename = '퇴적층 생성'
 
 
+    def lasttarget(self, target):
+        a = []
+        a.append(target)
+
+    
     def passive(self):
         if self.turn%2 == 0:
             self.hp += self.hhp*(23/1000)
@@ -428,7 +433,7 @@ class Naturalist:
             slow_print('기본 공격으로 대체됩니다.')
             self.normal(target)
         else:
-            damm = int((((self.ad*2.5)*0.5) + 310) * (100/(100+target.de)))
+            damm = int((((self.ad*8.98)*0.5) + 310) * (100/(100+target.de)))
             target.hp -= damm
             slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
@@ -479,7 +484,7 @@ class Naturalist:
             slow_print('기본 공격으로 대체됩니다.')
             self.normal(target)
         else:
-            damm = int(((((self.ad*2.5) * 0.9) + 400) * (100/(100+target.de)))/2)
+            damm = int(((((self.ad*8.98) * 0.9) + 400) * (100/(100+target.de)))/2)
             target.hp -= damm
             slow_print(f'{self.name}이/가 {self.target}에게 궁극기 {self.ultimatename}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 2턴 동안 입힙니다.')
@@ -626,7 +631,7 @@ class Blackdeath:
     def explanation(self):
         slow_print(f'[{self.passivename}]은/는 매턴 마다 자기 자신에게 피해를 입히는 패시브입니다.')
         slow_print(f'[{self.damageskillname}]은/는 의료 도구로 상대를 공격하는 기본 스킬입니다.')
-        slow_print(f'[{self.buffdebuffname}]은/는 [{self.passivename}] 효과를 모든 플레이어에게 (디)버프 스킬입니다.')
+        slow_print(f'[{self.buffdebuffname}]은/는 [{self.passivename}] 효과를 모든 플레이어에게 부여하는 (디)버프 스킬입니다.')
         slow_print(f'[{self.ultimatename}]은/는 자신을 포함해 최대 세번 [{self.passivename}] 효과를 치유하는 궁극기 입니다.')
         slow_print(f'(디)버프는 쿨타임이 존재하고 궁극기 사용은 최대 3번 입니다.')
         print()
