@@ -395,12 +395,8 @@ class Naturalist:
         self.damageskillname = '침식'
         self.buffdebuffname = '덩굴조작'
         self.ultimatename = '퇴적층 생성'
-
-
-    def lasttarget(self, target):
-        a = []
-        a.append(target)
-
+        self.bdbtarget = []
+        self.utarget = []        
     
     def passive(self):
         if self.turn%2 == 0:
@@ -423,6 +419,8 @@ class Naturalist:
         print()
         if self.uturn > 0:
             self.uturn -= 1
+        if self.bdbturn > 0:
+            self.bdbturn -= 1
         self.turn += 1
         self.passive()
 
@@ -448,6 +446,8 @@ class Naturalist:
         print()
         if self.uturn > 0:
             self.uturn -= 1
+        if self.bdbturn > 0:
+            self.bdbturn -= 1
         self.turn += 1
         self.passive()
 
@@ -469,7 +469,7 @@ class Naturalist:
             self.mp += self.rmp - 80
             slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-            self.bdbturn += 1
+            self.bdbturn += 2
             self.turn += 1
             self.passive()
 
@@ -501,6 +501,9 @@ class Naturalist:
                 slow_print(f'{target.name}이/가 사망하였습니다!')
                 return
             print()
+            
+            if self.bdbturn > 0:
+                self.bdbturn -= 1
             self.turn += 1
             self.passive()
             
