@@ -46,7 +46,7 @@ class Fighter:
     
     def damageskill(self, target):
         if self.mp - 50 < 0:
-            slow_print('사용 가능한 마나 없습니다.')
+            slow_print('사용 가능한 마나가 없습니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
@@ -85,7 +85,7 @@ class Fighter:
 
     def buffdebuff(self, target):
         if self.mp - 80 < 0 :
-            slow_print('사용 가능한 마나 없습니다.')
+            slow_print('사용 가능한 마나가 없습니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
@@ -114,7 +114,7 @@ class Fighter:
     
     def ultimate(self, target):
         if self.mp - 100 < 0:
-            slow_print('사용 가능한 마나 없습니다.')
+            slow_print('사용 가능한 마나가 없습니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
@@ -442,7 +442,7 @@ class Naturalist:
     
     def damageskill(self, target):
         if self.mp - 60 < 0:
-            slow_print('사용 가능한 마나 없습니다.')
+            slow_print('사용 가능한 마나가 없습니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
@@ -477,7 +477,7 @@ class Naturalist:
     
     def buffdebuff(self, target):
         if self.mp - 80 < 0 :
-            slow_print('사용 가능한 마나 없습니다.')
+            slow_print('사용 가능한 마나가 없습니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
@@ -501,7 +501,7 @@ class Naturalist:
     
     def ultimate(self, target):
         if self.mp - 100 < 0:
-            slow_print('사용 가능한 마나 없습니다.')
+            slow_print('사용 가능한 마나가 없습니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
