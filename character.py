@@ -461,7 +461,7 @@ class Naturalist:
                 slow_print(f'{target.name}이/가 사망하였습니다!')
                 return
             print()
-             if self.uturn > 0:
+            if self.uturn > 0:
                 self.utarget[0].hp -= int((((self.ad*8.98) * 0.9) + 400) * (100/(100+target.de)))
                 self.uturn -= 1
                 if self.uturn == 0:
@@ -488,7 +488,7 @@ class Naturalist:
             self.normal(target)
         else:
             target.de = int(target.de * 0.3)
-            slow_print(f'{self.name}이/가 {taget.name}에게 {self.buffdebuffname}을/를 사용합니다!')
+            slow_print(f'{self.name}이/가 {target.name}에게 {self.buffdebuffname}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}의 방어력을 30%를 감소시킵니다.')
             print()
             self.mp += self.rmp - 80
