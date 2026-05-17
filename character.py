@@ -447,7 +447,7 @@ class Naturalist:
             print()
             self.normal(target)
         else:
-            damm = int((((self.ad*8.98)*0.5) + 310) * (100/(100+target.de)))
+            damm = int((((self.ad*8.98)*0.75) + 310) * (100/(100+target.de)))
             target.hp -= damm
             slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
@@ -701,9 +701,9 @@ class Blackdeath:
 class Rider:
     def __init__(self, name):
         self.namee = name
-        self.hhp = 2427
+        self.hhp = 4410
         self.hp = self.hhp
-        self.ad = 129
+        self.ad = 421
         self.de = 124
         self.hmp = 280
         self.mp = self.hmp
