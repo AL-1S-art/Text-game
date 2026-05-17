@@ -701,13 +701,13 @@ class Blackdeath:
 class Rider:
     def __init__(self, name):
         self.namee = name
-        self.hhp =
+        self.hhp = 2427
         self.hp = self.hhp
-        self.ad =
-        self.de =
-        self.hmp =
+        self.ad = 129
+        self.de = 124
+        self.hmp = 280
         self.mp = self.hmp
-        self.rmp =
+        self.rmp = 7
         self.passiveturn = 0
         self.bdbturn = 0
         self.uturn = 0
@@ -751,7 +751,7 @@ class Rider:
             print()
             self.normal(target)
         else:
-            damm = int((self.ad + 50 + (target.hp/100)*(1+(self.ad*0.03))) * (100/(100+target.de))*2)
+            damm = int(() * (100/(100+target.de)))
             target.hp -= damm
             slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
