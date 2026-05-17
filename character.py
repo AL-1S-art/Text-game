@@ -447,7 +447,7 @@ class Naturalist:
             print()
             self.normal(target)
         else:
-            damm = int((((self.ad*8.98)*0.75) + 310) * (100/(100+target.de)))
+            damm = int((((self.ad*8.98)*0.8) + 310) * (100/(100+target.de)))
             target.hp -= damm
             slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
