@@ -170,10 +170,10 @@ if sequence == 'player1':
             elif player1.buffdebuffname in attact_pick:
                 player1.buffdebuff(player2)
             elif player1.ultimatename in attact_pick:
-                    player1.ultimae(player2)
+                    player1.ultimate(player2)
 
         elif player1.ultimatename in attact_pick:
-            player1.ultimae(player2)
+            player1.ultimate(player2)
         elif '설명' in attact_pick:
             player1.explanation()
 
@@ -223,10 +223,10 @@ if sequence == 'player1':
                 elif player1.buffdebuffname in attact_pick:
                     player1.buffdebuff(player2)
                 elif player1.ultimatename in attact_pick:
-                        player1.ultimae(player2)
+                        player1.ultimate(player2)
             
             elif player1.ultimatename in attact_pick:
-                player1.ultimae(player2)
+                player1.ultimate(player2)
 
 
 
@@ -294,10 +294,10 @@ if sequence == 'player1':
             elif player2.buffdebuffname in attact_pick:
                 player2.buffdebuff(player1)
             elif player2.ultimatename in attact_pick:
-                player2.ultimae(player1)
+                player2.ultimate(player1)
 
         elif player2.ultimatename in attact_pick:
-            player2.ultimae(player1)
+            player2.ultimate(player1)
         elif '설명' in attact_pick:
             player2.explanation()
 
@@ -347,10 +347,10 @@ if sequence == 'player1':
                 elif player2.buffdebuffname in attact_pick:
                     player2.buffdebuff(player1)
                 elif player2.ultimatename in attact_pick:
-                    player2.ultimae(player1)
+                    player2.ultimate(player1)
 
             elif player2.ultimatename in attact_pick:
-                player2.ultimae(player1)
+                player2.ultimate(player1)
 
         if player1.hp <= 0:
             slow_print(f'축하드립니다! {player2_name}의 승리입니다!')
@@ -419,10 +419,10 @@ elif sequence == 'player2':
             elif player2.buffdebuffname in attact_pick:
                 player2.buffdebuff(player1)
             elif player2.ultimatename in attact_pick:
-                player2.ultimae(player1)
+                player2.ultimate(player1)
 
         elif player2.ultimatename in attact_pick:
-            player2.ultimae(player2)
+            player2.ultimate(player2)
         elif '설명' in attact_pick:
             player2.explanation()
 
@@ -472,11 +472,11 @@ elif sequence == 'player2':
                 elif player2.buffdebuffname in attact_pick:
                     player2.buffdebuff(player1)
                 elif player2.ultimatename in attact_pick:
-                    player2.ultimae(player1)
+                    player2.ultimate(player1)
 
         
             elif player2.ultimatename in attact_pick:
-                player2.ultimae(player1)
+                player2.ultimate(player1)
 
 
 
@@ -546,10 +546,10 @@ elif sequence == 'player2':
             elif player1.ultimatename in attact_pick:
                 player1.ultimae(player2)
             elif player1.ultimatename in attact_pick:
-                player1.ultimae(player2)
+                player1.ultimate(player2)
 
         elif player1.ultimatename in attact_pick:
-            player1.ultimae(player2)
+            player1.ultimate(player2)
         elif '설명' in attact_pick:
             player1.explanation()
 
@@ -576,7 +576,7 @@ elif sequence == 'player2':
             elif player1.buffdebuffname in attact_pick:
                 player1.buffdebuff(player2)
             elif player1.ultimatename in attact_pick:
-                player1.ultimae(player2)
+                player1.ultimate(player2)
 
         if player1.hp <= 0:
             slow_print(f'축하드립니다! {player2_name}의 승리입니다!')
