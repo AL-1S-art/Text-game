@@ -40,7 +40,7 @@ def player1_pick():
         print(character_list[i], end=' ')
     print()
     pick = input()
-    slow_print(f'{player1_name}이/가 [{pick1}]를 선택했습니다.')
+    slow_print(f'{player1_name}이/가 [{pick}]를 선택했습니다.')
     player1_character.append(f'[{pick}]')
     character_list.remove(f'[{pick}]')
     if pick == '도박꾼':
@@ -68,7 +68,7 @@ def player2_pick():
         print(character_list[i], end=' ')
     print()
     pick = input()
-    slow_print(f'{player2_name}이/가 [{pick1}]를 선택했습니다.')
+    slow_print(f'{player2_name}이/가 [{pick}]를 선택했습니다.')
     player2_character.append(f'[{pick}]')
     character_list.remove(f'[{pick}]')
     if pick == '도박꾼':
