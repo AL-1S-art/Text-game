@@ -168,6 +168,7 @@ class Gambler:
         self.hmp = 0
         self.mp = 0
         self.rmp = 0
+        self.pturn = 0
         self.bdbturn = 0
         self.uturn = 0
         self.turn = 0
@@ -221,10 +222,12 @@ class Gambler:
         if a == b and b == c and c == a:
             slow_print(f'{self.name}이/가 잭팟을 터트립니다!!!')
             slow_print(f'{self.name}이/가 4턴 동안 계속하여 체력을 최대로 회복합니다!')
-            self.turn += 4
-        if self.turn > 0:
+            self.pturn += 4
+        if self.pturn > 0:
             self.hp = self.hhp
-            self.turn -= 1
+            self.pturn -= 1
+        print()
+        
             
     def damageskill(self, target):
         damm = random.randint(1, 2000)
@@ -270,11 +273,13 @@ class Gambler:
         if a == b and b == c and c == a:
             slow_print(f'{self.name}이/가 잭팟을 터트립니다!!!')
             slow_print(f'{self.name}이/가 4턴 동안 계속하여 체력을 최대로 회복합니다!')
-            self.turn += 4
-        if self.turn > 0:
+            self.pturn += 4
+        if self.pturn > 0:
             self.hp = self.hhp
-            self.turn -= 1
-            
+            self.pturn -= 1
+        print()
+
+    
     def buffdebuff(self, target):
         damm = random.randint(1, 2000)
         target.hp -= damm
@@ -319,11 +324,12 @@ class Gambler:
         if a == b and b == c and c == a:
             slow_print(f'{self.name}이/가 잭팟을 터트립니다!!!')
             slow_print(f'{self.name}이/가 4턴 동안 계속하여 체력을 최대로 회복합니다!')
-            self.turn += 4
-        if self.turn > 0:
+            self.pturn += 4
+        if self.pturn > 0:
             self.hp = self.hhp
-            self.turn -= 1
-
+            self.pturn -= 1
+        print()
+        
     
     def ultimate(self, target):
         damm = random.randint(1, 2000)
@@ -369,11 +375,12 @@ class Gambler:
         if a == b and b == c and c == a:
             slow_print(f'{self.name}이/가 잭팟을 터트립니다!!!')
             slow_print(f'{self.name}이/가 4턴 동안 계속하여 체력을 최대로 회복합니다!')
-            self.turn += 4
-        if self.turn > 0:
+            self.pturn += 4
+        if self.pturn > 0:
             self.hp = self.hhp
-            self.turn -= 1
-            
+            self.pturn -= 1
+        print()
+        
     def explanation(self):
         slow_print('모든걸 운에 거세요!')
         print()
