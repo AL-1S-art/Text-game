@@ -747,7 +747,7 @@ class Rider:
         if self.uturn > 0:
             self.uturn -= 1
         if self.bdbturn > 0:
-         selself.bdbturn -= 1
+            self.bdbturn -= 1
         self.turn += 1
         self.passive()
    
@@ -770,7 +770,7 @@ class Rider:
                 slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
             else:
                 slow_print(f'{target.name}이/가 사망하였습니다!')
-                break
+
             print()
             if self.uturn > 0:
                 self.uturn -= 1
@@ -823,7 +823,6 @@ class Rider:
                 slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
             else:
                 slow_print(f'{target.name}이/가 사망하였습니다!')
-                break
             print()
    
     def explanation(self):
