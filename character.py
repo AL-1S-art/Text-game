@@ -834,4 +834,172 @@ class Rider:
         print()
 
 
-
+class Ninja:
+    def __init__(self, name):
+        self.name = name
+        self.hhp = 3000
+        self.hp = self.hhp
+        self.ad = 150
+        self.de = 150
+        self.hmp = 200
+        self.mp = self.hmp
+        self.rmp = 30
+        self.passiveturn = 0
+        self.bdbturn = 0
+        self.uturn = 0
+        self.turn = 0
+        self.passivename = '그림자 분신술' #생성된 분신이 매 2턴마다 스킬을 발동한다. 분신은 최대 3개까지 생성 가능하다.
+        self.normalname = '평타'
+        self.damageskillname = '그림자검' #적을 검으로 벤다.
+        self.buffdebuffname = '분신 소환' #분신을 1개 생성한다.
+        self.ultimatename = '분신 폭주' #분신 수를 2배로 늘린 후 분신들이 모두 스킬을 발동한다. 그 후 분신을 모두 소멸시킨다. 소멸한 분신당 체력을 70 회복한다.
+        self.maxclones = 3
+        self.clones = {}
+        self.isclone = False
+        self.clonecooldown = 2
+    def passive(self,target):
+        if len(self.clones) > 0:
+            self.isclone = True
+            for i in range(len(self.clones)):
+                self.clones[i+1] -= 1
+                if self.clones[i+1] == 0:
+                    self.damageskill(target)
+                    self.clones[i+1] = self.clonecooldown
+            self.isclone = False   
+                         
+    def normal(self, target):
+        damm = int((self.ad * (100/(100+target.de)))*2)
+        target.hp -= damm
+        slow_print(f'{self.name}이/가 공격을 시도합니다!')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        print()
+        self.mp += self.rmp
+        slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+        print()
+        if target.hp > 0:
+            slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+        else:
+            slow_print(f'{target.name}이/가 사망하였습니다!')
+            return
+        print()
+        if self.uturn > 0:
+            self.uturn -= 1
+        if self.bdbturn > 0:
+            self.bdbturn -= 1
+        self.turn += 1
+        self.passive(target)
+        self.bdbturn -= 1
+    def damageskill(self, target):
+        if self.isclone == False:
+            if self.mp - 60 < 0:
+                slow_print('사용 가능한 마나가 없습니다.')
+                slow_print('기본 공격으로 대체됩니다.')
+                print()
+                self.normal(target)
+            else:
+                damm = int((self.ad * (100/(100+target.de)))*3)
+                target.hp -= damm
+                slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
+                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+                print()
+                self.mp += self.rmp - 50
+                slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+                print()
+                if target.hp > 0:
+                    slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+                else:
+                    slow_print(f'{target.name}이/가 사망하였습니다!')
+                    return
+                print()
+            if self.uturn > 0:
+                self.uturn -= 1
+            self.passive(target)
+            self.bdbturn -= 1
+        else:
+            damm = int((self.ad * (100/(100+target.de)))*1.5)
+            target.hp -= damm
+            slow_print(f'{self.name}의 분신이 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
+            slow_print(f'{self.name}의 분신이 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            print()
+            if target.hp > 0:
+                slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+            else:
+                slow_print(f'{target.name}이/가 사망하였습니다!')
+                return
+            print()    
+    def buffdebuff(self, target):
+        if self.mp - 100 < 0 :
+            slow_print('사용 가능한 마나가 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        elif self.bdbturn > 0:
+            slow_print('(디)버프 쿨타임 입니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        elif len(self.clones) >= self.maxclones:
+            slow_print('분신을 최대치로 보유하고 있습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        else:
+            self.clones[len(self.clones)+1] = 2
+            slow_print(f'{self.name}이/가 {self.buffdebuffname}을/를 사용합니다!')
+            slow_print(f'{self.name}이/가 분신을 하나 생성했습니다. 분신은 매 2턴마다 스킬을 발동하며 최대 3개까지 생성 가능합니다.')
+            print()
+            self.mp += self.rmp - 80
+            slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            self.bdbturn += 3
+        self.passive(target)
+    def ultimate(self, target):
+        if self.mp - 80 < 0:
+            slow_print('사용 가능한 마나가 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        elif self.uturn > 0:
+            slow_print('궁극기 쿨타임 입니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        else:
+            slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용합니다!')
+            maxclones = len(self.clones)*2
+            for i in range(len(self.clones)+1, maxclones+1):
+                self.clones[i] = self.clonecooldown
+            clonecount = len(self.clones)
+            self.isclone = True
+            for i in range(clonecount):
+                self.damageskill(target)
+                self.clones.pop(i+1)
+                self.hp += 70
+                slow_print(f'{self.name}의 분신이 소멸했습니다! 체력을 70 회복합니다.')
+                print()
+                if target.hp <= 0:
+                    break
+            self.isclone = False
+            slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용했습니다!')
+            slow_print(f'{self.name}이/가 분신의 수를 2배로 늘린 후 분신들이 모두 스킬을 발동했습니다. 그 후 분신을 모두 소멸시켜 체력을 {clonecount*70} 회복했습니다.')
+            print()
+            self.mp += self.rmp - 150
+            slow_print(f'{self.name}의 마나가 150 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            if target.hp > 0:
+                slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+            else:
+                slow_print(f'{target.name}이/가 사망하였습니다!')
+                return
+            print()
+            self.uturn += 3
+            self.maxclones = 3
+        self.passive(target)
+        self.bdbturn -= 1  
+    def explanation(self):
+        slow_print(f'[{self.passivename}]은/는 생성된 분신이 매 2턴마다 스킬을 발동하는 패시브입니다. 분신은 최대 3개까지 생성 가능합니다.')
+        slow_print(f'[{self.damageskillname}]은/는 적을 검으로 벨 수 있는 기본 스킬입니다.')
+        slow_print(f'[{self.buffdebuffname}]은/는 분신을 하나 생성하는 (디)버프 스킬입니다. 분신은 매 2턴마다 스킬을 발동하며 최대 3개까지 생성 가능합니다.')
+        slow_print(f'[{self.ultimatename}]은/는 분신의 수를 2배로 늘린 후 분신들이 모두 스킬을 발동하는 궁극기 입니다. 그 후 분신을 모두 소멸시켜 체력을 회복합니다. 소멸한 분신당 체력을 70 회복합니다.')
+        slow_print(f'여러 턴에 걸쳐 피해 및 (디)버프를 거는 스킬은 해당 스킬의 효과가 끝날 때 까지 재사용이 불가능 합니다. 궁극기는 최대 3번 사용 가능합니다.')
+        print()
