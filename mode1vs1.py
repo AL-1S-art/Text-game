@@ -150,16 +150,10 @@ if sequence == 'player1':
             slow_print(f'다시 {player1_name}의 공격차례 입니다.')
             slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
-            if player1.bdbturn == 0:
-                if player1.uturn == 0:
-                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}], [{player1.ultimatename}]')
-                if player1.uturn > 0:
-                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}]')
-            elif player1.bdbturn > 0:
-                if player1.uturn == 0:
-                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}]')
-                if player1.uturn > 0:
-                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}]')
+            if player1.uturn == 0:
+                slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}]')
+            if player1.uturn > 0:
+                slow_print(f'[{player1.normalname}], [{player1.damageskillname}]')
 
             attact_pick = input()
 
@@ -167,8 +161,6 @@ if sequence == 'player1':
                 player1.normal(player2)
             elif player1.damageskillname in attact_pick:
                 player1.damageskill(player2)
-            elif player1.buffdebuffname in attact_pick:
-                player1.buffdebuff(player2)
             elif player1.ultimatename in attact_pick:
                     player1.ultimate(player2)
 
@@ -203,16 +195,10 @@ if sequence == 'player1':
                 slow_print(f'다시 {player1_name}의 공격차례 입니다.')
                 slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
-                if player1.bdbturn == 0:
-                    if player1.uturn == 0:
-                        slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}], [{player1.ultimatename}]')
-                    if player1.uturn > 0:
-                        slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}]')
-                elif player1.bdbturn > 0:
-                    if player1.uturn == 0:
-                        slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}]')
-                    if player1.uturn > 0:
-                        slow_print(f'[{player1.normalname}], [{player1.damageskillname}]')
+                if player1.uturn == 0:
+                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}]')
+                if player1.uturn > 0:
+                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}]')
 
                 attact_pick = input()
 
@@ -220,8 +206,6 @@ if sequence == 'player1':
                     player1.normal(player2)
                 elif player1.damageskillname in attact_pick:
                     player1.damageskill(player2)
-                elif player1.buffdebuffname in attact_pick:
-                    player1.buffdebuff(player2)
                 elif player1.ultimatename in attact_pick:
                         player1.ultimate(player2)
             
@@ -280,16 +264,10 @@ if sequence == 'player1':
             slow_print(f'다시 {player2_name}의 공격차례 입니다.')
             slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
-            if player2.bdbturn == 0:
-                if player2.uturn == 0:
-                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}], [{player2.ultimatename}]')
-                if player2.uturn > 0:
-                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}]')
-            elif player2.bdbturn > 0:
-                if player2.uturn == 0:
-                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
-                if player2.uturn > 0:
-                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
+            if player2.uturn == 0:
+                slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
+            if player2.uturn > 0:
+                slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
 
             attact_pick = input()
 
@@ -333,16 +311,10 @@ if sequence == 'player1':
                 slow_print(f'다시 {player2_name}의 공격차례 입니다.')
                 slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
-                if player2.bdbturn == 0:
-                    if player2.uturn == 0:
-                        slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}], [{player2.ultimatename}]')
-                    if player2.uturn > 0:
-                            slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}]')
-                elif player2.bdbturn > 0:
-                    if player2.uturn == 0:
-                        slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
-                    if player2.uturn > 0:
-                        slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
+                if player2.uturn == 0:
+                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
+                if player2.uturn > 0:
+                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
 
                 attact_pick = input()
 
@@ -350,8 +322,6 @@ if sequence == 'player1':
                     player2.normal(player1)
                 elif player2.damageskillname in attact_pick:
                     player2.damageskill(player1)
-                elif player2.buffdebuffname in attact_pick:
-                    player2.buffdebuff(player1)
                 elif player2.ultimatename in attact_pick:
                     player2.ultimate(player1)
 
@@ -412,16 +382,10 @@ elif sequence == 'player2':
             slow_print(f'다시 {player2_name}의 공격차례 입니다.')
             slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
-            if player2.bdbturn == 0:
-                if player2.uturn == 0:
-                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}], [{player2.ultimatename}]')
-                if player2.uturn > 0:
-                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}]')
-            elif player2.bdbturn > 0:
-                if player2.uturn == 0:
-                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
-                if player2.uturn > 0:
-                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
+            if player2.uturn == 0:
+                slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
+            if player2.uturn > 0:
+                slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
 
             attact_pick = input()
 
@@ -429,8 +393,6 @@ elif sequence == 'player2':
                 player2.normal(player1)
             elif player2.damageskillname in attact_pick:
                 player2.damageskill(player1)
-            elif player2.buffdebuffname in attact_pick:
-                player2.buffdebuff(player1)
             elif player2.ultimatename in attact_pick:
                 player2.ultimate(player1)
 
@@ -465,16 +427,10 @@ elif sequence == 'player2':
                 slow_print(f'다시 {player2_name}의 공격차례 입니다.')
                 slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
-                if player2.bdbturn == 0:
-                    if player2.uturn == 0:
-                        slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}], [{player2.ultimatename}]')
-                    if player2.uturn > 0:
-                        slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}]')
-                elif player2.bdbturn > 0:
-                    if player2.uturn == 0:
-                        slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
-                    if player2.uturn > 0:
-                        slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
+                if player2.uturn == 0:
+                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
+                if player2.uturn > 0:
+                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
 
                 attact_pick = input()
 
@@ -482,8 +438,6 @@ elif sequence == 'player2':
                     player2.normal(player1)
                 elif player2.damageskillname in attact_pick:
                     player2.damageskill(player1)
-                elif player2.buffdebuffname in attact_pick:
-                    player2.buffdebuff(player1)
                 elif player2.ultimatename in attact_pick:
                     player2.ultimate(player1)
 
@@ -542,16 +496,10 @@ elif sequence == 'player2':
             slow_print(f'다시 {player1_name}의 공격차례 입니다.')
             slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
-            if player1.bdbturn == 0:
-                if player1.uturn == 0:
-                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}], [{player1.ultimatename}]')
-                if player1.uturn > 0:
-                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}]')
-            elif player1.bdbturn > 0:
-                if player1.uturn == 0:
-                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}]')
-                if player1.uturn > 0:
-                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}]')
+            if player1.uturn == 0:
+                slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}]')
+            if player1.uturn > 0:
+                slow_print(f'[{player1.normalname}], [{player1.damageskillname}]')
 
             attact_pick = input()
 
@@ -559,12 +507,8 @@ elif sequence == 'player2':
                 player1.normal(player2)
             elif player1.damageskillname in attact_pick:
                 player1.damageskill(player2)
-            elif player1.buffdebuffname in attact_pick:
-                player1.buffdebuff(player2)
             elif player1.ultimatename in attact_pick:
                 player1.ultimae(player2)
-            elif player1.ultimatename in attact_pick:
-                player1.ultimate(player2)
 
         elif player1.ultimatename in attact_pick:
             player1.ultimate(player2)
@@ -593,6 +537,25 @@ elif sequence == 'player2':
                 player1.damageskill(player2)
             elif player1.buffdebuffname in attact_pick:
                 player1.buffdebuff(player2)
+
+                slow_print(f'다시 {player1_name}의 공격차례 입니다.')
+                slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
+
+                if player1.uturn == 0:
+                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}]')
+                if player1.uturn > 0:
+                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}]')
+
+                attact_pick = input()
+
+                if player1.normalname in attact_pick:
+                    player1.normal(player2)
+                elif player1.damageskillname in attact_pick:
+                    player1.damageskill(player2)
+                elif player1.ultimatename in attact_pick:
+                        player1.ultimate(player2)
+
+            
             elif player1.ultimatename in attact_pick:
                 player1.ultimate(player2)
 
