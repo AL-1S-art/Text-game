@@ -229,16 +229,20 @@ if sequence == 'player1':
                 player1.ultimate(player2)
 
 
-
+        if '흑사병 보균자' in player1_character = []:
+            player1.passive()
+        elif '흑사병 보균자' in player2_character = []:
+            player2.passive()
+        
         if player2.hp <= 0:
             slow_print(f'축하드립니다! {player1_name}의 승리입니다!')
             break
 
-        slow_print('플레이어들 1의 상태')
+        slow_print(f'{player1_name}: {player1_character[0]}')
         print(f'현재 체력: [ {player1.hp} / {player1.hhp} ], 현재 마나: [ {player1.mp} / {player1.hmp} ] ')
         print(f'현재 공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
         print()
-        slow_print('플레이어들 2의 상태')
+        slow_print(f'{player2_name}: {player2_character[0]}')
         print(f'현재 체력: [ {player2.hp} / {player2.hhp} ], 현재 마나: [ {player2.mp} / {player2.hmp} ] ')
         print(f'현재 공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
         print()
@@ -352,15 +356,20 @@ if sequence == 'player1':
             elif player2.ultimatename in attact_pick:
                 player2.ultimate(player1)
 
+        if '흑사병 보균자' in player1_character = []:
+            player1.passive()
+        elif '흑사병 보균자' in player2_character = []:
+            player2.passive()
+        
         if player1.hp <= 0:
             slow_print(f'축하드립니다! {player2_name}의 승리입니다!')
             break
         
-        slow_print('플레이어들 1의 상태')
+        slow_print(f'{player1_name}: {player1_character[0]}')
         print(f'현재 체력: [ {player1.hp} / {player1.hhp} ], 현재 마나: [ {player1.mp} / {player1.hmp} ] ')
         print(f'현재 공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
         print()
-        slow_print('플레이어들 2의 상태')
+        slow_print(f'{player2_name}: {player2_character[0]}')
         print(f'현재 체력: [ {player2.hp} / {player2.hhp} ], 현재 마나: [ {player2.mp} / {player2.hmp} ] ')
         print(f'현재 공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
         print()
@@ -478,17 +487,20 @@ elif sequence == 'player2':
             elif player2.ultimatename in attact_pick:
                 player2.ultimate(player1)
 
-
+        if '흑사병 보균자' in player1_character = []:
+            player1.passive()
+        elif '흑사병 보균자' in player2_character = []:
+            player2.passive()
 
         if player2.hp <= 0:
             slow_print(f'축하드립니다! {player1_name}의 승리입니다!')
             break
 
-        slow_print('플레이어들 1의 상태')
+        slow_print(f'{player1_name}: {player1_character[0]}')
         print(f'현재 체력: [ {player1.hp} / {player1.hhp} ], 현재 마나: [ {player1.mp} / {player1.hmp} ] ')
         print(f'현재 공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
         print()
-        slow_print('플레이어들 2의 상태')
+        slow_print(f'{player2_name}: {player2_character[0]}')
         print(f'현재 체력: [ {player2.hp} / {player2.hhp} ], 현재 마나: [ {player2.mp} / {player2.hmp} ] ')
         print(f'현재 공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
         print()
@@ -578,15 +590,20 @@ elif sequence == 'player2':
             elif player1.ultimatename in attact_pick:
                 player1.ultimate(player2)
 
+        if '흑사병 보균자' in player1_character = []:
+            player1.passive()
+        elif '흑사병 보균자' in player2_character = []:
+            player2.passive()
+        
         if player1.hp <= 0:
             slow_print(f'축하드립니다! {player2_name}의 승리입니다!')
             break
 
-        slow_print('플레이어들 1의 상태')
+        print(f'{player1_name}: {player1_character[0]}')
         print(f'현재 체력: [ {player1.hp} / {player1.hhp} ], 현재 마나: [ {player1.mp} / {player1.hmp} ] ')
         print(f'현재 공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
         print()
-        slow_print('플레이어들 2의 상태')
+        print(f'{player2_name}: {player2_character[0]}')
         print(f'현재 체력: [ {player2.hp} / {player2.hhp} ], 현재 마나: [ {player2.mp} / {player2.hmp} ] ')
         print(f'현재 공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
         print()
