@@ -572,7 +572,7 @@ class Blackdeath:
         self.rmp = 8
         self.bdbturn = 0
         self.uturn = 0
-        self.uutrun = 3
+        self.ustrun = 3
         self.turn = 0
         self.passivename = '보균' #흑사병에 걸려서 매턴 체력 감소
         self.normalname = '평타'
@@ -682,8 +682,8 @@ class Blackdeath:
             slow_print(f'{self.name}의 마나가 150 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             self.turn += 1
-            self.uuturn -= 1
-            if self.uuturn == 0:
+            self.usturn -= 1
+            if self.usturn == 0:
                 self.uturn += 3
             self.passive()
    
@@ -770,7 +770,7 @@ class Rider:
                 slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
             else:
                 slow_print(f'{target.name}이/가 사망하였습니다!')
-                break
+                return
             print()
             if self.uturn > 0:
                 self.uturn -= 1
@@ -823,7 +823,7 @@ class Rider:
                 slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
             else:
                 slow_print(f'{target.name}이/가 사망하였습니다!')
-                break
+                return
             print()
    
     def explanation(self):
