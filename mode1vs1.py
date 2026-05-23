@@ -238,13 +238,15 @@ if sequence == 'player1':
             slow_print(f'축하드립니다! {player1_name}의 승리입니다!')
             break
 
-        slow_print(f'{player1_name}: {player1_character[0]}')
-        print(f'현재 체력: [ {player1.hp} / {player1.hhp} ], 현재 마나: [ {player1.mp} / {player1.hmp} ] ')
-        print(f'현재 공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
+        print(f'{player1_name}, {player2_name}의 현재 상태')
         print()
-        slow_print(f'{player2_name}: {player2_character[0]}')
-        print(f'현재 체력: [ {player2.hp} / {player2.hhp} ], 현재 마나: [ {player2.mp} / {player2.hmp} ] ')
-        print(f'현재 공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
+        print(f'{player1_name}: {player1_character[0]}')
+        print(f'체력: [ {player1.hp} / {player1.hhp} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
+        print(f'공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
+        print()
+        print(f'{player2_name}: {player2_character[0]}')
+        print(f'체력: [ {player2.hp} / {player2.hhp} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
+        print(f'공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
         print()
 
 
@@ -364,14 +366,16 @@ if sequence == 'player1':
         if player1.hp <= 0:
             slow_print(f'축하드립니다! {player2_name}의 승리입니다!')
             break
-        
-        slow_print(f'{player1_name}: {player1_character[0]}')
-        print(f'현재 체력: [ {player1.hp} / {player1.hhp} ], 현재 마나: [ {player1.mp} / {player1.hmp} ] ')
-        print(f'현재 공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
+
+        print(f'{player1_name}, {player2_name}의 현재 상태')
         print()
-        slow_print(f'{player2_name}: {player2_character[0]}')
-        print(f'현재 체력: [ {player2.hp} / {player2.hhp} ], 현재 마나: [ {player2.mp} / {player2.hmp} ] ')
-        print(f'현재 공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
+        print(f'{player1_name}: {player1_character[0]}')
+        print(f'체력: [ {player1.hp} / {player1.hhp} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
+        print(f'공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
+        print()
+        print(f'{player2_name}: {player2_character[0]}')
+        print(f'체력: [ {player2.hp} / {player2.hhp} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
+        print(f'공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
         print()
 
 
@@ -496,13 +500,15 @@ elif sequence == 'player2':
             slow_print(f'축하드립니다! {player1_name}의 승리입니다!')
             break
 
-        slow_print(f'{player1_name}: {player1_character[0]}')
-        print(f'현재 체력: [ {player1.hp} / {player1.hhp} ], 현재 마나: [ {player1.mp} / {player1.hmp} ] ')
-        print(f'현재 공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
+        print(f'{player1_name}, {player2_name}의 현재 상태')
         print()
-        slow_print(f'{player2_name}: {player2_character[0]}')
-        print(f'현재 체력: [ {player2.hp} / {player2.hhp} ], 현재 마나: [ {player2.mp} / {player2.hmp} ] ')
-        print(f'현재 공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
+        print(f'{player1_name}: {player1_character[0]}')
+        print(f'체력: [ {player1.hp} / {player1.hhp} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
+        print(f'공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
+        print()
+        print(f'{player2_name}: {player2_character[0]}')
+        print(f'체력: [ {player2.hp} / {player2.hhp} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
+        print(f'공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
         print()
 
 
@@ -599,11 +605,12 @@ elif sequence == 'player2':
             slow_print(f'축하드립니다! {player2_name}의 승리입니다!')
             break
 
-        print(f'{player1_name}: {player1_character[0]}')
-        print(f'현재 체력: [ {player1.hp} / {player1.hhp} ], 현재 마나: [ {player1.mp} / {player1.hmp} ] ')
-        print(f'현재 공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
+        print(f'{player1_name}, {player2_name}의 현재 상태')
+        print()
+        print(f'체력: [ {player1.hp} / {player1.hhp} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
+        print(f'공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
         print()
         print(f'{player2_name}: {player2_character[0]}')
-        print(f'현재 체력: [ {player2.hp} / {player2.hhp} ], 현재 마나: [ {player2.mp} / {player2.hmp} ] ')
-        print(f'현재 공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
+        print(f'체력: [ {player2.hp} / {player2.hhp} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
+        print(f'공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
         print()
