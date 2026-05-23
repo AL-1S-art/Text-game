@@ -229,9 +229,9 @@ if sequence == 'player1':
                 player1.ultimate(player2)
 
 
-        if '흑사병 보균자' in player1_character = []:
+        if '흑사병 보균자' in player1_character:
             player1.passive()
-        elif '흑사병 보균자' in player2_character = []:
+        elif '흑사병 보균자' in player2_character:
             player2.passive()
         
         if player2.hp <= 0:
@@ -358,9 +358,9 @@ if sequence == 'player1':
             elif player2.ultimatename in attact_pick:
                 player2.ultimate(player1)
 
-        if '흑사병 보균자' in player1_character = []:
+        if '흑사병 보균자' in player1_character:
             player1.passive()
-        elif '흑사병 보균자' in player2_character = []:
+        elif '흑사병 보균자' in player2_character:
             player2.passive()
         
         if player1.hp <= 0:
@@ -491,9 +491,9 @@ elif sequence == 'player2':
             elif player2.ultimatename in attact_pick:
                 player2.ultimate(player1)
 
-        if '흑사병 보균자' in player1_character = []:
+        if '흑사병 보균자' in player1_character:
             player1.passive()
-        elif '흑사병 보균자' in player2_character = []:
+        elif '흑사병 보균자' in player2_character:
             player2.passive()
 
         if player2.hp <= 0:
@@ -596,9 +596,9 @@ elif sequence == 'player2':
             elif player1.ultimatename in attact_pick:
                 player1.ultimate(player2)
 
-        if '흑사병 보균자' in player1_character = []:
+        if '흑사병 보균자' in player1_character:
             player1.passive()
-        elif '흑사병 보균자' in player2_character = []:
+        elif '흑사병 보균자' in player2_character:
             player2.passive()
         
         if player1.hp <= 0:
