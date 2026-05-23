@@ -118,10 +118,10 @@ time.sleep(3)
 
 slow_print(f'게임을 시작합니다!')
 print()
-sequence = random.choice(['player1', 'player2'])
+sequence = random.shuffle([player1_name, player2_name])
 
 if sequence == 'player1':
-    slow_print(f'순서는 {[player1_name]} -> {[player2_name]} 입니다.')
+    slow_print(f'순서는 {sequence} 입니다.')
     print()
     while True:
         slow_print(f'{player1_name}의 공격차례 입니다.')
@@ -370,7 +370,7 @@ if sequence == 'player1':
 
 
 elif sequence == 'player2':
-    slow_print(f'순서는 {[player2_name]} -> {[player1_name]} 입니다.')
+    slow_print(f'순서는 {sequence} 입니다.')
     print()
     while True:
         slow_print(f'{player2_name}의 공격차례 입니다.')
