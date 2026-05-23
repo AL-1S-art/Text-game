@@ -370,7 +370,7 @@ if sequence == 'player1':
 
 
 elif sequence == 'player2':
-    slow_print(f'순서는 {[player1_name]} -> {[player2_name]} 입니다.')
+    slow_print(f'순서는 {[player2_name]} -> {[player1_name]} 입니다.')
     print()
     while True:
         slow_print(f'{player2_name}의 공격차례 입니다.')
