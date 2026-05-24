@@ -61,7 +61,7 @@ def player1_pick():
 
 def player2_pick():
     global player2
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[닌자]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[도플갱어]']
     slow_print(f'{player2_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -81,8 +81,8 @@ def player2_pick():
         player2 = character.Naturalist(f'{player2_name}')
     elif pick == '흑사병 보균자':
         player2 = character.Blackdeath(f'{player2_name}')
-    elif pick == '닌자':
-        player2 = character.Ninja(f'{player2_name}')
+    elif pick == '도플갱어':
+        player2 = character.Doppelganger(f'{player2_name}')
     print()
 
 

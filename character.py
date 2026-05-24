@@ -834,7 +834,7 @@ class Rider:
         print()
 
 
-class Ninja:
+class Doppelganger:
     def __init__(self, name):
         self.name = name
         self.hhp = 3000
@@ -1009,3 +1009,23 @@ class Ninja:
         slow_print(f'[{self.ultimatename}]은/는 분신의 수를 2배로 늘린 후 분신들이 모두 스킬을 발동하는 궁극기 입니다. 그 후 분신을 모두 소멸시켜 체력을 회복합니다. 소멸한 분신당 체력을 70 회복합니다.')
         slow_print(f'여러 턴에 걸쳐 피해 및 (디)버프를 거는 스킬은 최대 중첩 가능 수량 도달 시 재사용이 불가능 합니다.')
         print()
+        
+class Assassin:
+    def __init__(self, name):
+        self.name = name
+        self.hhp = 2500
+        self.hp = self.hhp
+        self.ad = 200
+        self.de = 100
+        self.hmp = 150
+        self.mp = self.hmp
+        self.rmp = 20
+        self.passiveturn = 0
+        self.bdbturn = 0
+        self.uturn = 0
+        self.turn = 0
+        self.passivename = '암살자 본능' #체력이 일정 이하로 떨어지면 공격력이 증가한다.
+        self.normalname = '평타'
+        self.damageskillname = '암살' #적을 암살한다. 체력이 일정 이하인 적에게는 치명타가 발동한다.
+        self.buffdebuffname = '은신' #은신하여 다음 공격이 반드시 치명타가 된다. 은신 상태에서는 받는 피해가 감소한다.
+        self.ultimatename = '그림자 일격' #그림자처럼 빠르게 이동하여 적을 공격한다. 적의 방어력을 무시하고 피해를 입힌다.
