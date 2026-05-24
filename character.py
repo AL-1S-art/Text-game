@@ -850,13 +850,14 @@ class Ninja:
         self.turn = 0
         self.passivename = '그림자 분신술' #생성된 분신이 매 2턴마다 스킬을 발동한다. 분신은 최대 3개까지 생성 가능하다.
         self.normalname = '평타'
-        self.damageskillname = '그림자검' #적을 검으로 벤다.
+        self.damageskillname = '그림자베기' #적을 검으로 벤다.
         self.buffdebuffname = '분신 소환' #분신을 1개 생성한다.
         self.ultimatename = '분신 폭주' #분신 수를 2배로 늘린 후 분신들이 모두 스킬을 발동한다. 그 후 분신을 모두 소멸시킨다. 소멸한 분신당 체력을 70 회복한다.
         self.maxclones = 3
         self.clones = {}
         self.isclone = False
         self.clonecooldown = 2
+        self.skillturn = 0
     def passive(self,target):
         if len(self.clones) > 0:
             self.isclone = True
@@ -897,8 +898,9 @@ class Ninja:
                 print()
                 self.normal(target)
             else:
-                damm = int((self.ad * (100/(100+target.de)))*3)
+                damm = int((self.ad * (100/(100+target.de)))*6/(((self.skillturn%3)+1)))
                 target.hp -= damm
+                self.skillturn += 1
                 slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
                 slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
                 print()
@@ -915,9 +917,11 @@ class Ninja:
                 self.uturn -= 1
             self.passive(target)
             self.bdbturn -= 1
+            self.turn += 1
         else:
-            damm = int((self.ad * (100/(100+target.de)))*1.5)
+            damm = int((self.ad * (100/(100+target.de)))*6/(self.skillturn%3+1))
             target.hp -= damm
+            self.skillturn += 1
             slow_print(f'{self.name}의 분신이 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
             slow_print(f'{self.name}의 분신이 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             print()
@@ -952,7 +956,8 @@ class Ninja:
             slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             self.bdbturn += 3
-        self.passive(target)
+            self.turn += 1
+            self.passive(target)
     def ultimate(self, target):
         if self.mp - 80 < 0:
             slow_print('사용 가능한 마나가 없습니다.')
@@ -994,6 +999,7 @@ class Ninja:
             print()
             self.uturn += 3
             self.maxclones = 3
+            self.turn += 1
         self.passive(target)
         self.bdbturn -= 1  
     def explanation(self):
@@ -1001,5 +1007,5 @@ class Ninja:
         slow_print(f'[{self.damageskillname}]은/는 적을 검으로 벨 수 있는 기본 스킬입니다.')
         slow_print(f'[{self.buffdebuffname}]은/는 분신을 하나 생성하는 (디)버프 스킬입니다. 분신은 매 2턴마다 스킬을 발동하며 최대 3개까지 생성 가능합니다.')
         slow_print(f'[{self.ultimatename}]은/는 분신의 수를 2배로 늘린 후 분신들이 모두 스킬을 발동하는 궁극기 입니다. 그 후 분신을 모두 소멸시켜 체력을 회복합니다. 소멸한 분신당 체력을 70 회복합니다.')
-        slow_print(f'여러 턴에 걸쳐 피해 및 (디)버프를 거는 스킬은 해당 스킬의 효과가 끝날 때 까지 재사용이 불가능 합니다. 궁극기는 최대 3번 사용 가능합니다.')
+        slow_print(f'여러 턴에 걸쳐 피해 및 (디)버프를 거는 스킬은 최대 중첩 가능 수량 도달 시 재사용이 불가능 합니다.')
         print()
