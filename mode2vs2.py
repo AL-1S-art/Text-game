@@ -204,7 +204,7 @@ if sequence == [team1_name[0], team1_name[1], team2_name[0], team2_name[1]]:
                         player1.buffdebuff(player2, player3, player4)
                     if team2_name[1] in attact_target:
                         player1.buffdebuff(player2, player3, player4)
-                elif:
+                else:
                     if team2_name[0] in attact_target:
                         player1.buffdebuff(player3)
                     if team2_name[1] in attact_target:
@@ -290,7 +290,7 @@ if sequence == [team1_name[0], team1_name[1], team2_name[0], team2_name[1]]:
                             player1.buffdebuff(player2, player3, player4)
                         if team2_name[1] in attact_target:
                             player1.buffdebuff(player2, player3, player4)
-                    elif:
+                    else:
                         if team2_name[0] in attact_target:
                             player1.buffdebuff(player3)
                         if team2_name[1] in attact_target:
@@ -392,7 +392,7 @@ if sequence == [team1_name[0], team1_name[1], team2_name[0], team2_name[1]]:
                         player1.buffdebuff(player2, player3, player4)
                     if team2_name[1] in attact_target:
                         player1.buffdebuff(player2, player3, player4)
-                elif:
+                else:
                     if team2_name[0] in attact_target:
                         player1.buffdebuff(player3)
                     if team2_name[1] in attact_target:
@@ -478,7 +478,7 @@ if sequence == [team1_name[0], team1_name[1], team2_name[0], team2_name[1]]:
                             player1.buffdebuff(player2, player3, player4)
                         if team2_name[1] in attact_target:
                             player1.buffdebuff(player2, player3, player4)
-                    elif:
+                    else:
                         if team2_name[0] in attact_target:
                             player1.buffdebuff(player3)
                         if team2_name[1] in attact_target:
