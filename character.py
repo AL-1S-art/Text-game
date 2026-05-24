@@ -1013,19 +1013,232 @@ class Doppelganger:
 class Assassin:
     def __init__(self, name):
         self.name = name
-        self.hhp = 2500
+        self.hhp = 2000
         self.hp = self.hhp
-        self.ad = 200
+        self.ad = 300
         self.de = 100
-        self.hmp = 150
+        self.hmp = 200
         self.mp = self.hmp
         self.rmp = 20
         self.passiveturn = 0
         self.bdbturn = 0
         self.uturn = 0
         self.turn = 0
-        self.passivename = '암살자 본능' #체력이 일정 이하로 떨어지면 공격력이 증가한다.
+        self.bufftime = 0
+        self.marklist = {}
+        self.passivename = '암살자의 표식' #적에게 표식을 생성한다. 표식이 있는 적을 4회 공격할 때마다 표식이 폭발하여 추가 피해를 입힌다. 또한 체력이 50% 이하인 적 공격시 치명타가 발동한다.
         self.normalname = '평타'
-        self.damageskillname = '암살' #적을 암살한다. 체력이 일정 이하인 적에게는 치명타가 발동한다.
-        self.buffdebuffname = '은신' #은신하여 다음 공격이 반드시 치명타가 된다. 은신 상태에서는 받는 피해가 감소한다.
-        self.ultimatename = '그림자 일격' #그림자처럼 빠르게 이동하여 적을 공격한다. 적의 방어력을 무시하고 피해를 입힌다.
+        self.damageskillname = '급소 찌르기' #급소를 찌른다. 체력이 일정 이하인 적에게는 치명타가 발동한다.
+        self.buffdebuffname = '은신' #은신 상태에 들어간다. 다음 공격은 적의 방어력을 50% 무시하며, 적의 최대체력에 비례한 피해를 입힌다.(은신 상태는 2턴 지속되며, 공격시 해제됩니다).
+        self.ultimatename = '최후의 일격' #적의 심장을 찌른다. 적의 잃은 체력에 비례해 추가 고정피해를 입히며, 적의 체력이 일정 이하시 치명타가 발동한다.적의 체력이 10% 이하로 내려갈 시 처형한다.
+        
+    def passive(self, target):
+        if target not in self.marklist:
+            self.marklist[target] = 0
+        if self.bdbturn > 0:
+            self.bdbturn -= 1
+        if self.uturn > 0:
+            self.uturn -= 1
+        self.turn += 1
+        if self.bufftime > 0:
+            self.bufftime -= 1
+            if self.bufftime == 0:
+                slow_print(f'{self.name}의 은신이 해제되었습니다.')
+                print()
+        if self.marklist[target] == 4:
+            if target.hp <= target.hhp*0.5:
+                extra = int(self.ad*2 * (100/(100+target.de))*1.5)
+                crit = True
+            else:
+                extra = int(self.ad*2 * (100/(100+target.de)))
+                crit = False
+            target.hp -= extra
+            if crit:
+                slow_print(f'치명타가 발동하여 {target.name}에게 암살자의 표식이 폭발하여 추가로 {extra}만큼 피해를 입혔습니다.')
+            else:
+                slow_print(f'{target.name}에게 암살자의 표식이 폭발하여 추가로 {extra}만큼 피해를 입혔습니다.')
+            print()
+    def normal(self, target):
+        if target not in self.marklist:
+            self.marklist[target] = 0
+        if self.bufftime == 0:    
+            if target.hp <= target.hhp*0.5:
+                damm = int((self.ad * (100/(100+target.de)))*2*1.5)
+                crit = True
+            else:
+                damm = int((self.ad * (100/(100+target.de)))*2)
+                crit = False
+            target.hp -= damm
+            slow_print(f'{self.name}이/가 공격을 시도합니다!')
+            if crit:
+                slow_print(f'치명타가 발동하여 {self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            else:
+                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        else:
+            if target.hp <= target.hhp*0.5:
+                damm = int(((self.ad * (50/(100+target.de)))*2+target.hhp*0.07)*1.5)
+                crit = True
+            else:
+                damm = int((self.ad * (50/(100+target.de)))*2+target.hhp*0.07)
+                crit = False
+            target.hp -= damm
+            slow_print(f'{self.name}이/가 은신 상태에서 공격을 시도합니다!')
+            if crit:
+                slow_print(f'치명타가 발동하여 {self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            else:
+                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            self.bufftime = 0
+        print()
+        self.mp += self.rmp
+        slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+        print()
+        if self.uturn > 0:
+            self.uturn -= 1
+        if self.bdbturn > 0:
+            self.bdbturn -= 1
+        self.marklist[target] += 1
+        self.passive(target)
+        if target.hp > 0:
+            slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+        else:
+            slow_print(f'{target.name}이/가 사망하였습니다!')
+            return
+        print()
+        self.turn += 1
+    def damageskill(self, target):
+        if target not in self.marklist:
+            self.marklist[target] = 0
+        if self.bufftime == 0:
+            if target.hp <= target.hhp*0.5:
+                damm = int((self.ad * (100/(100+target.de)))*2*1.5)
+                crit = True
+            else:
+                damm = int((self.ad * (100/(100+target.de)))*2)
+                crit = False
+            target.hp -= damm
+            slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
+            if crit:
+                slow_print(f'치명타가 발동하여 {self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            else:
+                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        else:
+            if target.hp <= target.hhp*0.5:
+                damm = int(((self.ad * (50/(100+target.de)))*2+target.hhp*0.07)*1.5)
+                crit = True
+            else:
+                damm = int((self.ad * (50/(100+target.de)))*2+target.hhp*0.07)
+                crit = False
+            target.hp -= damm
+            slow_print(f'{self.name}이/가 은신 상태에서 {target.name}에게 {self.damageskillname}을/를 사용했습니다! \n공격이 적의 방어력을 50% 무시하며, 적의 최대체력에 비례한 피해를 입힙니다!')
+            if crit:
+                slow_print(f'치명타가 발동하여 {self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            else:
+                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            self.bufftime = 0
+        self.marklist[target] += 1
+        self.passive(target)
+        print()
+        self.mp += self.rmp - 40
+        slow_print(f'{self.name}의 마나가 40 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+        print()
+        if target.hp > 0:
+            slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+        else:
+            slow_print(f'{target.name}이/가 사망하였습니다!')
+            return
+        print()
+        if self.uturn > 0:
+            self.uturn -= 1
+        self.bdbturn -= 1
+        self.turn += 1
+    def buffdebuff(self, target):
+        if self.mp - 60 < 0 :
+            slow_print('사용 가능한 마나가 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        elif self.bdbturn > 0:
+            slow_print('(디)버프 쿨타임 입니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        else:
+            slow_print(f'{self.name}이/가 {self.buffdebuffname}에 들어갑니다!')
+            slow_print(f'{self.name}이/가 은신 상태에 들어갑니다. 다음 공격은 적의 방어력을 50% 무시하며, 적의 최대체력에 비례한 피해를 입힙니다.(은신 상태는 2턴 지속되며, 공격시 해제됩니다).')
+            print()
+            self.mp += self.rmp - 60
+            slow_print(f'{self.name}의 마나가 60 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            self.bdbturn = 3
+            self.turn += 1
+            self.bufftime += 2
+            self.passive(target)
+    def ultimate(self, target):
+        if target not in self.marklist:
+            self.marklist[target] = 0
+        if self.mp - 100 < 0:
+            slow_print('사용 가능한 마나가 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        elif self.uturn > 0:
+            slow_print('궁극기 쿨타임 입니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        else:
+            if self.bufftime == 0:
+                if target.hp <= target.hhp*0.5:
+                    extra = int((target.hhp-target.hp)*0.5)
+                    damm = int(((self.ad * (100/(100+target.de)))*4 + extra)*1.5)
+                    crit = True
+                else:
+                    damm = int((self.ad * (100/(100+target.de)))*4)
+                    crit = False
+                target.hp -= damm
+                slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.ultimatename}을/를 사용했습니다!')
+                if crit:
+                    slow_print(f'치명타가 발동하여 {self.name}이/가 {target.name}의 심장을 찔러 {damm}만큼 피해를 입혔습니다!')
+                else:
+                    slow_print(f'{self.name}이/가 {target.name}의 심장을 찔러 {damm}만큼 피해를 입혔습니다!')
+            else:
+                self.bufftime = 0
+                slow_print(f'{self.name}이/가 은신 상태에서 {target.name}에게 궁극기 {self.ultimatename}을/를 사용했습니다! \n공격이 적의 방어력을 50% 무시하며, 적의 최대체력에 비례한 피해를 입힙니다!')
+                extra = int((target.hhp-target.hp)*0.5)
+                if target.hp <= target.hhp*0.5:
+                    damm = int(((self.ad * (50/(100+target.de)))*4+extra)*1.5)
+                    crit = True
+                else:
+                    damm = int((self.ad * (50/(100+target.de)))*4)
+                    crit = False    
+                target.hp -= damm
+                if crit:
+                    slow_print(f'치명타가 발동하여 {self.name}이/가 은신 상태에서 {target.name}의 심장을 찔러 {damm}만큼 피해를 입혔습니다!')
+                else:
+                    slow_print(f'{self.name}이/가 은신 상태에서 {target.name}의 심장을 찔러 {damm}만큼 피해를 입혔습니다!')
+            self.marklist[target] += 1
+            self.passive(target)
+            print()
+            self.mp += self.rmp - 100
+            slow_print(f'{self.name}의 마나가 100 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            if target.hp <= target.hhp*0.1:
+                veryslow_print(f'처형')
+                target.hp = int(target.hhp*0.1)
+                while target.hp > -4444:
+                    target.hp -= 13
+                    
+                    if target.hp  < 0:
+                        time.sleep(0.4)
+                        target.hp = -4444
+                    print(f'\r{target.name}의 체력이 {target.hp} 남았습니다.', end='')
+                    time.sleep(0.08)  
+                
+                time.sleep(0.2)
+                print()
+                slow_print(f'{target.name}이/가 사망하였습니다!')
+                return
+            else:
+                slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+            print()
+            self.uturn += 3
