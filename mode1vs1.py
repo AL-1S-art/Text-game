@@ -213,15 +213,15 @@ if sequence == 'player1':
             elif player1.ultimatename in attact_pick:
                 player1.ultimate(player2)
 
+        if player2.hp <= 0:
+            slow_print(f'축하드립니다! {player1_name}의 승리입니다!')
+            break
 
         if '흑사병 보균자' in player1_character:
             player1.passive()
         elif '흑사병 보균자' in player2_character:
             player2.passive()
         
-        if player2.hp <= 0:
-            slow_print(f'축하드립니다! {player1_name}의 승리입니다!')
-            break
 
         print(f'{player1_name}, {player2_name}의 현재 상태')
         print()
@@ -329,14 +329,15 @@ if sequence == 'player1':
             elif player2.ultimatename in attact_pick:
                 player2.ultimate(player1)
 
+        if player1.hp <= 0:
+            slow_print(f'축하드립니다! {player2_name}의 승리입니다!')
+            break
+
         if '흑사병 보균자' in player1_character:
             player1.passive()
         elif '흑사병 보균자' in player2_character:
             player2.passive()
-        
-        if player1.hp <= 0:
-            slow_print(f'축하드립니다! {player2_name}의 승리입니다!')
-            break
+    
 
         print(f'{player1_name}, {player2_name}의 현재 상태')
         print()
@@ -446,14 +447,14 @@ elif sequence == 'player2':
             elif player2.ultimatename in attact_pick:
                 player2.ultimate(player1)
 
+        if player2.hp <= 0:
+            slow_print(f'축하드립니다! {player1_name}의 승리입니다!')
+            break
+
         if '흑사병 보균자' in player1_character:
             player1.passive()
         elif '흑사병 보균자' in player2_character:
             player2.passive()
-
-        if player2.hp <= 0:
-            slow_print(f'축하드립니다! {player1_name}의 승리입니다!')
-            break
 
         print(f'{player1_name}, {player2_name}의 현재 상태')
         print()
@@ -560,14 +561,14 @@ elif sequence == 'player2':
             elif player1.ultimatename in attact_pick:
                 player1.ultimate(player2)
 
+        if player1.hp <= 0:
+            slow_print(f'축하드립니다! {player2_name}의 승리입니다!')
+            break
+        
         if '흑사병 보균자' in player1_character:
             player1.passive()
         elif '흑사병 보균자' in player2_character:
             player2.passive()
-        
-        if player1.hp <= 0:
-            slow_print(f'축하드립니다! {player2_name}의 승리입니다!')
-            break
 
         print(f'{player1_name}, {player2_name}의 현재 상태')
         print()
