@@ -42,7 +42,7 @@ def player1_pick():
     pick = input()
     slow_print(f'{player1_name}이/가 [{pick}]를 선택했습니다.')
     player1_character.append(f'[{pick}]')
-    character_list.remove(f'[{pick}]')
+    
     if pick == '도박꾼':
         player1 = character.Gambler(f'{player1_name}')
     elif pick == '격투가':

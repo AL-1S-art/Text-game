@@ -1040,23 +1040,37 @@ class Assassin:
         if self.uturn > 0:
             self.uturn -= 1
         self.turn += 1
+        
+        if self.marklist[target] == 4:
+            if self.bufftime > 0:
+                if target.hp <= target.hhp*0.5:
+                    extra = int(self.ad*2 * (200/(100+target.de))*1.5)
+                    crit = True
+                else:
+                    extra = int(self.ad*2 * (200/(100+target.de)))
+                    crit = False
+                target.hp -= extra
+                if crit:
+                    slow_print(f'치명타가 발동하여 {target.name}에게 암살자의 표식이 폭발하여 추가로 {extra}만큼 피해를 입혔습니다.')
+                else:
+                    slow_print(f'{target.name}에게 암살자의 표식이 폭발하여 추가로 {extra}만큼 피해를 입혔습니다.')
+            else:
+                if target.hp <= target.hhp*0.5:
+                    extra = int((self.ad * (100/(100+target.de)))*2*1.5)
+                    crit = True
+                else:
+                    extra = int((self.ad * (100/(100+target.de)))*2)
+                    crit = False
+                target.hp -= extra
+                if crit:
+                    slow_print(f'은신 상태에서 치명타가 발동하여 {target.name}에게 암살자의 표식이 폭발하여 추가로 {extra}만큼 피해를 입혔습니다.')
+                else:
+                    slow_print(f'은신 상태에서 {target.name}에게 암살자의 표식이 폭발하여 추가로 {extra}만큼 피해를 입혔습니다.')
+            print()
         if self.bufftime > 0:
             self.bufftime -= 1
-            if self.bufftime == 0:
-                slow_print(f'{self.name}의 은신이 해제되었습니다.')
-                print()
-        if self.marklist[target] == 4:
-            if target.hp <= target.hhp*0.5:
-                extra = int(self.ad*2 * (100/(100+target.de))*1.5)
-                crit = True
-            else:
-                extra = int(self.ad*2 * (100/(100+target.de)))
-                crit = False
-            target.hp -= extra
-            if crit:
-                slow_print(f'치명타가 발동하여 {target.name}에게 암살자의 표식이 폭발하여 추가로 {extra}만큼 피해를 입혔습니다.')
-            else:
-                slow_print(f'{target.name}에게 암살자의 표식이 폭발하여 추가로 {extra}만큼 피해를 입혔습니다.')
+        if self.bufftime == 0:
+            slow_print(f'{self.name}의 은신이 해제되었습니다.')
             print()
     def normal(self, target):
         if target not in self.marklist:
@@ -1076,10 +1090,10 @@ class Assassin:
                 slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         else:
             if target.hp <= target.hhp*0.5:
-                damm = int(((self.ad * (50/(100+target.de)))*2+target.hhp*0.07)*1.5)
+                damm = int(((self.ad * (200/(100+target.de)))*2+target.hhp*0.07)*1.5)
                 crit = True
             else:
-                damm = int((self.ad * (50/(100+target.de)))*2+target.hhp*0.07)
+                damm = int((self.ad * (200/(100+target.de)))*2+target.hhp*0.07)
                 crit = False
             target.hp -= damm
             slow_print(f'{self.name}이/가 은신 상태에서 공격을 시도합니다!')
@@ -1123,10 +1137,10 @@ class Assassin:
                 slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         else:
             if target.hp <= target.hhp*0.5:
-                damm = int(((self.ad * (50/(100+target.de)))*2+target.hhp*0.07)*1.5)
+                damm = int(((self.ad * (200/(100+target.de)))*2+target.hhp*0.07)*1.5)
                 crit = True
             else:
-                damm = int((self.ad * (50/(100+target.de)))*2+target.hhp*0.07)
+                damm = int((self.ad * (200/(100+target.de)))*2+target.hhp*0.07)
                 crit = False
             target.hp -= damm
             slow_print(f'{self.name}이/가 은신 상태에서 {target.name}에게 {self.damageskillname}을/를 사용했습니다! \n공격이 적의 방어력을 50% 무시하며, 적의 최대체력에 비례한 피해를 입힙니다!')
@@ -1206,10 +1220,10 @@ class Assassin:
                 slow_print(f'{self.name}이/가 은신 상태에서 {target.name}에게 궁극기 {self.ultimatename}을/를 사용했습니다! \n공격이 적의 방어력을 50% 무시하며, 적의 최대체력에 비례한 피해를 입힙니다!')
                 extra = int((target.hhp-target.hp)*0.5)
                 if target.hp <= target.hhp*0.5:
-                    damm = int(((self.ad * (50/(100+target.de)))*4+extra)*1.5)
+                    damm = int(((self.ad * (200/(100+target.de)))*4+extra)*1.5)
                     crit = True
                 else:
-                    damm = int((self.ad * (50/(100+target.de)))*4)
+                    damm = int((self.ad * (200/(100+target.de)))*4)
                     crit = False    
                 target.hp -= damm
                 if crit:
