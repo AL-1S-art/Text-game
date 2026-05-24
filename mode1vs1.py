@@ -108,7 +108,8 @@ print(f'{player2_name}: {player2_character[0]}')
 print(f'체력: [ {player2.hp} / {player2.hhp} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
 print(f'공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
 print()
-time.sleep(3)
+
+time.sleep(5)
 
 
 
