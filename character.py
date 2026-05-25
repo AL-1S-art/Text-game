@@ -1146,7 +1146,7 @@ class ChessPlayer:
             self.hhp += 2000
             self.hp += 2000
             self.passivename = '체크메이트'
-            self.normalname = 'Qd4+'
+            self.normalname = '평타'
             self.damageskillname = 'Qxe4+'
             self.ultimatename = '로얄 포크'
             self.uturn = 0
@@ -1312,7 +1312,7 @@ class Politician:
         self.uturn = 0
         self.turn = 0
         self.passivename = '대중의 지지' #정치인은 대중의 지지율에 따라 피해량이 바뀝니다. 지지율이 높을수록 피해량이 증가하며, 낮을수록 피해량이 감소합니다. 만약 지지율이 100% 이상이라면 즉시 승리하며, 0% 미만이라면 즉시 패배합니다.
-        self.normalname = '전국 순회' #정치인이 전국을 순회하여 연설을 합니다. 만약 입힌 피해량이 짝수이면, 지지율이 증가하며, 홀수시, 지지율이 감소합니다. (증가/감소량은 피해량의 10%입니다.)
+        self.normalname = '평타' #정치인이 전국을 순회하여 연설을 합니다. 만약 입힌 피해량이 짝수이면, 지지율이 증가하며, 홀수시, 지지율이 감소합니다. (증가/감소량은 피해량의 10%입니다.)
         self.damageskillname = '후보 공격' #정치인이 상대 후보를 공격합니다. 만약 입힌 피해량이 홀수이면, 지지율이 증가하며, 짝수시, 지지율이 감소합니다. (증가/감소량은 피해량의 15%입니다.)
         self.buffdebuffname = '당의 지원' #당의 지원을 받아 방어력이 30 상승합니다. 또한 지지율이 50% 이상이면, 추가로 체력이 20% 회복됩니다. 최대 1회 사용 가능합니다.
         self.ultimatename = '대선 토론' #대선 토론을 엽니다. 다음 3턴동안 정치인의 공격이 방어력을 무시하며, 3턴 후 정치인이 입힌 피해량이 상대보다 많다면, 지지율을 40% 획득하며, 적보다 피해량이 적다면, 지지율을 40% 잃습니다. 
@@ -1329,7 +1329,7 @@ class Politician:
             self.opptotaldamm += self.prevhp - self.hp
             if self.ultimateturn == 0:
                 self.passivename = '대중의 지지'
-                self.normalname = '전국 순회' 
+                self.normalname = '평타' 
                 self.damageskillname = '후보 공격'
                 if self.mytotaldamm > self.opptotaldamm:
                     self.popularity += 40
@@ -1661,8 +1661,8 @@ class Musician:
         self.uturn = 0
         self.turn = 0
         self.passivename = '악기 전문가' #음악가는 악기를 2가지중 하나 선택할 수 있습니다. 피아노를 선택하면 최대체력이 2500, 방어력이 50 증가하며, 스킬사용시 체력을 회복합니다. 바이올린을 선택시 공격력이 100 증가하며, 스킬이 최대체력에 비례한 피해를 입힙니다.
-        self.normalname = '다장조 C' #음악가가 연주를 하여 적에게 피해를 입힙니다. 악기가 피아노일 시 체력을 50 회복하며, 악기가 바이올린일 시 적의 최대체력의 5%에 비례한 추가피해를 입힙니다.
-        self.damageskillname = '가단조 A' #음악가가 연주를 하여 적에게 피해를 입힙니다. 악기가 피아노일 시 체력을 100 회복하며, 악기가 바이올린일 시 적의 최대체력의 10%에 비례한 추가피해를 입힙니다.
+        self.normalname = '평타' #음악가가 연주를 하여 적에게 피해를 입힙니다. 악기가 피아노일 시 체력을 50 회복하며, 악기가 바이올린일 시 적의 최대체력의 5%에 비례한 추가피해를 입힙니다.
+        self.damageskillname = '세레나데' #음악가가 연주를 하여 적에게 피해를 입힙니다. 악기가 피아노일 시 체력을 100 회복하며, 악기가 바이올린일 시 적의 최대체력의 10%에 비례한 추가피해를 입힙니다.
         self.buffdebuffname = '조화로운 멜로디' #음악가가 아름다운 선율을 연주합니다. 악기가 피아노일 시 체력을 10% 회복하며, 악기가 바이올린일 시 공격력이 50 증가합니다. 공격력 증가는 2턴동안 유지되며, 최대 1회 사용 가능합니다.
         self.ultimatename = '피날레' #연주가 피날레에 들어갑니다! 악기가 피아노일 시 체력을 30% 회복하며, 방어력이 영구적으로 50 증가합니다. 악기가 바이올린일 시 적의 최대체력의 20%에 해당하는 고정피해를 입히며, 적의 방어력을 영구적으로 10% 감소시킵니다. 최대 1회 사용 가능합니다.
         self.instrument = ''
@@ -1683,8 +1683,8 @@ class Musician:
                 self.hp += 2500
                 self.de += 50
                 self.passivename = '악기 전문가 - 피아노'
-                self.normalname = '다장조 C - 피아노'
-                self.damageskillname = '가단조 A - 피아노'
+                self.normalname = '평타 - 피아노'
+                self.damageskillname = '세레나데 - 피아노'
                 self.buffdebuffname = '조화로운 멜로디 - 피아노'
                 self.ultimatename = '피날레 - 피아노'
                 slow_print(f'{self.name}이/가 악기 전문가 패시브로 피아노를 선택하였습니다! 최대 체력이 200 증가하고, 방어력이 50 증가하며, 모든 스킬 사용 시 체력을 회복합니다!')
@@ -1692,8 +1692,8 @@ class Musician:
             elif self.instrument == '바이올린':
                 self.ad += 100
                 self.passivename = '악기 전문가 - 바이올린'
-                self.normalname = '다장조 C - 바이올린'
-                self.damageskillname = '가단조 A - 바이올린'
+                self.normalname = '평타 - 바이올린'
+                self.damageskillname = '세레나데 - 바이올린'
                 self.buffdebuffname = '조화로운 멜로디 - 바이올린'
                 self.ultimatename = '피날레 - 바이올린'
                 slow_print(f'{self.name}이/가 악기 전문가 패시브로 바이올린을 선택하였습니다! 공격력이 100 증가하며, 모든 스킬이 적의 최대체력에 비례한 피해를 입힙니다!')
