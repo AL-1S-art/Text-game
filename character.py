@@ -2,7 +2,6 @@ import random
 from Util import *
 
 
-
 class Fighter:
     def __init__(self, name):
         self.name = name
@@ -21,13 +20,14 @@ class Fighter:
         self.damageskillname = '훅'
         self.buffdebuffname = '배면기'
         self.ultimatename = '오라러쉬'
-
+    def dealdamm(self, damage):
+        self.hp -= int(damage)
     def passive(self):
         self.ad = self.ad + (self.turn * 2)
 
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.hp -= damm
+        target.dealdamm(damm)
         slow_print(f'{self.name}이/가 공격을 시도합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         print()
@@ -55,19 +55,19 @@ class Fighter:
             a = random.choice(['r', 'l'])
             if a == 'r':
                 damm = int((self.ad + 140 + (target.hp/100)*(1+(self.ad*0.03)) + (self.ad*0.55)) * (100/(100+target.de)))
-                target.hp -= damm
+                target.dealdamm(damm)
                 slow_print(f'{self.name}이/가 [오른손]으로 강력한 훅을 날렸습니다!')
                 slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             elif a == 'l':
                 b = random.randint(1, 100)
                 if b < 90:
                     damm = int((self.ad + 50 + (target.hp/100)*(1+(self.ad*0.03))) * (100/(100+target.de)))
-                    target.hp -= damm
+                    target.dealdamm(damm)
                     slow_print(f'{self.name}이/가 [왼손]으로 강력한 훅을 날렸습니다!')
                     slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
                 else:
                     damm = int((self.ad + 50 + (target.hp/100)*(1+(self.ad*0.03))) * (100/(100+target.de))*2)
-                    target.hp -= damm
+                    target.dealdamm(damm)
                     slow_print(f'{self.name}이/가 [왼손]으로 [폐]를 강타했습니다!')
                     slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             print()
@@ -125,7 +125,7 @@ class Fighter:
             self.normal(target)
         else:
             damm = int(((self.ad + self.ad + self.ad*0.55) * (100/(100+target.de)))*5)
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.ultimatename}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             print()
@@ -159,6 +159,7 @@ class Fighter:
 
 
 class Gambler:
+    
     def __init__(self, name):
         self.name = name
         self.hhp = random.randint(1670, 3388)
@@ -176,10 +177,11 @@ class Gambler:
         self.damageskillname = '???'
         self.buffdebuffname = '???'
         self.ultimatename = '???'
-
+    def dealdamm(self, damage):
+        self.hp -= int(damage)
     def normal(self, target):
         damm = random.randint(1, 2000)
-        target.hp -= damm
+        target.dealdamm(damm)
         slow_print(f'{self.name}이/가  ??? 를  사용합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         if target.hp > 0:
@@ -231,7 +233,7 @@ class Gambler:
             
     def damageskill(self, target):
         damm = random.randint(1, 2000)
-        target.hp -= damm
+        target.dealdamm(damm)
         slow_print(f'{self.name}이/가  ??? 를  사용합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         if target.hp > 0:
@@ -282,7 +284,7 @@ class Gambler:
     
     def buffdebuff(self, target):
         damm = random.randint(1, 2000)
-        target.hp -= damm
+        target.dealdamm(damm)
         slow_print(f'{self.name}이/가  ??? 를  사용합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         if target.hp > 0:
@@ -333,7 +335,7 @@ class Gambler:
     
     def ultimate(self, target):
         damm = random.randint(1, 2000)
-        target.hp -= damm
+        target.dealdamm(damm)
         slow_print(f'{self.name}이/가  ??? 를  사용합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         if target.hp > 0:
@@ -413,14 +415,15 @@ class Naturalist:
         self.ultimatename = '퇴적층 생성'
         self.bdbtarget = []
         self.utarget = []        
-    
+    def dealdamm(self, damage):
+        self.hp -= int(damage)
     def passive(self):
         if self.turn%2 == 0:
             self.hp += self.hhp*(23/1000)
 
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.hp -= damm
+        target.dealdamm(damm)
         slow_print(f'{self.name}이/가 공격을 시도합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         print()
@@ -455,7 +458,7 @@ class Naturalist:
             self.normal(target)
         else:
             damm = int((((self.ad*8.98)*0.8) + 310) * (100/(100+target.de)))
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             print()
@@ -519,7 +522,7 @@ class Naturalist:
             self.normal(target)
         else:
             damm = int((((self.ad*8.98) * 0.75) + 400) * (100/(100+target.de)))
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 {self.target}에게 궁극기 {self.ultimatename}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 2턴 동안 입힙니다.')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 입혔습니다.')
@@ -572,7 +575,7 @@ class Blackdeath:
         self.rmp = 8
         self.bdbturn = 0
         self.uturn = 0
-        self.ustrun = 3
+        self.usturn = 3
         self.turn = 0
         self.passivename = '보균' #흑사병에 걸려서 매턴 체력 감소
         self.normalname = '평타'
@@ -581,7 +584,8 @@ class Blackdeath:
         self.ultimatename = '항생제' #대상을 지정해 흑사병을 치료(최대 3번)
         self.bdbtarget = []
         self.utarget = []
-   
+    def dealdamm(self, damage):
+        self.hp -= int(damage)
     def passive(self):
         damm = int((self.ad*2.63)*0.425 + 60)
         self.hp -= damm
@@ -592,7 +596,7 @@ class Blackdeath:
    
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.hp -= damm
+        target.dealdamm(damm)
         slow_print(f'{self.name}이/가 공격을 시도합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         print()
@@ -617,7 +621,7 @@ class Blackdeath:
             self.normal(target)
         else:
             damm = int((target.hp*0.3) * (100/(100+target.de)))
-            target.hp -= damm
+            target.dealdamm(damm)
             self.hp -= 100
             slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
@@ -724,14 +728,15 @@ class Rider:
         self.damageskillname = '발가락 골절' #상대를 밟고 간다
         self.buffdebuffname = '윌리' #앞바퀴를 들어올려 방어력을 낮추고 공격력을 높임
         self.ultimatename = '준자살' #교통사고 속력 비례 대미지 입히고 3턴동안 휠체어를 타서 방어력을 높인다
-   
+    def dealdamm(self, damage):
+        self.hp -= int(damage)
     def passive(self, target):
         self.passiveturn += 1
         self.ad += self.passiveturn * 2
         
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.hp -= damm
+        target.dealdamm(damm)
         slow_print(f'{self.name}이/가 공격을 시도합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         print()
@@ -759,7 +764,7 @@ class Rider:
             self.normal(target)
         else:
             damm = int(() * (100/(100+target.de)))
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             print()
@@ -812,7 +817,7 @@ class Rider:
             self.normal(target)
         else:
             damm = int()
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.damageskillname}을/를 사용했습니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             print()
@@ -859,14 +864,15 @@ class Harrypotter:
         self.damageskillname = '슈투포파이' #마법피해 입히기
         self.buffdebuffname = '프루타이고' #3턴 동안 마법 보호막 생성해서 데미지 감소
         self.ultimatename = '아부다카다브라' #1턴 마비
-   
+    def dealdamm(self, damage):
+        self.hp -= int(damage)
     def passive(self, target):
         self.passiveturn += 1
         self.ad += self.passiveturn * 2
         
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.hp -= damm
+        target.dealdamm(damm)
         slow_print(f'{self.name}이/가 공격을 시도합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         print()
@@ -894,7 +900,7 @@ class Harrypotter:
             self.normal(target)
         else:
             damm = int(() * (100/(100+target.de)))
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             print()
@@ -947,7 +953,7 @@ class Harrypotter:
             self.normal(target)
         else:
             damm = int()
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.damageskillname}을/를 사용했습니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             print()
@@ -995,12 +1001,14 @@ class Chemist:
         self.compoundlist = []
         self.reactionlist = ['O2 + H2', 'H2O + Na']
         self.productlist = {'O2 + H2':'H2O', 'H2O + Na':'H2'}
+    def dealdamm(self, damage):
+        self.hp -= int(damage)
     def passive(self, target):
         if len(self.compoundlist) > 7:
             self.compoundlist.pop(0)
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.hp -= damm
+        target.dealdamm(damm)
         slow_print(f'{self.name}이/가 나트륨 플라스크를 던집니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         self.compoundlist.append('Na')
@@ -1022,7 +1030,7 @@ class Chemist:
         self.passive(target)
     def damageskill(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2.5)
-        target.hp -= damm
+        target.dealdamm(damm)
         slow_print(f'{self.name}이/가 수소 플라스크를 던집니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         self.compoundlist.append('H2')
@@ -1044,7 +1052,7 @@ class Chemist:
         self.passive(target)
     def buffdebuff(self, target):
         damm = int((self.ad * (100/(100+target.de)))*1.5)
-        target.hp -= damm
+        target.dealdamm(damm)
         target.de -= 4
         slow_print(f'{self.name}이/가 산소 플라스크를 던집니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다. 또한 {target.name}의 방어력이 4 감소합니다.')
@@ -1093,7 +1101,7 @@ class Chemist:
                         totaldamm += int((self.ad * (100/(100+target.de)))*3)
                         slow_print(f'{self.name}이/가 {i.split(" + ")[0]}과 {i.split(" + ")[1]}을/를 반응시켜 {self.productlist[i]}을/를 생성하여 {target.name}에게 {int((self.ad * (100/(100+target.de)))*3)}만큼 피해를 입혔습니다!')
                      
-            target.hp -= totaldamm
+            target.dealdamm(totaldamm, self.name)
             slow_print(f'{self.name}이/가 저장된 화합물을 모두 반응시켜 {target.name}에게 총 {totaldamm}만큼 피해를 입혔습니다!')
             print()
             self.compoundlist = []
@@ -1138,6 +1146,8 @@ class ChessPlayer:
         self.actioncount = 0
         self.castlingused = False
         self.square = 3
+    def dealdamm(self, damage):
+        self.hp -= int(damage)
     def passive(self, target):
         if self.square == 9 and self.piece == 'Pawn':
             self.piece = 'Queen'
@@ -1178,7 +1188,7 @@ class ChessPlayer:
             print()
         else:
             damm = 400
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 퀸으로 {target.name}에게 공격을 시도합니다!')
             slow_print(f'체크!')
             self.passive(target)
@@ -1212,7 +1222,7 @@ class ChessPlayer:
             print()
         else:
             damm = 700
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 퀸으로 {target.name}에게 공격을 시도합니다!')
             slow_print(f'체크!')
             self.passive(target)
@@ -1266,7 +1276,7 @@ class ChessPlayer:
             self.normal(target)
         else:
             damm = 1000+int((target.hhp-target.hp)*0.3)
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용합니다! 잃은 체력에 비례해 추가 피해를 입힙니다!')
             slow_print('체크!')
             self.passive(target)
@@ -1322,6 +1332,8 @@ class Politician:
         self.opptotaldamm = 0
         self.ultimateturn = 0
         self.supportused = False
+    def dealdamm(self, damage):
+        self.hp -= int(damage)
     def passive(self, target):
         self.prevhp = self.hp
         if self.ultimateturn > 0:
@@ -1356,7 +1368,7 @@ class Politician:
     def normal(self, target):
         if self.ultimateturn > 0:
             damm = int(self.ad*self.popularity/50)
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 대선 토론에서 정책을 제안합니다! 공격이 방어력을 무시하며, 지지율에 비례한 피해를 입힙니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             if damm % 2 == 0:
@@ -1367,7 +1379,7 @@ class Politician:
                 slow_print(f'정책 제안이 비판을 받아 지지율이 {10}% 감소하여 {self.popularity}%가 되었습니다.')
         else:
             damm = int((self.ad * (100/(100+target.de)))*2*(self.popularity/100)*2)
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 전국을 순회하며 연설을 합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             if damm % 2 == 0:
@@ -1396,7 +1408,7 @@ class Politician:
     def damageskill(self, target):
         if self.ultimateturn > 0:
             damm = int(self.ad*self.popularity/50*2)
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 대선 토론에서 상대 후보에게 반론을 제시합니다! 공격이 방어력을 무시하며, 지지율에 비례한 피해를 입힙니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             if damm % 2 == 1:
@@ -1407,7 +1419,7 @@ class Politician:
                 slow_print(f'반론이 터무니없어서 지지율이 {15}% 감소하여 {self.popularity}%가 되었습니다.')
         else:
             damm = int((self.ad * (100/(100+target.de)))*2*(self.popularity/100)*2)
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 상대 후보를 공격합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             if damm % 2 == 1:
@@ -1511,13 +1523,15 @@ class Engineer:
         self.ultimatename = '로켓 발사' #.메가와트급 레이저를 적에게 발사합니다.
         self.parts = 0
         self.upgradelist = ['공격력 20 증가', '방어력 20 증가', '평타+', '레이저 용접+', '로켓 발사+', '설명']
+    def dealdamm(self, damage):
+        self.hp -= int(damage)
     def passive(self, target):
         if self.turn % 3 == 0:
             self.parts += 1
             slow_print(f'{self.name}이/가 부품을 획득하여 현재 {self.parts}개입니다!')
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.hp -= damm
+        target.dealdamm(damm)
         slow_print(f'{self.name}이/가 스패너를 적에게 던집니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         if self.normalname != '평타':
@@ -1539,12 +1553,12 @@ class Engineer:
         self.passive(target)
     def damageskill(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2.5)
-        target.hp -= damm
+        target.dealdamm(damm)
         slow_print(f'{self.name}이/가 용접용 레이저를 적의 위치에 발사합니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         if self.damageskillname != '레이저 용접':
             slow_print(f'{target.name} 주변의 지면이 온도가 급격히 높아져 폭발합니다!')
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{target.name}이/가 폭발에 휘말려 {int(damm*1.1)}만큼 피해를 입었습니다!')
         print()
         self.mp += self.rmp - 40
@@ -1616,14 +1630,14 @@ class Engineer:
         else:
             damm = int((self.ad * (100/(100+target.de/2)))*3)
             
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용합니다!')
             
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             if self.ultimatename == '로켓 발사+':
                 extradamm = int((self.hhp-self.hp)*0.3)
                 slow_print(f'로켓이 폭발했습니다! 폭발이 적이 잃은 체력에 비례한 추가 고정 피해를 입힙니다!')
-                target.hp -= extradamm
+                target.dealdamm(extradamm, self.name)
                 slow_print(f'{self.name}이/가 {extradamm}만큼 피해를 입혔습니다!')
             print()
             self.mp += self.rmp - 100
@@ -1668,6 +1682,8 @@ class Musician:
         self.instrument = ''
         self.ultimateused = False
         self.passive()
+    def dealdamm(self, damage):
+        self.hp -= int(damage)
     def passive(self):
         if self.instrument == '':
             print(f'{self.name}이/가 악기를 선택합니다!')
@@ -1683,19 +1699,19 @@ class Musician:
                 self.hp += 2500
                 self.de += 50
                 self.passivename = '악기 전문가 - 피아노'
-                self.normalname = '평타 - 피아노'
-                self.damageskillname = '세레나데 - 피아노'
-                self.buffdebuffname = '조화로운 멜로디 - 피아노'
-                self.ultimatename = '피날레 - 피아노'
+                self.normalname = '평타'
+                self.damageskillname = '월광 소나타'
+                self.buffdebuffname = '조화로운 멜로디'
+                self.ultimatename = '피날레 - 라 캄파넬라'
                 slow_print(f'{self.name}이/가 악기 전문가 패시브로 피아노를 선택하였습니다! 최대 체력이 200 증가하고, 방어력이 50 증가하며, 모든 스킬 사용 시 체력을 회복합니다!')
                 print()
             elif self.instrument == '바이올린':
                 self.ad += 100
                 self.passivename = '악기 전문가 - 바이올린'
-                self.normalname = '평타 - 바이올린'
-                self.damageskillname = '세레나데 - 바이올린'
-                self.buffdebuffname = '조화로운 멜로디 - 바이올린'
-                self.ultimatename = '피날레 - 바이올린'
+                self.normalname = '평타'
+                self.damageskillname = '바이올린 협주곡 제1번'
+                self.buffdebuffname = '조화로운 멜로디'
+                self.ultimatename = '피날레 - 사계'
                 slow_print(f'{self.name}이/가 악기 전문가 패시브로 바이올린을 선택하였습니다! 공격력이 100 증가하며, 모든 스킬이 적의 최대체력에 비례한 피해를 입힙니다!')
                 print()
         if self.buffdebuffname == '조화로운 멜로디 - 바이올린':
@@ -1712,12 +1728,12 @@ class Musician:
             if self.hp > self.hhp:
                 self.hp = self.hhp
             damm = int((self.ad * (100/(100+target.de)))*2)
-            target.hp -= damm
+            self.dealdamm(damm, self.name)
             slow_print(f'{self.name}이/가 다장조 C를 피아노로 연주합니다! 선율이 아름다워 체력이 {heal}만큼 회복됩니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         elif self.instrument == '바이올린':
             damm = int((self.ad * (100/(100+target.de)))*2 + target.hhp*0.05)
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 다장조 C를 바이올린으로 연주합니다! 적의 최대체력에 비례한 추가 피해를 입힙니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         print()
@@ -1743,12 +1759,12 @@ class Musician:
             if self.hp > self.hhp:
                 self.hp = self.hhp
             damm = int((self.ad * (100/(100+target.de)))*2.5)
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 가단조 A를 피아노로 연주합니다! 선율이 더욱 아름다워 체력이 {heal}만큼 회복됩니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         elif self.instrument == '바이올린':
             damm = int((self.ad * (100/(100+target.de)))*2.5 + target.hhp*0.1)
-            target.hp -= damm
+            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 가단조 A를 바이올린으로 연주합니다! 적의 최대체력에 비례한 추가 피해를 입힙니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
         print()
@@ -1804,7 +1820,7 @@ class Musician:
             print()
             self.normal(target)
         elif self.ultimateused:
-            slow_print('피날레는 오직 한번만 연주됩니다.')
+            slow_print('피날레곡은 오직 한번만 연주됩니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
@@ -1819,7 +1835,7 @@ class Musician:
                 print()
             elif self.instrument == '바이올린':
                 damm = int(target.hhp*0.2)
-                target.hp -= damm
+                target.dealdamm(damm)
                 target.de = int(target.de*0.9)
                 slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용합니다! 피날레에 들어갑니다! 적의 최대체력의 20%에 해당하는 고정피해를 입히며, 적의 방어력을 영구적으로 10% 감소시킵니다!')
                 slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다!')
@@ -1841,16 +1857,13 @@ class Musician:
         if self.instrument == '피아노':
             slow_print(f'[{self.passivename}]은/는 최대체력이 2500, 방어력이 50 증가하며, 스킬사용시 체력을 회복하는 패시브입니다.')
             slow_print(f'[{self.normalname}]은/는 다장조 C를 피아노로 연주하여 적에게 피해를 입히는 기본 공격입니다. 기본공격시 체력을 50 회복합니다.')
-            slow_print(f'[{self.damageskillname}]은/는 가단조 A를 피아노로 연주하여 적에게 피해를 입히는 공격 스킬입니다. 스킬사용시 체력을 100 회복합니다.')
+            slow_print(f'[{self.damageskillname}]은/는 피아노를 연주하여 적에게 피해를 입히는 공격 스킬입니다. 스킬사용시 체력을 100 회복합니다.')
             slow_print(f'[{self.buffdebuffname}]은/는 조화로운 멜로디를 피아노로 연주하는 (디)버프 스킬입니다. 선율이 조화로워 체력이 10% 회복됩니다.')
             slow_print(f'[{self.ultimatename}]은/는 피날레를 피아노로 연주하는 궁극기입니다. 선율이 절정에 달하여 체력이 30% 회복되고, 방어력이 영구적으로 50 증가합니다. 최대 1회 사용 가능합니다.')
         elif self.instrument == '바이올린':
             slow_print(f'[{self.passivename}]은/는 공격력이 100 증가하며, 모든 스킬이 적의 최대체력에 비례한 피해를 입히는 패시브입니다.')
             slow_print(f'[{self.normalname}]은/는 다장조 C를 바이올린으로 연주하여 적에게 피해를 입히는 기본 공격입니다. 또한 적의 최대체력의 5%에 비례한 추가 피해를 입힙니다.')
-            slow_print(f'[{self.damageskillname}]은/는 가단조 A를 바이올린으로 연주하여 적에게 피해를 입히는 공격 스킬입니다. 또한 적의 최대체력의 10%에 비례한 추가 피해를 입힙니다.')
+            slow_print(f'[{self.damageskillname}]은/는 바이올린으로 곡을 연주하여 적에게 피해를 입히는 공격 스킬입니다. 또한 적의 최대체력의 10%에 비례한 추가 피해를 입힙니다.')
             slow_print(f'[{self.buffdebuffname}]은/는 조화로운 멜로디를 바이올린으로 연주하는 버프 스킬입니다. 선율이 조화로워 공격력이 50 증가합니다. 공격력 증가는 2턴동안 유지되며, 최대 1회 사용 가능합니다.')
             slow_print(f'[{self.ultimatename}]은/는 피날레를 바이올린으로 연주하는 궁극기입니다. 적의 최대체력의 20%에 해당하는 고정피해를 입히며, 적의 방어력을 영구적으로 10% 감소시킵니다. 최대 1회 사용 가능합니다.')
-
-
-        
 

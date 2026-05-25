@@ -184,7 +184,7 @@ if sequence[0] == player1_name:
             elif player1.damageskillname in attact_pick:
                 player1.damageskill(player2)
             elif player1.ultimatename in attact_pick:
-                    player1.ultimate(player2)
+                player1.ultimate(player2)
 
         elif player1.ultimatename in attact_pick:
             player1.ultimate(player2)
@@ -229,7 +229,7 @@ if sequence[0] == player1_name:
                 elif player1.damageskillname in attact_pick:
                     player1.damageskill(player2)
                 elif player1.ultimatename in attact_pick:
-                        player1.ultimate(player2)
+                    player1.ultimate(player2)
             
             elif player1.ultimatename in attact_pick:
                 player1.ultimate(player2)
@@ -576,7 +576,7 @@ elif sequence[0] == player2_name:
                 elif player1.damageskillname in attact_pick:
                     player1.damageskill(player2)
                 elif player1.ultimatename in attact_pick:
-                        player1.ultimate(player2)
+                    player1.ultimate(player2)
 
             
             elif player1.ultimatename in attact_pick:
