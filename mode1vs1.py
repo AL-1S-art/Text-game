@@ -31,7 +31,7 @@ player2 = character.Fighter(f'{player2_name}')
 
 def player1_pick():
     global player1
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]']
     slow_print(f'{player1_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -51,6 +51,16 @@ def player1_pick():
         player1 = character.Naturalist(f'{player1_name}')
     elif pick == '흑사병 보균자':
         player1 = character.Blackdeath(f'{player1_name}')
+    elif pick == '화학자':
+        player1 = character.Chemist(f'{player1_name}')
+    elif pick == '체스선수':
+        player1 = character.ChessPlayer(f'{player1_name}')
+    elif pick == '정치인':
+        player1 = character.Politician(f'{player1_name}')
+    elif pick == '엔지니어':
+        player1 = character.Engineer(f'{player1_name}')
+    elif pick == '음악가':
+        player1 = character.Musician(f'{player1_name}')
     print()
 
 
@@ -59,7 +69,7 @@ def player1_pick():
 
 def player2_pick():
     global player2
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]']
     slow_print(f'{player2_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -79,6 +89,16 @@ def player2_pick():
         player2 = character.Naturalist(f'{player2_name}')
     elif pick == '흑사병 보균자':
         player2 = character.Blackdeath(f'{player2_name}')
+    elif pick == '화학자':
+        player2 = character.Chemist(f'{player2_name}')
+    elif pick == '체스선수':
+        player2 = character.ChessPlayer(f'{player2_name}')
+    elif pick == '정치인':
+        player2 = character.Politician(f'{player2_name}')
+    elif pick == '엔지니어':
+        player2 = character.Engineer(f'{player2_name}')
+    elif pick == '음악가':
+        player2 = character.Musician(f'{player2_name}')
     print()
 
 
@@ -119,9 +139,10 @@ time.sleep(5)
 
 slow_print(f'게임을 시작합니다!')
 print()
-sequence = random.shuffle([player1_name, player2_name])
+sequence = [player1_name, player2_name]
+random.shuffle(sequence)
 
-if sequence == 'player1':
+if sequence[0] == player1_name:
     slow_print(f'순서는 {sequence} 입니다.')
     print()
     while True:
@@ -354,7 +375,7 @@ if sequence == 'player1':
 
 
 
-elif sequence == 'player2':
+elif sequence[0] == player2_name:
     slow_print(f'순서는 {sequence} 입니다.')
     print()
     while True:
