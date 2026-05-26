@@ -124,7 +124,7 @@ class Fighter:
             print()
             self.normal(target)
         else:
-            damm = int(((self.ad + self.ad + self.ad*0.55) * (100/(100+target.de)))*5)
+            damm = int(((self.ad + self.ad + self.ad*0.55) * (100/(100+target.de)))*3)
             target.dealdamm(damm)
             slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.ultimatename}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
