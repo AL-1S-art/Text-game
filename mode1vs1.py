@@ -31,7 +31,7 @@ player2 = character.Fighter(f'{player2_name}')
 
 def player1_pick():
     global player1
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]']
     slow_print(f'{player1_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -61,6 +61,8 @@ def player1_pick():
         player1 = character.Engineer(f'{player1_name}')
     elif pick == '음악가':
         player1 = character.Musician(f'{player1_name}')
+    elif pick == '투수':
+        player1 = character.Pitcher(f'{player1_name}')
     print()
 
 
@@ -69,7 +71,7 @@ def player1_pick():
 
 def player2_pick():
     global player2
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]']
     slow_print(f'{player2_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -99,6 +101,8 @@ def player2_pick():
         player2 = character.Engineer(f'{player2_name}')
     elif pick == '음악가':
         player2 = character.Musician(f'{player2_name}')
+    elif pick == '투수':
+        player2 = character.Pitcher(f'{player2_name}')
     print()
 
 
