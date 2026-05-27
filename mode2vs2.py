@@ -36,7 +36,7 @@ player4 = character.Fighter(0)
 def team1_pick():
     global player1
     global player2
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]']
     slow_print(f'{team1_name[0]}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -85,7 +85,7 @@ def team1_pick():
 def team2_pick():
     global player3
     global player4
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]']
     slow_print(f'{team2_name[0]}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
