@@ -31,7 +31,7 @@ player2 = character.Fighter(f'{player2_name}')
 
 def player1_pick():
     global player1
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]','[목수]']
     slow_print(f'{player1_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -63,6 +63,8 @@ def player1_pick():
         player1 = character.Musician(f'{player1_name}')
     elif pick == '투수':
         player1 = character.Pitcher(f'{player1_name}')
+    elif pick == '목수':
+        player1 = character.Carpenter(f'{player1_name}')
     print()
 
 
@@ -71,7 +73,7 @@ def player1_pick():
 
 def player2_pick():
     global player2
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]', '[목수]']
     slow_print(f'{player2_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -103,6 +105,8 @@ def player2_pick():
         player2 = character.Musician(f'{player2_name}')
     elif pick == '투수':
         player2 = character.Pitcher(f'{player2_name}')
+    elif pick == '목수':
+        player2 = character.Carpenter(f'{player2_name}')
     print()
 
 
@@ -125,11 +129,11 @@ print()
 slow_print(f'각 플레이어와 캐릭터를 확인하세요!')
 print()
 print(f'{player1_name}: {player1_character[0]}')
-print(f'체력: [ {player1.hp} / {player1.hhp} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
+print(f'체력/보호막: [ {player1.hp}({player1.hhp}) / {player1.shield} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
 print(f'공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
 print()
 print(f'{player2_name}: {player2_character[0]}')
-print(f'체력: [ {player2.hp} / {player2.hhp} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
+print(f'체력/보호막: [ {player2.hp}({player2.hhp}) / {player2.shield} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
 print(f'공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
 print()
 
@@ -251,11 +255,11 @@ if sequence[0] == player1_name:
         print(f'{player1_name}, {player2_name}의 현재 상태')
         print()
         print(f'{player1_name}: {player1_character[0]}')
-        print(f'체력: [ {player1.hp} / {player1.hhp} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
+        print(f'체력/방어막: [ {player1.hp} / {player1.hhp}, {player1.shield} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
         print(f'공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
         print()
         print(f'{player2_name}: {player2_character[0]}')
-        print(f'체력: [ {player2.hp} / {player2.hhp} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
+        print(f'체력/방어막: [ {player2.hp} / {player2.hhp}, {player2.shield} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
         print(f'공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
         print()
 
@@ -367,11 +371,11 @@ if sequence[0] == player1_name:
         print(f'{player1_name}, {player2_name}의 현재 상태')
         print()
         print(f'{player1_name}: {player1_character[0]}')
-        print(f'체력: [ {player1.hp} / {player1.hhp} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
+        print(f'체력/보호막: [ {player1.hp}({player1.hhp}) / {player1.shield} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
         print(f'공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
         print()
         print(f'{player2_name}: {player2_character[0]}')
-        print(f'체력: [ {player2.hp} / {player2.hhp} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
+        print(f'체력/보호박: [ {player2.hp}({player2.hhp})/ {player2.shield} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
         print(f'공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
         print()
 
@@ -484,11 +488,11 @@ elif sequence[0] == player2_name:
         print(f'{player1_name}, {player2_name}의 현재 상태')
         print()
         print(f'{player1_name}: {player1_character[0]}')
-        print(f'체력: [ {player1.hp} / {player1.hhp} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
+        print(f'체력/보호막: [ {player1.hp} / {player1.hhp} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
         print(f'공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
         print()
         print(f'{player2_name}: {player2_character[0]}')
-        print(f'체력: [ {player2.hp} / {player2.hhp} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
+        print(f'체력/보호막: [ {player2.hp} / {player2.hhp} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
         print(f'공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
         print()
 
@@ -535,7 +539,7 @@ elif sequence[0] == player2_name:
             elif player1.damageskillname in attact_pick:
                 player1.damageskill(player2)
             elif player1.ultimatename in attact_pick:
-                player1.ultimae(player2)
+                player1.ultimate(player2)
 
         elif player1.ultimatename in attact_pick:
             player1.ultimate(player2)
@@ -597,10 +601,10 @@ elif sequence[0] == player2_name:
 
         print(f'{player1_name}, {player2_name}의 현재 상태')
         print()
-        print(f'체력: [ {player1.hp} / {player1.hhp} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
+        print(f'체력/보호막: [ {player1.hp}({player1.hhp}) / {player1.shield} ], 마나: [ {player1.mp} / {player1.hmp} ] ')
         print(f'공격력 / 방어력: [ {player1.ad} / {player1.de} ]')
         print()
         print(f'{player2_name}: {player2_character[0]}')
-        print(f'체력: [ {player2.hp} / {player2.hhp} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
+        print(f'체력/보호막: [ {player2.hp}({player2.hhp}) / {player2.shield} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
         print(f'공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
         print()
