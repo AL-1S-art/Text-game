@@ -36,7 +36,7 @@ player4 = character.Fighter(0)
 def team1_pick():
     global player1
     global player2
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]']
     slow_print(f'{team1_name[0]}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -49,13 +49,25 @@ def team1_pick():
     team1_character.append(f'[{pick}]')
     character_list.remove(f'[{pick}]')
     if pick == '격투가':
-        player1 = character.Fighter(f'{team2_name[0]}')
+        player1 = character.Fighter(f'{team1_name[0]}')
     elif pick == '도박꾼':
-        player1 = character.Gambler(f'{team2_name[0]}')
+        player1 = character.Gambler(f'{team1_name[0]}')
     elif pick == '자연술사':
-        player1 = character.Naturalist(f'{team2_name[0]}')
+        player1 = character.Naturalist(f'{team1_name[0]}')
     elif pick == '흑사병 보균자':
-        player1 = character.Blackdeath(f'{team2_name[0]}')
+        player1 = character.Blackdeath(f'{team1_name[0]}')
+    elif pick == '화학자':
+        player1 = character.Chemist(f'{team1_name[0]}')
+    elif pick == '체스선수':
+        player1 = character.ChessPlayer(f'{team1_name[0]}')
+    elif pick == '정치인':
+        player1 = character.Politician(f'{team1_name[0]}')
+    elif pick == '엔지니어':
+        player1 = character.Engineer(f'{team1_name[0]}')
+    elif pick == '음악가':
+        player1 = character.Musician(f'{team1_name[0]}')
+    elif pick == '투수':
+        player1 = character.Pitcher(f'{team1_name[0]}')
     print()
 
 
@@ -71,13 +83,25 @@ def team1_pick():
     team1_character.append(f'[{pick}]')
     character_list.remove(f'[{pick}]')
     if pick == '격투가':
-        player2 = character.Fighter(f'{team2_name[0]}')
+        player2 = character.Fighter(f'{team1_name[1]}')
     elif pick == '도박꾼':
-        player2 = character.Gambler(f'{team2_name[0]}')
+        player2 = character.Gambler(f'{team1_name[1]}')
     elif pick == '자연술사':
-        player2 = character.Naturalist(f'{team2_name[0]}')
+        player2 = character.Naturalist(f'{team1_name[1]}')
     elif pick == '흑사병 보균자':
-        player2 = character.Blackdeath(f'{team2_name[0]}')
+        player2 = character.Blackdeath(f'{team1_name[1]}')
+    elif pick == '화학자':
+        player2 = character.Chemist(f'{team1_name[1]}')
+    elif pick == '체스선수':
+        player2 = character.ChessPlayer(f'{team1_name[1]}')
+    elif pick == '정치인':
+        player2 = character.Politician(f'{team1_name[1]}')
+    elif pick == '엔지니어':
+        player2 = character.Engineer(f'{team1_name[1]}')
+    elif pick == '음악가':
+        player2 = character.Musician(f'{team1_name[1]}')
+    elif pick == '투수':
+        player2 = character.Pitcher(f'{team1_name[1]}')
     print()
 
 
@@ -85,7 +109,7 @@ def team1_pick():
 def team2_pick():
     global player3
     global player4
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]']
     slow_print(f'{team2_name[0]}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -105,6 +129,18 @@ def team2_pick():
         player3 = character.Naturalist(f'{team2_name[0]}')
     elif pick == '흑사병 보균자':
         player3 = character.Blackdeath(f'{team2_name[0]}')
+    elif pick == '화학자':
+        player3 = character.Chemist(f'{team2_name[0]}')
+    elif pick == '체스선수':
+        player3 = character.ChessPlayer(f'{team2_name[0]}')
+    elif pick == '정치인':
+        player3 = character.Politician(f'{team2_name[0]}')
+    elif pick == '엔지니어':
+        player3 = character.Engineer(f'{team2_name[0]}')
+    elif pick == '음악가':
+        player3 = character.Musician(f'{team2_name[0]}')
+    elif pick == '투수':
+        player3 = character.Pitcher(f'{team2_name[0]}')
     print()
 
 
@@ -120,13 +156,25 @@ def team2_pick():
     team2_character.append(f'[{pick}]')
     character_list.remove(f'[{pick}]')
     if pick == '격투가':
-        player4 = character.Fighter(f'{team2_name[0]}')
+        player4 = character.Fighter(f'{team2_name[1]}')
     elif pick == '도박꾼':
-        player4 = character.Gambler(f'{team2_name[0]}')
+        player4 = character.Gambler(f'{team2_name[1]}')
     elif pick == '자연술사':
-        player4 = character.Naturalist(f'{team2_name[0]}')
+        player4 = character.Naturalist(f'{team2_name[1]}')
     elif pick == '흑사병 보균자':
-        player4 = character.Blackdeath(f'{team2_name[0]}')
+        player4 = character.Blackdeath(f'{team2_name[1]}')
+    elif pick == '화학자':
+        player4 = character.Chemist(f'{team2_name[1]}')
+    elif pick == '체스선수':
+        player4 = character.ChessPlayer(f'{team2_name[1]}')
+    elif pick == '정치인':
+        player4 = character.Politician(f'{team2_name[1]}')
+    elif pick == '엔지니어':
+        player4 = character.Engineer(f'{team2_name[1]}')
+    elif pick == '음악가':
+        player4 = character.Musician(f'{team2_name[1]}')
+    elif pick == '투수':
+        player4 = character.Pitcher(f'{team2_name[1]}')
     print()
 
 
