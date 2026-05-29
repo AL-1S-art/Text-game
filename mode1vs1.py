@@ -144,64 +144,22 @@ time.sleep(5)
 
 
 def player1_turn():
-    slow_print(f'{player1_name}의 공격차례 입니다.')
-    slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
-
-    if player1.bdbturn == 0:
-        if player1.uturn == 0:
-            slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}], [{player1.ultimatename}], [설명]')
-        if player1.uturn > 0:
-            slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}], [설명]')
-    elif player1.bdbturn > 0:
-        if player1.uturn == 0:
-            slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}], [설명]')
-        if player1.uturn > 0:
-            slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [설명]')
-
-    attact_pick = input()
-
-    if player1.normalname in attact_pick:
-        player1.normal(player2)
-    elif player1.damageskillname in attact_pick:
-        player1.damageskill(player2)
-    elif player1.buffdebuffname in attact_pick:
-        player1.buffdebuff(player2)
-
-        slow_print(f'다시 {player1_name}의 공격차례 입니다.')
-        slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
-
-        if player1.uturn == 0:
-            slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}]')
-        if player1.uturn > 0:
-            slow_print(f'[{player1.normalname}], [{player1.damageskillname}]')
-
-        attact_pick = input()
-
-        if player1.normalname in attact_pick:
-            player1.normal(player2)
-        elif player1.damageskillname in attact_pick:
-            player1.damageskill(player2)
-        elif player1.ultimatename in attact_pick:
-            player1.ultimate(player2)
-
-    elif player1.ultimatename in attact_pick:
-        player1.ultimate(player2)
-    elif '설명' in attact_pick:
-        player1.explanation()
-
-        slow_print(f'{player1_name}의 공격차례 입니다.')
+    slow_print(f'{player1_name}의 차례 입니다.')
+    if player1_character == ['[목수]'] and player1.resurracting:
+        player1.passive(player2)
+    else:
         slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
         if player1.bdbturn == 0:
             if player1.uturn == 0:
-                slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}], [{player1.ultimatename}]')
+                slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}], [{player1.ultimatename}], [설명]')
             if player1.uturn > 0:
-                slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}]')
+                slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}], [설명]')
         elif player1.bdbturn > 0:
             if player1.uturn == 0:
-                slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}]')
+                slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}], [설명]')
             if player1.uturn > 0:
-                slow_print(f'[{player1.normalname}], [{player1.damageskillname}]')
+                slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [설명]')
 
         attact_pick = input()
 
@@ -212,7 +170,7 @@ def player1_turn():
         elif player1.buffdebuffname in attact_pick:
             player1.buffdebuff(player2)
 
-            slow_print(f'다시 {player1_name}의 공격차례 입니다.')
+            slow_print(f'다시 {player1_name}의 차례 입니다.')
             slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
             if player1.uturn == 0:
@@ -228,14 +186,58 @@ def player1_turn():
                 player1.damageskill(player2)
             elif player1.ultimatename in attact_pick:
                 player1.ultimate(player2)
-        
+
         elif player1.ultimatename in attact_pick:
             player1.ultimate(player2)
+        elif '설명' in attact_pick:
+            player1.explanation()
+
+            slow_print(f'{player1_name}의 차례 입니다.')
+            slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
+
+            if player1.bdbturn == 0:
+                if player1.uturn == 0:
+                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}], [{player1.ultimatename}]')
+                if player1.uturn > 0:
+                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.buffdebuffname}]')
+            elif player1.bdbturn > 0:
+                if player1.uturn == 0:
+                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}]')
+                if player1.uturn > 0:
+                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}]')
+
+            attact_pick = input()
+
+            if player1.normalname in attact_pick:
+                player1.normal(player2)
+            elif player1.damageskillname in attact_pick:
+                player1.damageskill(player2)
+            elif player1.buffdebuffname in attact_pick:
+                player1.buffdebuff(player2)
+
+                slow_print(f'다시 {player1_name}의 차례 입니다.')
+                slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
+
+                if player1.uturn == 0:
+                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}]')
+                if player1.uturn > 0:
+                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}]')
+
+                attact_pick = input()
+
+                if player1.normalname in attact_pick:
+                    player1.normal(player2)
+                elif player1.damageskillname in attact_pick:
+                    player1.damageskill(player2)
+                elif player1.ultimatename in attact_pick:
+                    player1.ultimate(player2)
+            
+            elif player1.ultimatename in attact_pick:
+                player1.ultimate(player2)
+                return
 
     if player2.hp <= 0:
         slow_print(f'축하드립니다! {player1_name}의 승리입니다!')
-        break
-
     if '흑사병 보균자' in player1_character:
         player1.passive()
     elif '흑사병 보균자' in player2_character:
@@ -252,72 +254,28 @@ def player1_turn():
     print(f'체력/방어막: [ {player2.hp} / {player2.hhp}, {player2.shield} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
     print(f'공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
     print()
-
+    player2_turn()
 
 
 
 
 def player2_turn():
-    slow_print(f'{player2_name}의 공격차례 입니다.')
-    slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
-
-    if player2.bdbturn == 0:
-        if player2.uturn == 0:
-            slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}], [{player2.ultimatename}], [설명]')
-        if player2.uturn > 0:
-            slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}], [설명]')
-    elif player2.bdbturn > 0:
-        if player2.uturn == 0:
-            slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}], [설명]')
-        if player2.uturn > 0:
-            slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [설명]')
-
-    attact_pick = input()
-
-    if player2.normalname in attact_pick:
-        player2.normal(player1)
-    elif player2.damageskillname in attact_pick:
-        player2.damageskill(player1)
-    elif player2.buffdebuffname in attact_pick:
-        player2.buffdebuff(player1)
-        
-        slow_print(f'다시 {player2_name}의 공격차례 입니다.')
-        slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
-
-        if player2.uturn == 0:
-            slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
-        if player2.uturn > 0:
-            slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
-
-        attact_pick = input()
-
-        if player2.normalname in attact_pick:
-            player2.normal(player1)
-        elif player2.damageskillname in attact_pick:
-            player2.damageskill(player1)
-        elif player2.buffdebuffname in attact_pick:
-            player2.buffdebuff(player1)
-        elif player2.ultimatename in attact_pick:
-            player2.ultimate(player1)
-
-    elif player2.ultimatename in attact_pick:
-        player2.ultimate(player1)
-    elif '설명' in attact_pick:
-        player2.explanation()
-
-        slow_print(f'{player2_name}의 공격차례 입니다.')
+    slow_print(f'{player2_name}의 차례 입니다.')
+    if player2_character == ['[목수]'] and player2.resurracting:
+        player2.passive(player1)
+    else:
         slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
         if player2.bdbturn == 0:
             if player2.uturn == 0:
-                slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}], [{player2.ultimatename}]')
+                slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}], [{player2.ultimatename}], [설명]')
             if player2.uturn > 0:
-                slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}]')
+                slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}], [설명]')
         elif player2.bdbturn > 0:
             if player2.uturn == 0:
-                slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
+                slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}], [설명]')
             if player2.uturn > 0:
-                slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
+                slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [설명]')
 
         attact_pick = input()
 
@@ -327,8 +285,8 @@ def player2_turn():
             player2.damageskill(player1)
         elif player2.buffdebuffname in attact_pick:
             player2.buffdebuff(player1)
-
-            slow_print(f'다시 {player2_name}의 공격차례 입니다.')
+            
+            slow_print(f'다시 {player2_name}의 차례 입니다.')
             slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
             if player2.uturn == 0:
@@ -342,15 +300,62 @@ def player2_turn():
                 player2.normal(player1)
             elif player2.damageskillname in attact_pick:
                 player2.damageskill(player1)
+            elif player2.buffdebuffname in attact_pick:
+                player2.buffdebuff(player1)
             elif player2.ultimatename in attact_pick:
                 player2.ultimate(player1)
 
         elif player2.ultimatename in attact_pick:
             player2.ultimate(player1)
+        elif '설명' in attact_pick:
+            player2.explanation()
 
-    if player1.hp <= 0:
-        slow_print(f'축하드립니다! {player2_name}의 승리입니다!')
-        break
+            slow_print(f'{player2_name}의 차례 입니다.')
+            slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
+
+            if player2.bdbturn == 0:
+                if player2.uturn == 0:
+                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}], [{player2.ultimatename}]')
+                if player2.uturn > 0:
+                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.buffdebuffname}]')
+            elif player2.bdbturn > 0:
+                if player2.uturn == 0:
+                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
+                if player2.uturn > 0:
+                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
+
+            attact_pick = input()
+
+            if player2.normalname in attact_pick:
+                player2.normal(player1)
+            elif player2.damageskillname in attact_pick:
+                player2.damageskill(player1)
+            elif player2.buffdebuffname in attact_pick:
+                player2.buffdebuff(player1)
+
+                slow_print(f'다시 {player2_name}의 공격차례 입니다.')
+                slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
+
+                if player2.uturn == 0:
+                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
+                if player2.uturn > 0:
+                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
+
+                attact_pick = input()
+
+                if player2.normalname in attact_pick:
+                    player2.normal(player1)
+                elif player2.damageskillname in attact_pick:
+                    player2.damageskill(player1)
+                elif player2.ultimatename in attact_pick:
+                    player2.ultimate(player1)
+
+            elif player2.ultimatename in attact_pick:
+                player2.ultimate(player1)
+
+        if player1.hp <= 0:
+            slow_print(f'축하드립니다! {player2_name}의 승리입니다!')
+            return
 
     if '흑사병 보균자' in player1_character:
         player1.passive()
@@ -368,26 +373,17 @@ def player2_turn():
     print(f'체력/보호박: [ {player2.hp}({player2.hhp})/ {player2.shield} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
     print(f'공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
     print()
+    player1_turn()
 
 
 
 slow_print(f'게임을 시작합니다!')
 print()
-sequence = random.shuffle([player1_name, player2_name])
-
+sequence = [player1_name, player2_name]
+random.shuffle(sequence)
 
 slow_print(f'순서는 {sequence} 입니다.')
 if sequence == [player1_name, player2_name]:
     player1_turn()
-    if player2.hp <= 0:
-        break
-    player2_turn()
-    if player2.hp <= 0:
-        break
 if sequence == [player2_name, player1_name]:
-    player1_turn()
-    if player2.hp <= 0:
-        break
     player2_turn()
-    if player2.hp <= 0:
-        break

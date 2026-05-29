@@ -1,6 +1,6 @@
 import random
 from Util import *
-
+import time
 
 class Fighter:
     def __init__(self, name):
@@ -1731,9 +1731,9 @@ class Musician:
                 slow_print(f'{self.name}이/가 악기 전문가 패시브로 바이올린을 선택하였습니다! 공격력이 100 증가하며, 모든 스킬이 적의 최대체력에 비례한 피해를 입힙니다!')
                 print()
         if self.instrument == '바이올린':
-            if self.bdbturn > 0:
-                self.bdbturn -= 1
-                if self.bdbturn == 0:
+            if self.bdbtime > 0:
+                self.bdbtime -= 1
+                if self.bdbtime == 0:
                     self.ad -= 50
                     slow_print(f'{self.name}의 조화로운 멜로디 버프가 끝났습니다. 공격력이 50 감소하여 {self.ad}가 되었습니다.')
                     print()
@@ -1808,7 +1808,7 @@ class Musician:
             slow_print(f'{self.name}이/가 조화로운 멜로디를 피아노로 연주합니다! 선율이 조화로워 체력이 {heal}만큼 회복됩니다!')
         elif self.instrument ==  '바이올린':
             self.ad += 50
-            self.bdbturn += 2
+            self.bdbtime += 2
             slow_print(f'{self.name}이/가 조화로운 멜로디를 바이올린으로 연주합니다! 선율이 조화로워 공격력이 50 증가하여 {self.ad}가 되었습니다! 공격력 증가는 2턴동안 유지됩니다!')
         print()
         self.mp += self.rmp - 40
@@ -1850,9 +1850,9 @@ class Musician:
                 slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용합니다! 피날레에 들어갑니다! 선율이 절정에 달하여 체력이 {heal}만큼 회복되고, 방어력이 영구적으로 50 증가합니다!')
                 print()
             elif self.instrument == '바이올린':
-                damm = int(target.hhp*0.2)
+                damm = int(target.hhp*0.3)
                 target.dealdamm(damm)
-                target.de = int(target.de*0.9)
+                target.de = int(target.de*0.7)
                 slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용합니다! 피날레에 들어갑니다! 적의 최대체력의 20%에 해당하는 고정피해를 입히며, 적의 방어력을 영구적으로 10% 감소시킵니다!')
                 slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다!')
                 print()
@@ -1881,7 +1881,7 @@ class Musician:
             slow_print(f'[{self.normalname}]은/는 바이올린을 연주하여 적에게 피해를 입히는 기본 공격입니다. 또한 적의 최대체력의 5%에 비례한 추가 피해를 입힙니다.')
             slow_print(f'[{self.damageskillname}]은/는 바이올린으로 강렬한 곡을 연주하여 적에게 피해를 입히는 공격 스킬입니다. 또한 적의 최대체력의 10%에 비례한 추가 피해를 입힙니다.')
             slow_print(f'[{self.buffdebuffname}]은/는 조화로운 멜로디를 바이올린으로 연주하는 버프 스킬입니다. 선율이 조화로워 공격력이 50 증가합니다. 공격력 증가는 2턴동안 유지되며, 최대 1회 사용 가능합니다.')
-            slow_print(f'[{self.ultimatename}]은/는 피날레를 바이올린으로 연주하는 궁극기입니다. 적의 최대체력의 20%에 해당하는 고정피해를 입히며, 적의 방어력을 영구적으로 10% 감소시킵니다. 최대 1회 사용 가능합니다.')
+            slow_print(f'[{self.ultimatename}]은/는 피날레를 바이올린으로 연주하는 궁극기입니다. 적의 최대체력의 30%에 해당하는 고정피해를 입히며, 적의 방어력을 영구적으로 30% 감소시킵니다. 최대 1회 사용 가능합니다.')
 
 class Pitcher:
     def __init__(self, name):
@@ -1913,9 +1913,10 @@ class Pitcher:
         self.strikelist[target] += 1
         slow_print(f'{target.name} {str(self.strikelist[target])} 스트라이크!')
         if self.strikelist[target] == 3:
-            target.dealdamm(400)
+            damm = int(300 +  self.ad * 0.5)
+            target.dealdamm(damm)
             slow_print(f'{target.name}이/가 삼진아웃되었습니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 400만큼의 추가피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 추가피해를 입혔습니다.')
             self.strikelist[target] = 0
             self.out += 1
             slow_print(f'{self.out} 아웃!')
@@ -2021,10 +2022,10 @@ class Pitcher:
             elif self.out >2:
                 slow_print(f'{self.name}이/가 스타디움을 지배하고 있습니다!!!')
                 slow_print(f'관중들이 열광하고 있습니다!!')
-                self.ad += self.out * 20
-                self.de += self.out * 20
+                self.ad += self.out * 30
+                self.de += self.out * 30
                 self.hp += 100*self.out
-                slow_print(f'{self.name}의 공격력과 방어력이 {str(self.out * 20)} 상승하며, 체력이 {str(self.out * 100)} 회복됩니다!')
+                slow_print(f'{self.name}의 공격력과 방어력이 {str(self.out * 30)} 상승하며, 체력이 {str(self.out * 100)} 회복됩니다!')
             self.mp += self.rmp - 100
             slow_print(f'{self.name}의 마나가 100 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
@@ -2069,13 +2070,10 @@ class Carpenter:
         self.line = ['그리스도께서 우리 죄를 위하여 죽으시고','장사 지낸 바 되셨다가','성경대로 사흘 만에 다시 살아나사']
     def dealdamm(self, damage):
         if not self.resurracting:
-            if self.shield > 0:
-                self.shield -= int(damage)
-                if self.shield <= 0:
-                    self.hp += self.shield
-                    self.shield = 0
-            else:
-                self.hp -= int(damage)
+            self.shield -= int(damage)
+            if self.shield <= 0:
+                self.hp += self.shield
+                self.shield = 0
             if self.hp <= 0 and self.passivecool == 0 and self.ultimateon > 0:
                 self.hp = 2
                 self.resurracting = True
@@ -2084,19 +2082,23 @@ class Carpenter:
                 
     def passive(self, target):
         if self.resurracting:
-            slow_print(self.line[self.resurractingtime])
-            self.ressuractingtime += 1
-            if self.ressuractingtime == 2:
-                slow_print(f'{self.name}이가 부활하였습니다!')
+            print()
+            moreslow_print(self.line[self.resurractingtime])
+            if self.resurractingtime == 2:
+                moreslow_print(f'{self.name}이/가 부활하였습니다!')
                 self.ressuractingtime = 0
                 self.resurracting = False
                 self.hp = self.hhp
                 self.ad += self.oad
                 self.de += self.ode
+            self.resurractingtime += 1
+            print()
+            time.sleep(0.3)
+            
         else:
             if self.ultimateon > 0:
                 self.ultimateon -= 1
-                self.shield += 500
+                self.shield += 300
                 if self.shield > 700:
                     self.shield = 700
                 slow_print(f'{self.name}이/가 방어막을 획득합니다.')
@@ -2180,7 +2182,7 @@ class Carpenter:
                     return
             else:
                 damm = int(self.ad * (100/(target.de+100))*3.5)
-                moreslow_print(f'“아버지여, 저들을 사하여 주옵소서. 자기들이 하는 것을 알지 못함이니이다.”')
+                moreslow_print(f'“아버지여, 저들을 사하여 주옵소서.”')
                 slow_print(f'{self.name}이/가 {target.name}을/를 십자가에 매답니다!')
                 slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
                 self.passive(target)
@@ -2234,8 +2236,9 @@ class Carpenter:
         else:
             moreslow_print('“나는 길이요 진리요 생명이니”')
             slow_print(f'{self.name}이/가 예수로 각성합니다!')
-            slow_print(f'{self.name}의 최대체력과 방어력이 50% 감소하지만, 공격력이 100% 증가하며, 행동시마다 보호막을 얻습니다!')
+            slow_print(f'{self.name}의 최대체력과 방어력이 절반으로 감소하지만, 공격력이 3배로 증가하며, 행동시마다 보호막을 얻습니다!')
             self.passive(target)
+            self.hhp = self.hhp//2
             self.oad = self.ad *2
             self.ad = self.ad *3
             self.ode = self.de // 2
@@ -2254,7 +2257,7 @@ class Carpenter:
             slow_print(f'[{self.normalname}]은/는 적에게 피해를 입히는 기본 스킬입니다.')
             slow_print(f'[{self.damageskillname}]은/는 못을 박아 적에게 피해를 입히는 기본 스킬입니다.')
             slow_print(f'[{self.buffdebuffname}]은/는 마음을 가다듬어 방어력을 2턴동안 상승시키는 버프 스킬입니다.')
-            slow_print(f'{self.ultimatename}은/는 체력이 최대체력의 50% 이하일시 사용 가능합니다. 예수로 각성하며 최대체력과 방어력이 50% 감소하지만, 공격력이 100% 상승하며 행동시 보호막을 얻습니다. 또한 스킬이 모두 업그레이드 됩니다.')
+            slow_print(f'{self.ultimatename}은/는 체력이 최대체력의 50% 이하일시 사용 가능합니다. 예수로 각성하며 최대체력과 방어력이 절반 감소하지만, 공격력이 3배 상승하며 행동시 보호막을 얻습니다. 또한 스킬이 모두 업그레이드 됩니다.')
         else:
             slow_print(f'[{self.passivename}]은/는 체력이 0에 도달시 3턴에 걸쳐 부활하는 패시브입니다(쿨타임 8턴).')
             slow_print(f'[{self.normalname}]은/는 적에게 공격하는 기본 스킬입니다.')
