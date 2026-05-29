@@ -526,7 +526,7 @@ class Naturalist:
         else:
             damm = int((((self.ad*8.98) * 0.75) + 400) * (100/(100+target.de)))
             target.dealdamm(damm)
-            slow_print(f'{self.name}이/가 {self.target}에게 궁극기 {self.ultimatename}을/를 사용합니다!')
+            slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.ultimatename}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 2턴 동안 입힙니다.')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 입혔습니다.')
             print()
@@ -1084,7 +1084,7 @@ class Chemist:
         self.bdbturn += 1
         self.turn += 1
         self.passive(target)
-    def ultimate(self, target):
+    def ultimate(self, target, *args):
         if self.mp - 100 < 0:
             slow_print('사용 가능한 마나가 없습니다.')
             slow_print('기본 공격으로 대체됩니다.')
@@ -1111,9 +1111,9 @@ class Chemist:
                         self.compoundlist.remove(i.split(' + ')[0])
                         self.compoundlist.remove(i.split(' + ')[1])
                         totaldamm += int((self.ad * (100/(100+target.de)))*3)
-                        slow_print(f'{self.name}이/가 {i.split(" + ")[0]}과 {i.split(" + ")[1]}을/를 반응시켜 {self.productlist[i]}을/를 생성하여 {target.name}에게 {int((self.ad * (100/(100+target.de)))*3)}만큼 피해를 입혔습니다!')
+                        slow_print(f'{self.name}이/가 {i.split(" + ")[0]}과 {i.split(" + ")[1]}을/를 반응시켜 {self.productlist[i]}을/를 생성하여 모든적에게 {int((self.ad * (100/(100+target.de)))*3)}만큼 피해를 입혔습니다!')
                      
-            target.dealdamm(totaldamm, self.name)
+            target.dealdamm(totaldamm, args)
             slow_print(f'{self.name}이/가 저장된 화합물을 모두 반응시켜 {target.name}에게 총 {totaldamm}만큼 피해를 입혔습니다!')
             print()
             self.compoundlist = []
