@@ -236,24 +236,56 @@ def player1_turn():
     if player1.normalname in attact_pick:
         if team2_name[0] in attact_target:
             player1.normal(player3)
+            if player3.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player1.damageskill(player4)
         if team2_name[1] in attact_target:
             player1.normal(player4)
+            if player4.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player1.damageskill(player3)
     elif player1.damageskillname in attact_pick:
         if team2_name[0] in attact_target:
             player1.damageskill(player3)
+            if player3.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player1.damageskill(player4)
         if team2_name[1] in attact_target:
             player1.damageskill(player4)
+            if player4.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player1.damageskill(player3)
     elif player1.buffdebuffname in attact_pick:
         if team1_character[0] == '흑사병 보균자':
             if team2_name[0] in attact_target:
                 player1.buffdebuff(player3, player2, player4)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player4, player2)
             if team2_name[1] in attact_target:
                 player1.buffdebuff(player4, player2, player3)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player3, player2)
         else:
             if team2_name[0] in attact_target:
                 player1.buffdebuff(player3)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player4)
             if team2_name[1] in attact_target:
                 player1.buffdebuff(player4)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player3)
                 
         slow_print(f'다시 {team1_name[0]}의 공격차례 입니다.')
         slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
@@ -278,24 +310,56 @@ def player1_turn():
         if player1.normalname in attact_pick:
             if team2_name[0] in attact_target:
                 player1.normal(player3)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player4)
             if team2_name[1] in attact_target:
                 player1.normal(player4)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player3)
         elif player1.damageskillname in attact_pick:
             if team2_name[0] in attact_target:
                 player1.damageskill(player3)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player4)
             if team2_name[1] in attact_target:
                 player1.damageskill(player4)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player3)
         elif player1.ultimatename in attact_pick:
             if team2_name[0] in attact_target:
                 player1.ultimate(player3)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player4)
             if team2_name[1] in attact_target:
                 player1.ultimate(player4)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player3)
 
     elif player1.ultimatename in attact_pick:
         if team2_name[0] in attact_target:
             player1.ultimate(player3)
+            if player3.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player1.damageskill(player4)
         if team2_name[1] in attact_target:
             player1.ultimate(player4)
+            if player4.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player1.damageskill(player3)
     elif '설명' in attact_pick:
         player1.explanation()
         
@@ -322,24 +386,56 @@ def player1_turn():
         if player1.normalname in attact_pick:
             if team2_name[0] in attact_target:
                 player1.normal(player3)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player4)
             if team2_name[1] in attact_target:
                 player1.normal(player4)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player3)
         elif player1.damageskillname in attact_pick:
             if team2_name[0] in attact_target:
                 player1.damageskill(player3)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player4)
             if team2_name[1] in attact_target:
                 player1.damageskill(player4)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player3)
         elif player1.buffdebuffname in attact_pick:
             if team1_character[0] == '흑사병 보균자':
                 if team2_name[0] in attact_target:
                     player1.buffdebuff(player3, player2, player4)
+                    if player3.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player1.damageskill(player4, player2)
                 if team2_name[1] in attact_target:
                     player1.buffdebuff(player4, player2, player3)
+                    if player4.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player1.damageskill(player3, player2)
             else:
                 if team2_name[0] in attact_target:
                     player1.buffdebuff(player3)
+                    if player3.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player1.damageskill(player4)
                 if team2_name[1] in attact_target:
                     player1.buffdebuff(player4)
+                    if player4.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player1.damageskill(player3)
                     
             slow_print(f'다시 {team1_name[0]}의 공격차례 입니다.')
             slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
@@ -364,24 +460,56 @@ def player1_turn():
             if player1.normalname in attact_pick:
                 if team2_name[0] in attact_target:
                     player1.normal(player3)
+                    if player3.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player1.damageskill(player4)
                 if team2_name[1] in attact_target:
                     player1.normal(player4)
+                    if player4.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player1.damageskill(player3)
             elif player1.damageskillname in attact_pick:
                 if team2_name[0] in attact_target:
                     player1.damageskill(player3)
+                    if player3.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player1.damageskill(player4)
                 if team2_name[1] in attact_target:
                     player1.damageskill(player4)
+                    if player4.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player1.damageskill(player3)
             elif player1.ultimatename in attact_pick:
                 if team2_name[0] in attact_target:
                     player1.ultimate(player3)
+                    if player3.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player1.damageskill(player4)
                 if team2_name[1] in attact_target:
                     player1.ultimate(player4)
+                    if player4.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player1.damageskill(player3)
 
         elif player1.ultimatename in attact_pick:
             if team2_name[0] in attact_target:
                 player1.ultimate(player3)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player4)
             if team2_name[1] in attact_target:
                 player1.ultimate(player4)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player1.damageskill(player3)
 
     if player3.hp <= 0 and player4.hp <= 0:
         slow_print(f'축하드립니다! 1팀의 승리입니다!')
@@ -443,24 +571,48 @@ def player2_turn():
     if player2.normalname in attact_pick:
         if team2_name[0] in attact_target:
             player2.normal(player3)
+            if player3.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player2.damageskill(player4)
         if team2_name[1] in attact_target:
             player2.normal(player4)
+            if player4.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player1.damageskill(player3)
     elif player2.damageskillname in attact_pick:
         if team2_name[0] in attact_target:
             player2.damageskill(player3)
+            if player3.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player2.damageskill(player4)
         if team2_name[1] in attact_target:
             player2.damageskill(player4)
+            if player4.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player2.damageskill(player3)
     elif player2.buffdebuffname in attact_pick:
         if team1_character[1] == '흑사병 보균자':
             if team2_name[0] in attact_target:
-                player2.buffdebuff(player3, player1, player4)
+                player2.buffdebuff(player3, player1, player4)--------------------------------------------------------
             if team2_name[1] in attact_target:
                 player2.buffdebuff(player4, player1, player3)
         else:
             if team2_name[0] in attact_target:
                 player2.buffdebuff(player3)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player2.damageskill(player4)
             if team2_name[1] in attact_target:
                 player2.buffdebuff(player4)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player2.damageskill(player3)
                 
         slow_print(f'다시 {team1_name[1]}의 공격차례 입니다.')
         slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
@@ -485,24 +637,56 @@ def player2_turn():
         if player2.normalname in attact_pick:
             if team2_name[0] in attact_target:
                 player2.normal(player3)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player2.damageskill(player4)
             if team2_name[1] in attact_target:
                 player2.normal(player4)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player2.damageskill(player3)
         elif player2.damageskillname in attact_pick:
             if team2_name[0] in attact_target:
                 player2.damageskill(player3)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player2.damageskill(player4)
             if team2_name[1] in attact_target:
                 player2.damageskill(player4)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player2.damageskill(player3)
         elif player2.ultimatename in attact_pick:
             if team2_name[0] in attact_target:
                 player2.ultimate(player3)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player2.damageskill(player4)
             if team2_name[1] in attact_target:
                 player2.ultimate(player4)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player2.damageskill(player3)
 
     elif player2.ultimatename in attact_pick:
         if team2_name[0] in attact_target:
             player2.ultimate(player3)
+            if player3.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player2.damageskill(player4)
         if team2_name[1] in attact_target:
             player2.ultimate(player4)
+            if player4.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player2.damageskill(player3)
     elif '설명' in attact_pick:
         player2.explanation()
         
@@ -529,13 +713,29 @@ def player2_turn():
         if player2.normalname in attact_pick:
             if team2_name[0] in attact_target:
                 player2.normal(player3)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player2.damageskill(player4)
             if team2_name[1] in attact_target:
                 player2.normal(player4)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player2.damageskill(player3)
         elif player2.damageskillname in attact_pick:
             if team2_name[0] in attact_target:
                 player2.damageskill(player3)
+                if player3.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player2.damageskill(player4)
             if team2_name[1] in attact_target:
                 player2.damageskill(player4)
+                if player4.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player2.damageskill(player3)
         elif player2.buffdebuffname in attact_pick:
             if team1_character[1] == '흑사병 보균자':
                 if team2_name[0] in attact_target:
@@ -545,8 +745,16 @@ def player2_turn():
             else:
                 if team2_name[0] in attact_target:
                     player2.buffdebuff(player3)
+                    if player3.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player2.damageskill(player4)
                 if team2_name[1] in attact_target:
                     player2.buffdebuff(player4)
+                    if player4.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player2.damageskill(player3)
                     
             slow_print(f'다시 {team1_name[1]}의 공격차례 입니다.')
             slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
@@ -571,18 +779,42 @@ def player2_turn():
             if player2.normalname in attact_pick:
                 if team2_name[0] in attact_target:
                     player2.normal(player3)
+                    if player3.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player2.damageskill(player4)
                 if team2_name[1] in attact_target:
                     player2.normal(player4)
+                    if player4.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player2.damageskill(player3)
             elif player2.damageskillname in attact_pick:
                 if team2_name[0] in attact_target:
                     player2.damageskill(player3)
+                    if player3.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player2.damageskill(player4)
                 if team2_name[1] in attact_target:
                     player2.damageskill(player4)
+                    if player4.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player2.damageskill(player3)
             elif player2.ultimatename in attact_pick:
                 if team2_name[0] in attact_target:
                     player2.ultimate(player3)
+                    if player3.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player2.damageskill(player4)
                 if team2_name[1] in attact_target:
                     player2.ultimate(player4)
+                    if player4.hp <= 0:
+                        slow_print('이미 사망한 적입니다!')
+                        slow_print('타겟이 자동으로 지정됩니다.')
+                        player2.damageskill(player3)
 
         elif player2.ultimatename in attact_pick:
             if team2_name[0] in attact_target:
@@ -655,13 +887,29 @@ def player3_turn():
     if player3.normalname in attact_pick:
         if team1_name[0] in attact_target:
             player3.normal(player1)
+            if player1.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player3.damageskill(player2)
         if team1_name[1] in attact_target:
             player3.normal(player2)
+            if player2.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player3.damageskill(player1)
     elif player3.damageskillname in attact_pick:
         if team1_name[0] in attact_target:
             player3.damageskill(player1)
+            if player1.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player3.damageskill(player2)
         if team1_name[1] in attact_target:
             player3.damageskill(player2)
+            if player2.hp <= 0:
+                slow_print('이미 사망한 적입니다!')
+                slow_print('타겟이 자동으로 지정됩니다.')
+                player3.damageskill(player1)
     elif player3.buffdebuffname in attact_pick:
         if team2_character[0] == '흑사병 보균자':
             if team1_name[0] in attact_target:
@@ -671,9 +919,17 @@ def player3_turn():
         else:
             if team1_name[0] in attact_target:
                 player3.buffdebuff(player3)
+                if player1.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player3.damageskill(player2)
             if team1_name[1] in attact_target:
                 player3.buffdebuff(player4)
-                
+                if player2.hp <= 0:
+                    slow_print('이미 사망한 적입니다!')
+                    slow_print('타겟이 자동으로 지정됩니다.')
+                    player3.damageskill(player1)
+                -------------------------------------------------------------------------------------------------------
         slow_print(f'다시 {team2_name[0]}의 공격차례 입니다.')
         slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
