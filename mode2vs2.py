@@ -244,7 +244,7 @@ def player1_turn():
         if team2_name[1] in attact_target:
             player1.damageskill(player4)
     elif player1.buffdebuffname in attact_pick:
-        if '흑사병 보균자' in team1_character[0]:
+        if team1_character[0] == '흑사병 보균자':
             if team2_name[0] in attact_target:
                 player1.buffdebuff(player3, player2, player4)
             if team2_name[1] in attact_target:
@@ -330,7 +330,7 @@ def player1_turn():
             if team2_name[1] in attact_target:
                 player1.damageskill(player4)
         elif player1.buffdebuffname in attact_pick:
-            if '흑사병 보균자' in team1_character[0]:
+            if team1_character[0] == '흑사병 보균자':
                 if team2_name[0] in attact_target:
                     player1.buffdebuff(player3, player2, player4)
                 if team2_name[1] in attact_target:
