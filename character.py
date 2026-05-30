@@ -4,7 +4,7 @@ import time
 
 class Fighter:
     def __init__(self, name):
-        self.name = name
+        self.name, self.team = name, []
         self.shield = 0
         self.hhp = 4908
         self.hp = self.hhp
@@ -23,6 +23,8 @@ class Fighter:
         self.ultimatename = '오라러쉬'
     def dealdamm(self, damage):
         self.hp -= int(damage)
+    def updateteam(self, team):
+        self.team = team
     def passive(self):
         self.ad = self.ad + (self.turn * 2)
 
@@ -162,7 +164,8 @@ class Fighter:
 class Gambler:
     
     def __init__(self, name):
-        self.name = name
+        self.name, self.team = name, []
+        self.team = team
         self.hhp = random.randint(1670, 3388)
         self.hp = self.hhp
         self.ad = 0
@@ -181,6 +184,8 @@ class Gambler:
         self.ultimatename = '???'
     def dealdamm(self, damage):
         self.hp -= int(damage)
+    def updateteam(self, team):
+        self.team = team
     def normal(self, target):
         damm = random.randint(1, 2000)
         target.dealdamm(damm)
@@ -398,8 +403,9 @@ class Gambler:
 
 
 class Naturalist:
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, name,team):
+        self.name, self.team = name, []
+        self.team = team
         self.hhp = 2109
         self.hp = self.hhp
         self.ad = 89
@@ -423,7 +429,8 @@ class Naturalist:
     def passive(self):
         if self.turn%2 == 0:
             self.hp += self.hhp*(23/1000)
-
+    def updateteam(self, team):
+        self.team = team
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
         target.dealdamm(damm)
@@ -568,7 +575,7 @@ class Naturalist:
 
 class Blackdeath:
     def __init__(self, name):
-        self.name = name
+        self.name, self.team = name, []
         self.hhp = 4682
         self.hp = self.hhp
         self.shield = 0
@@ -597,7 +604,8 @@ class Blackdeath:
             for i in range(len(self.bdbtarget)):
                 self.bdbtarget[i].hp -= damm
    
-   
+    def updateteam(self, team):
+        self.team = team
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
         target.dealdamm(damm)
@@ -738,7 +746,8 @@ class Rider:
     def passive(self, target):
         self.passiveturn += 1
         self.ad += self.passiveturn * 2
-        
+    def updateteam(self, team):
+        self.team = team    
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
         target.dealdamm(damm)
@@ -852,7 +861,7 @@ class Rider:
 
 class Harrypotter:
     def __init__(self, name):
-        self.name = name
+        self.name, self.team = name, []
         self.hhp = 4410
         self.hp = self.hhp
         self.ad = 421
@@ -881,7 +890,8 @@ class Harrypotter:
     def passive(self, target):
         self.passiveturn += 1
         self.ad += self.passiveturn * 2
-        
+    def updateteam(self, team):
+        self.team = team    
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
         target.dealdamm(damm)
@@ -992,7 +1002,7 @@ class Harrypotter:
 
 class Chemist:
     def __init__(self, name):
-        self.name = name
+        self.name, self.team = name, []
         self.hhp = 2500
         self.hp = self.hhp
         self.ad = 200
@@ -1018,6 +1028,8 @@ class Chemist:
     def passive(self, target):
         if len(self.compoundlist) > 7:
             self.compoundlist.pop(0)
+    def updateteam(self, team):
+        self.team = team
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
         target.dealdamm(damm)
@@ -1137,7 +1149,7 @@ class Chemist:
 
 class ChessPlayer:
     def __init__(self, name):
-        self.name = name
+        self.name, self.team = name, []
         self.hhp = 2000
         self.hp = self.hhp
         self.ad = 80
@@ -1161,6 +1173,8 @@ class ChessPlayer:
         self.square = 3
     def dealdamm(self, damage):
         self.hp -= int(damage)
+    def updateteam(self, team):
+        self.team = team
     def passive(self, target):
         if self.square == 9 and self.piece == 'Pawn':
             self.piece = 'Queen'
@@ -1322,7 +1336,7 @@ class ChessPlayer:
 
 class Politician:
     def __init__(self, name):
-        self.name = name
+        self.name, self.team = name, []
         self.hhp = 2200
         self.hp = self.hhp
         self.ad = 150
@@ -1348,6 +1362,8 @@ class Politician:
         self.supportused = False
     def dealdamm(self, damage):
         self.hp -= int(damage)
+    def updateteam(self, team):
+        self.team = team
     def passive(self, target):
         self.prevhp = self.hp
         if self.ultimateturn > 0:
@@ -1518,7 +1534,7 @@ class Politician:
 
 class Engineer:
     def __init__(self, name):
-        self.name = name
+        self.name, self.team = name, []
         self.hhp = 2400
         self.hp = self.hhp
         self.ad = 120
@@ -1540,6 +1556,8 @@ class Engineer:
         self.upgradelist = ['공격력 20 증가', '방어력 20 증가', '평타+', '레이저 용접+', '로켓 발사+', '설명']
     def dealdamm(self, damage):
         self.hp -= int(damage)
+    def updateteam(self, team):
+        self.team = team
     def passive(self, target):
         if self.turn % 3 == 0:
             self.parts += 1
@@ -1677,7 +1695,7 @@ class Engineer:
         
 class Musician:
     def __init__(self, name):
-        self.name = name
+        self.name, self.team = name, []
         self.hhp = 1800
         self.hp = self.hhp
         self.ad = 100
@@ -1700,6 +1718,8 @@ class Musician:
         self.passive()
     def dealdamm(self, damage):
         self.hp -= int(damage)
+    def updateteam(self, team):
+        self.team = team
     def passive(self):
         if self.instrument == '':
             print(f'{self.name}이/가 악기를 선택합니다!')
@@ -1885,7 +1905,7 @@ class Musician:
 
 class Pitcher:
     def __init__(self, name):
-        self.name = name
+        self.name, self.team = name, []
         self.hhp = 2200
         self.hp = self.hhp
         self.ad = 200
@@ -1907,6 +1927,8 @@ class Pitcher:
         self.ultimateused = False
     def dealdamm(self, damage):
         self.hp -= int(damage)
+    def updateteam(self, team):
+        self.team = team
     def passive(self, target):
         if target not in self.strikelist.keys():
             self.strikelist[target] = 0
@@ -2042,7 +2064,7 @@ class Pitcher:
 
 class Carpenter:
     def __init__(self, name):
-        self.name = name
+        self.name, self.team = name, []
         self.hhp = 4000
         self.hp = self.hhp
         self.ad = 80
@@ -2079,7 +2101,8 @@ class Carpenter:
                 self.resurracting = True
                 self.passivecool += 8
                 self.ultimateon = 0                
-                
+    def updateteam(self, team):
+        self.team = team            
     def passive(self, target):
         if self.resurracting:
             print()
@@ -2266,3 +2289,192 @@ class Carpenter:
         print()
 
         
+class Bodybuilder:
+    def __init__(self, name):
+        self.name, self.team = name, []
+        self.shield = 0
+        self.hhp = 3000
+        self.hp = self.hhp
+        self.ad = 100
+        self.de = 130
+        self.hmp = 295
+        self.mp = self.hmp
+        self.rmp = 8
+        self.bdbturn = 0
+        self.uturn = 0
+        self.turn = 0
+        self.damageincrease = 1
+        self.passivename = '체력이 곧 힘!'
+        self.normalname = '평타'
+        self.damageskillname = '죽음의 데드리프트'
+        self.buffdebuffname = '준비운동'
+        self.ultimatename = '벌크업'
+        self.warmingup = True
+        self.warminuplist = []
+        self.ad = self.ad + self.hhp // 60
+        self.utime = 0
+        self.wtime = 0
+    def dealdamm(self, damage):
+        self.hp -= int(damage)
+        self.hhp += int(damage // 10)
+        slow_print(f'{self.name}이/가 피해를 받아 최대체력이 {damage//10} 증가하였습니다.')
+    def updateteam(self, team):
+        self.team = team
+    def passive(self, damm):
+        self.hhp += damm // 10
+        self.hp += damm // 10
+        slow_print(f'{self.name}이/가 운동을 하여 체력이 {damm//10} 증가하였습니다!')
+        self.ad = 100 + self.hhp // 60
+        if not self.warmingup:
+            self.buffdebuffname = '웨이트 트레이닝'
+        if self.bdbturn > 0:
+            self.bdbturn -= 1
+        if self.uturn > 0:
+            self.uturn -= 1
+        if self.utime > 0:
+            self.utime -= 1
+            if self.utime == 0:
+                slow_print('벌크업 지속시간이 끝났습니다.')
+                self.hhp -= 3000
+                if self.hp > self.hhp:
+                    self.hp = self.hhp
+
+    def ult_passive(self):
+        if self.uturn == 0:
+            slow_print('트레이닝 시간입니다!')
+            moreslow_print('하나! 둘! 하나! 둘!')
+            increase = self.hhp // 100
+            slow_print(f'팀원 모두가 최대체력이 {self.hhp // 100} 증가합니다!')
+            for i in self.team:
+                i.hhp += increase
+                i.hp += increase
+    def normal(self, target):
+        self.warmingup = False
+        damm = int((self.ad * (100/(100+target.de)))*2 * self.damageincrease)
+        target.dealdamm(damm)
+        slow_print(f'{self.name}이/가 공격을 시도합니다!')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        print()
+        self.passive(damm)
+        self.mp += self.rmp
+        slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+        print()
+        if target.hp > 0:
+            slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+        else:
+            slow_print(f'{target.name}이/가 사망하였습니다!')
+            return
+        print()
+        self.turn += 1
+
+
+    
+    def damageskill(self, target):
+        if self.mp - 50 < 0:
+            slow_print('사용 가능한 마나가 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        else:
+            self.warmingup = False
+            slow_print(f'{self.name}이/가 200kg 바벨을 휘두릅니다!')
+            damm = int((self.ad + 140 + (target.hp/100)*(1+(self.ad*0.03)) + (self.ad*0.55)) * (100/(100+target.de)))
+            target.dealdamm(damm)
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            print()
+            self.passive(damm)
+            self.mp += self.rmp - 50
+            slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            if target.hp > 0:
+                slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+            else:
+                slow_print(f'{target.name}이/가 사망하였습니다!')
+                return
+            print()
+            self.turn += 1
+
+    def buffdebuff(self, target):
+        if self.warmingup:
+            moreslow_print(f'{self.name}이/가 몸을 풉니다!')
+            slow_print(f'최대체력이 100 증가합니다!')
+            self.hhp += 100
+            self.hp += 100
+            self.wtime += 1
+            if self.wtime == 5:
+                slow_print(f'{self.name}이/가 몸풀기를 끝냈습니다!')
+                self.warmingup = False
+        else:
+            if self.mp - 80 < 0 :
+                slow_print('사용 가능한 마나가 없습니다.')
+                slow_print('기본 공격으로 대체됩니다.')
+                print()
+                self.normal(target)
+            elif self.bdbturn > 0:
+                slow_print('(디)버프 쿨타임 입니다.')
+                slow_print('기본 공격으로 대체됩니다.')
+                print()
+                self.normal(target)
+            else:
+                slow_print(f'{self.name}이/가 아군을 모두 웨이트 트레이닝 시킵니다!')
+                increase = self.hhp // 100
+                for i in self.team:
+                    i.hhp += increase
+                    i.hp += increase
+                    slow_print(f'{i.name}이/가 트레이닝의 결과로 영구적으로 최대체력이 {increase} 증가합니다!')
+                self.bdbturn += 5
+                
+                
+
+    
+    def ultimate(self, target):
+        if self.mp - 100 < 0:
+            slow_print('사용 가능한 마나가 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        if self.uturn > 0:
+            slow_print('궁극기 쿨타임 입니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        else:
+            self.warmingup = False
+            target.dealdamm(damm)
+            slow_print(f'{self.name}이/가 벌크업 합니다!')
+            slow_print(f'{self.name}의 최대체력이 3턴동안 3000 증가합니다!')
+            self.hhp += 3000
+            self.hp += 3000
+            print()
+            self.passive(target)
+            self.mp += self.rmp - 100
+            self.uturn += 6
+            self.utime += 3
+            slow_print(f'{self.name}의 마나가 100 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            if target.hp > 0:
+                slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+            else:
+                slow_print(f'{target.name}이/가 사망하였습니다!')
+                return
+            print()
+
+    def explanation(self):
+        slow_print(f'[{self.passivename}]은/는 공격력이 최대체력에 비해 증가하며, 입거나 입히는 피해에 비례해 최대체력이 증가하는 패시브 입니다.')
+        slow_print(f'[{self.normalname}]은/는 기본 공격입니다.')
+        slow_print(f'[{self.damageskillname}]은/는 바벨을 적에게 휘둘러 피해를 주는 공격 스킬입니다.')
+        if self.warmingup:
+            slow_print(f'[{self.buffdebuffname}]은/는 공격을 시작하기 전에 몸을 풀어 최대체력을 증가시키는 버프 스킬입니다.')
+        else:
+            slow_print(f'[{self.buffdebuffname}]은/는 팀 전체를 운동시켜 영구적으로 최대체력을 증가시키는 버프 스킬입니다.')
+        slow_print(f'[{self.ultimatename}]의 기본지속효과는 턴이 돌아올 때마다 팀의 최대체력을 증가시키는 효과입니다.')
+        slow_print(f'[{self.ultimatename}]은/는 벌크업을 하여 3턴동안 최대체력을 3000 증가시키는 궁극기입니다.')
+        print()
+
+class Dummy:
+    def __init__(self, name):
+        self.name, self.team = name, []
+        self.hhp = 10000
+        self.hp = self.hhp
+    def updateteam(self, team):
+        self.team = team

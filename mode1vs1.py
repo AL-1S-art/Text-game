@@ -31,7 +31,7 @@ player2 = character.Fighter(f'{player2_name}')
 
 def player1_pick():
     global player1
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]','[목수]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]','[목수]', '[보디빌더]']
     slow_print(f'{player1_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -65,6 +65,8 @@ def player1_pick():
         player1 = character.Pitcher(f'{player1_name}')
     elif pick == '목수':
         player1 = character.Carpenter(f'{player1_name}')
+    elif pick == '보디빌더':
+        player1 = character.Bodybuilder(f'{player1_name}')
     print()
 
 
@@ -73,7 +75,7 @@ def player1_pick():
 
 def player2_pick():
     global player2
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]', '[목수]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]', '[목수]', '[보디빌더]']
     slow_print(f'{player2_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -107,13 +109,24 @@ def player2_pick():
         player2 = character.Pitcher(f'{player2_name}')
     elif pick == '목수':
         player2 = character.Carpenter(f'{player2_name}')
+    elif pick == '보디빌더':
+        player2 = character.Bodybuilder(f'{player2_name}')
     print()
 
 
 
-
-
-
+team1 = []
+team2 = []
+team1.append(player1)
+team2.append(player2)
+dummy1 = character.Dummy('더미1')
+dummy2 = character.Dummy('더미2')
+team1.append(dummy1)
+team2.append(dummy2)
+for i in team1:
+    i.updateteam(team1)
+for i in team2:
+    i.updateteam(team2)
 slow_print(f'{player1_name}의 캐릭터 선택 차례입니다.')
 print()
 player1_pick()
@@ -145,8 +158,11 @@ time.sleep(5)
 
 def player1_turn():
     slow_print(f'{player1_name}의 차례 입니다.')
+    if player1_character == ['[보디빌더]']:
+        player1.ult_passive()
     if player1_character == ['[목수]'] and player1.resurracting:
         player1.passive(player2)
+    
     else:
         slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
@@ -169,23 +185,23 @@ def player1_turn():
             player1.damageskill(player2)
         elif player1.buffdebuffname in attact_pick:
             player1.buffdebuff(player2)
+            if not '[보디빌더]' in player1_character or not player1.warmingup:
+                slow_print(f'다시 {player1_name}의 차례 입니다.')
+                slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
-            slow_print(f'다시 {player1_name}의 차례 입니다.')
-            slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
+                if player1.uturn == 0:
+                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}]')
+                if player1.uturn > 0:
+                    slow_print(f'[{player1.normalname}], [{player1.damageskillname}]')
 
-            if player1.uturn == 0:
-                slow_print(f'[{player1.normalname}], [{player1.damageskillname}], [{player1.ultimatename}]')
-            if player1.uturn > 0:
-                slow_print(f'[{player1.normalname}], [{player1.damageskillname}]')
+                attact_pick = input()
 
-            attact_pick = input()
-
-            if player1.normalname in attact_pick:
-                player1.normal(player2)
-            elif player1.damageskillname in attact_pick:
-                player1.damageskill(player2)
-            elif player1.ultimatename in attact_pick:
-                player1.ultimate(player2)
+                if player1.normalname in attact_pick:
+                    player1.normal(player2)
+                elif player1.damageskillname in attact_pick:
+                    player1.damageskill(player2)
+                elif player1.ultimatename in attact_pick:
+                    player1.ultimate(player2)
 
         elif player1.ultimatename in attact_pick:
             player1.ultimate(player2)
@@ -261,8 +277,11 @@ def player1_turn():
 
 def player2_turn():
     slow_print(f'{player2_name}의 차례 입니다.')
+    if player2_character == ['[보디빌더]']:
+        player2.ult_passive()
     if player2_character == ['[목수]'] and player2.resurracting:
         player2.passive(player1)
+    
     else:
         slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
@@ -285,25 +304,25 @@ def player2_turn():
             player2.damageskill(player1)
         elif player2.buffdebuffname in attact_pick:
             player2.buffdebuff(player1)
-            
-            slow_print(f'다시 {player2_name}의 차례 입니다.')
-            slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
+            if '보디빌더' not in player2_character or not player2.warmingup:
+                slow_print(f'다시 {player2_name}의 차례 입니다.')
+                slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
 
-            if player2.uturn == 0:
-                slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
-            if player2.uturn > 0:
-                slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
+                if player2.uturn == 0:
+                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}], [{player2.ultimatename}]')
+                if player2.uturn > 0:
+                    slow_print(f'[{player2.normalname}], [{player2.damageskillname}]')
 
-            attact_pick = input()
+                attact_pick = input()
 
-            if player2.normalname in attact_pick:
-                player2.normal(player1)
-            elif player2.damageskillname in attact_pick:
-                player2.damageskill(player1)
-            elif player2.buffdebuffname in attact_pick:
-                player2.buffdebuff(player1)
-            elif player2.ultimatename in attact_pick:
-                player2.ultimate(player1)
+                if player2.normalname in attact_pick:
+                    player2.normal(player1)
+                elif player2.damageskillname in attact_pick:
+                    player2.damageskill(player1)
+                elif player2.buffdebuffname in attact_pick:
+                    player2.buffdebuff(player1)
+                elif player2.ultimatename in attact_pick:
+                    player2.ultimate(player1)
 
         elif player2.ultimatename in attact_pick:
             player2.ultimate(player1)
