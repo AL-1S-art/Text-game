@@ -1715,6 +1715,7 @@ class Musician:
         self.ultimatename = '피날레' #연주가 피날레에 들어갑니다! 악기가 피아노일 시 체력을 30% 회복하며, 방어력이 영구적으로 50 증가합니다. 악기가 바이올린일 시 적의 최대체력의 20%에 해당하는 고정피해를 입히며, 적의 방어력을 영구적으로 10% 감소시킵니다. 최대 1회 사용 가능합니다.
         self.instrument = ''
         self.ultimateused = False
+        self.bdbtime = 0
         self.passive()
     def dealdamm(self, damage):
         self.hp -= int(damage)
@@ -2317,13 +2318,25 @@ class Bodybuilder:
     def dealdamm(self, damage):
         self.hp -= int(damage)
         self.hhp += int(damage // 10)
-        slow_print(f'{self.name}이/가 피해를 받아 최대체력이 {damage//10} 증가하였습니다.')
+        print(f'\r{self.name}이/가 피해를 받아 최대체력이 {0} 증가하였습니다.', end='')
+        time.sleep(1)
+        for i in range(damage//10 + 1):
+            print(f'\r{self.name}이/가 피해를 받아 최대체력이 {i} 증가하였습니다.', end='')
+            time.sleep(0.07)
+        time.sleep(0.7)
+        print()
     def updateteam(self, team):
         self.team = team
     def passive(self, damm):
-        self.hhp += damm // 10
-        self.hp += damm // 10
-        slow_print(f'{self.name}이/가 운동을 하여 체력이 {damm//10} 증가하였습니다!')
+        if damm > 0:
+            print(f'\r{self.name}이/가 운동을 하여 체력이 {self.hp}({self.hhp})이 되었습니다!', end='')
+            time.sleep(0.5)
+            for i in range(100):
+                print(f'\r{self.name}이/가 운동을 하여 체력이 {self.hp}({self.hhp})이 되었습니다!', end='')
+                self.hhp += damm // 100
+                self.hp += damm // 100
+                time.sleep(0.02)
+            print()
         self.ad = 100 + self.hhp // 60
         if not self.warmingup:
             self.buffdebuffname = '웨이트 트레이닝'
@@ -2340,14 +2353,20 @@ class Bodybuilder:
                     self.hp = self.hhp
 
     def ult_passive(self):
-        if self.uturn == 0:
-            slow_print('트레이닝 시간입니다!')
-            moreslow_print('하나! 둘! 하나! 둘!')
-            increase = self.hhp // 100
-            slow_print(f'팀원 모두가 최대체력이 {self.hhp // 100} 증가합니다!')
-            for i in self.team:
-                i.hhp += increase
-                i.hp += increase
+        slow_print('트레이닝 시간입니다!')
+        moreslow_print('하나! 둘! 하나! 둘!')
+        increase = self.hhp // 100
+        time.sleep(1)
+        print(f'\r팀원 모두가 최대체력이 {0} 증가합니다!', end='')
+        time.sleep(0.7)
+        for i in range(increase+1):
+            print(f'\r팀원 모두가 최대체력이 {i} 증가합니다!', end='')
+            time.sleep(0.06)
+        time.sleep(0.7)
+        print()
+        for i in self.team:
+            i.hhp += increase
+            i.hp += increase
     def normal(self, target):
         self.warmingup = False
         damm = int((self.ad * (100/(100+target.de)))*2 * self.damageincrease)
@@ -2396,8 +2415,14 @@ class Bodybuilder:
 
     def buffdebuff(self, target):
         if self.warmingup:
-            moreslow_print(f'{self.name}이/가 몸을 풉니다!')
-            slow_print(f'최대체력이 100 증가합니다!')
+            slow_print(f'{self.name}이/가 몸을 풉니다!')
+            time.sleep(1)
+            print(f'\r최대체력이 {0} 증가합니다!', end='')
+            time.sleep(0.7)
+            for i in range(101):
+                print(f'\r최대체력이 {i} 증가합니다!', end='')
+                time.sleep(0.02)
+            print()
             self.hhp += 100
             self.hp += 100
             self.wtime += 1
@@ -2440,23 +2465,23 @@ class Bodybuilder:
             self.normal(target)
         else:
             self.warmingup = False
-            target.dealdamm(damm)
             slow_print(f'{self.name}이/가 벌크업 합니다!')
             slow_print(f'{self.name}의 최대체력이 3턴동안 3000 증가합니다!')
-            self.hhp += 3000
-            self.hp += 3000
+            time.sleep(1)
+            print(f'\r{self.name}의 체력이 {self.hp}({self.hhp}) 남았습니다!', end='')
+            time.sleep(0.5)
+            for x in range(100):
+                print(f'\r{self.name}의 체력이 {self.hp}({self.hhp}) 남았습니다!', end='')
+                self.hp += 30
+                self.hhp += 30
+                time.sleep(0.04)
             print()
-            self.passive(target)
+            self.passive(0)
             self.mp += self.rmp - 100
             self.uturn += 6
             self.utime += 3
             slow_print(f'{self.name}의 마나가 100 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-            if target.hp > 0:
-                slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
-            else:
-                slow_print(f'{target.name}이/가 사망하였습니다!')
-                return
             print()
 
     def explanation(self):
