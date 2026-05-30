@@ -44,7 +44,6 @@ class Fighter:
             return
         print()
         self.turn += 1
-        self.passive()
 
     
     def damageskill(self, target):
@@ -84,7 +83,6 @@ class Fighter:
                 return
             print()
             self.turn += 1
-            self.passive()
 
     def buffdebuff(self, target):
         if self.mp - 80 < 0 :
@@ -112,7 +110,6 @@ class Fighter:
             slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             self.bdbturn += 999999999999999999999999999999999999999999999999999999999999999
-            self.passive()
 
     
     def ultimate(self, target):
@@ -141,7 +138,6 @@ class Fighter:
                 slow_print(f'{target.name}이/가 사망하였습니다!')
                 return
             print()
-            self.passive()
 
     def explanation(self):
         slow_print(f'[{self.passivename}]은/는 턴이 지날수록 공격력이 증가하는 패시브입니다.')
@@ -1125,8 +1121,9 @@ class Chemist:
                         totaldamm += int((self.ad * (100/(100+target.de)))*3)
                         slow_print(f'{self.name}이/가 {i.split(" + ")[0]}과 {i.split(" + ")[1]}을/를 반응시켜 {self.productlist[i]}을/를 생성하여 모든적에게 {int((self.ad * (100/(100+target.de)))*3)}만큼 피해를 입혔습니다!')
                      
-            target.dealdamm(totaldamm, args)
-            slow_print(f'{self.name}이/가 저장된 화합물을 모두 반응시켜 {target.name}에게 총 {totaldamm}만큼 피해를 입혔습니다!')
+            target.dealdamm(totaldamm)
+            args.dealdamm(totaldamm)
+            slow_print(f'{self.name}이/가 저장된 화합물을 모두 반응시켜 ㄷ에게 총 {totaldamm}만큼 피해를 입혔습니다!')
             print()
             self.compoundlist = []
             self.mp += self.rmp - 100
