@@ -387,14 +387,10 @@ def player1_turn():
         slow_print(f'축하드립니다! 1팀의 승리입니다!')
         return
 
-    if team1_character[0] == '흑사병 보균자':
-        player1.passive()
-    if team1_character[1] == '흑사병 보균자':
-        player2.passive()
-    if team2_character[0] == '흑사병 보균자':
-        player3.passive()
-    if team2_character[1] == '흑사병 보균자':
-        player4.passive()
+    player1.passive()
+    player2.passive()
+    player3.passive()
+    player4.passive()
     
     print()
     print('1팀의 플레이어들')
@@ -455,7 +451,7 @@ def player2_turn():
         if team2_name[1] in attact_target:
             player2.damageskill(player4)
     elif player2.buffdebuffname in attact_pick:
-        if '흑사병 보균자' in team1_character[1]:
+        if team1_character[1] == '흑사병 보균자':
             if team2_name[0] in attact_target:
                 player2.buffdebuff(player3, player1, player4)
             if team2_name[1] in attact_target:
@@ -541,7 +537,7 @@ def player2_turn():
             if team2_name[1] in attact_target:
                 player2.damageskill(player4)
         elif player2.buffdebuffname in attact_pick:
-            if '흑사병 보균자' in team1_character[1]:
+            if team1_character[1] == '흑사병 보균자':
                 if team2_name[0] in attact_target:
                     player2.buffdebuff(player3, player1, player4)
                 if team2_name[1] in attact_target:
@@ -598,14 +594,10 @@ def player2_turn():
         slow_print(f'축하드립니다! 1팀의 승리입니다!')
         return
 
-    if team1_character[0] == '흑사병 보균자':
-        player1.passive()
-    if team1_character[1] == '흑사병 보균자':
-        player2.passive()
-    if team2_character[0] == '흑사병 보균자':
-        player3.passive()
-    if team2_character[1] == '흑사병 보균자':
-        player4.passive()
+    player1.passive()
+    player2.passive()
+    player3.passive()
+    player4.passive()
     
     print()
     print('1팀의 플레이어들')
@@ -671,7 +663,7 @@ def player3_turn():
         if team1_name[1] in attact_target:
             player3.damageskill(player2)
     elif player3.buffdebuffname in attact_pick:
-        if '흑사병 보균자' in team1_character[0]:
+        if team2_character[0] == '흑사병 보균자':
             if team1_name[0] in attact_target:
                 player3.buffdebuff(player1, player2, player4)
             if team1_name[1] in attact_target:
@@ -757,7 +749,7 @@ def player3_turn():
             if team1_name[1] in attact_target:
                 player3.damageskill(player2)
         elif player3.buffdebuffname in attact_pick:
-            if '흑사병 보균자' in team2_character[0]:
+            if team2_character[0] == '흑사병 보균자':
                 if team1_name[0] in attact_target:
                     player3.buffdebuff(player1, player2, player4)
                 if team1_name[1] in attact_target:
@@ -814,14 +806,11 @@ def player3_turn():
         slow_print(f'축하드립니다! 2팀의 승리입니다!')
         return
 
-    if team1_character[0] == '흑사병 보균자':
-        player1.passive()
-    if team1_character[1] == '흑사병 보균자':
-        player3.passive()
-    if team2_character[0] == '흑사병 보균자':
-        player3.passive()
-    if team2_character[1] == '흑사병 보균자':
-        player4.passive()
+
+    player1.passive()
+    player3.passive()
+    player3.passive()
+    player4.passive()
     
     print()
     print('1팀의 플레이어들')
@@ -907,7 +896,7 @@ def player4_turn():
         if team1_name[1] in attact_target:
             player4.damageskill(player2)
     elif player4.buffdebuffname in attact_pick:
-        if '흑사병 보균자' in team2_character[1]:
+        if team2_character[1] == '흑사병 보균자':
             if team1_name[0] in attact_target:
                 player4.buffdebuff(player1, player2, player3)
             if team1_name[1] in attact_target:
@@ -993,7 +982,7 @@ def player4_turn():
             if team1_name[1] in attact_target:
                 player4.damageskill(player2)
         elif player4.buffdebuffname in attact_pick:
-            if '흑사병 보균자' in team2_character[1]:
+            if team2_character[1] == '흑사병 보균자':
                 if team1_name[0] in attact_target:
                     player4.buffdebuff(player1, player2, player3)
                 if team1_name[1] in attact_target:
@@ -1050,14 +1039,10 @@ def player4_turn():
         slow_print(f'축하드립니다! 2팀의 승리입니다!')
         return
 
-    if team1_character[0] == '흑사병 보균자':
-        player1.passive()
-    if team1_character[1] == '흑사병 보균자':
-        player4.passive()
-    if team2_character[0] == '흑사병 보균자':
-        player4.passive()
-    if team2_character[1] == '흑사병 보균자':
-        player4.passive()
+    player1.passive()
+    player2.passive()
+    player3.passive()
+    player4.passive()
     
     print()
     print('1팀의 플레이어들')
