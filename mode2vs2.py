@@ -28,10 +28,10 @@ print()
 team1_character = []
 team2_character = []
 
-player1 = character.Fighter(0)
-player2 = character.Fighter(0)
-player3 = character.Fighter(0)
-player4 = character.Fighter(0)
+player1 = character.Dummy('더미1')
+player2 = character.Dummy('더미2')
+player3 = character.Dummy('더미3')
+player4 = character.Dummy('더미4')
 
 def team1_pick():
     global player1
@@ -46,8 +46,8 @@ def team1_pick():
     print()
     pick = input()
     slow_print(f'{team1_name[0]}이/가 [{pick}]를 선택했습니다.')
-    team1_character.append(f'[{pick}]')
-    character_list.remove(f'[{pick}]')
+    team1_character.append(f'{pick}')
+    character_list.remove(f'{pick}')
     if pick == '격투가':
         player1 = character.Fighter(f'{team1_name[0]}')
     elif pick == '도박꾼':
@@ -80,8 +80,8 @@ def team1_pick():
     print()
     pick = input()
     slow_print(f'{team1_name[1]}이/가 [{pick}]를 선택했습니다.')
-    team1_character.append(f'[{pick}]')
-    character_list.remove(f'[{pick}]')
+    team1_character.append(f'{pick}')
+    character_list.remove(f'{pick}')
     if pick == '격투가':
         player2 = character.Fighter(f'{team1_name[1]}')
     elif pick == '도박꾼':
