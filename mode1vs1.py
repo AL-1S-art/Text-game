@@ -41,8 +41,8 @@ def player1_pick():
     print()
     pick = input()
     slow_print(f'{player1_name}이/가 [{pick}]를 선택했습니다.')
-    player1_character.append(f'[{pick}]')
-    character_list.remove(f'[{pick}]')
+    player1_character.append(f'{pick}')
+    character_list.remove(f'{pick}')
     if pick == '도박꾼':
         player1 = character.Gambler(f'{player1_name}')
     elif pick == '격투가':
@@ -85,8 +85,8 @@ def player2_pick():
     print()
     pick = input()
     slow_print(f'{player2_name}이/가 [{pick}]를 선택했습니다.')
-    player2_character.append(f'[{pick}]')
-    character_list.remove(f'[{pick}]')
+    player2_character.append(f'{pick}')
+    character_list.remove(f'{pick}')
     if pick == '도박꾼':
         player2 = character.Gambler(f'{player2_name}')
     elif pick == '격투가':
@@ -158,9 +158,9 @@ time.sleep(5)
 
 def player1_turn():
     slow_print(f'{player1_name}의 차례 입니다.')
-    if player1_character == ['[보디빌더]']:
+    if player1_character == ['보디빌더']:
         player1.ult_passive()
-    if player1_character == ['[목수]'] and player1.resurracting:
+    if player1_character == ['목수'] and player1.resurracting:
         player1.passive(player2)
     
     else:
@@ -277,9 +277,9 @@ def player1_turn():
 
 def player2_turn():
     slow_print(f'{player2_name}의 차례 입니다.')
-    if player2_character == ['[보디빌더]']:
+    if player2_character == ['보디빌더']:
         player2.ult_passive()
-    if player2_character == ['[목수]'] and player2.resurracting:
+    if player2_character == ['목수'] and player2.resurracting:
         player2.passive(player1)
     
     else:
@@ -403,6 +403,18 @@ random.shuffle(sequence)
 
 slow_print(f'순서는 {sequence} 입니다.')
 if sequence == [player1_name, player2_name]:
-    player1_turn()
+    while True:
+        player1_turn()
+        if player2.hp <= 0:
+            break
+        player2_turn()
+        if player1.hp <= 0:
+            break
 if sequence == [player2_name, player1_name]:
-    player2_turn()
+    while True:
+        player2_turn()
+        if player1.hp <= 0:
+            break
+        player1_turn()
+        if player2.hp <= 0:
+            break
