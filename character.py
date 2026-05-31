@@ -30,9 +30,10 @@ class Fighter:
 
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가 공격을 시도합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         print()
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -44,6 +45,7 @@ class Fighter:
             return
         print()
         self.turn += 1
+        self.passive()
 
     
     def damageskill(self, target):
@@ -57,21 +59,24 @@ class Fighter:
             a = random.choice(['r', 'l'])
             if a == 'r':
                 damm = int((self.ad + 140 + (target.hp/100)*(1+(self.ad*0.03)) + (self.ad*0.55)) * (100/(100+target.de)))
-                target.dealdamm(damm)
+                
                 slow_print(f'{self.name}이/가 [오른손]으로 강력한 훅을 날렸습니다!')
-                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+                target.dealdamm(damm)
             elif a == 'l':
                 b = random.randint(1, 100)
                 if b < 90:
                     damm = int((self.ad + 50 + (target.hp/100)*(1+(self.ad*0.03))) * (100/(100+target.de)))
-                    target.dealdamm(damm)
+                    
                     slow_print(f'{self.name}이/가 [왼손]으로 강력한 훅을 날렸습니다!')
-                    slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+                    slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+                    target.dealdamm(damm)
                 else:
                     damm = int((self.ad + 50 + (target.hp/100)*(1+(self.ad*0.03))) * (100/(100+target.de))*2)
-                    target.dealdamm(damm)
+                    
                     slow_print(f'{self.name}이/가 [왼손]으로 [폐]를 강타했습니다!')
-                    slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+                    slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+                    target.dealdamm(damm)
             print()
             self.mp += self.rmp - 50
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -83,6 +88,7 @@ class Fighter:
                 return
             print()
             self.turn += 1
+            self.passive()
 
     def buffdebuff(self, target):
         if self.mp - 80 < 0 :
@@ -110,6 +116,7 @@ class Fighter:
             slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             self.bdbturn += 999999999999999999999999999999999999999999999999999999999999999
+            self.passive()
 
     
     def ultimate(self, target):
@@ -125,9 +132,10 @@ class Fighter:
             self.normal(target)
         else:
             damm = int(((self.ad + self.ad + self.ad*0.55) * (100/(100+target.de)))*3)
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.ultimatename}을/를 사용합니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             print()
             self.mp += self.rmp - 100
             slow_print(f'{self.name}의 마나가 100 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -138,6 +146,7 @@ class Fighter:
                 slow_print(f'{target.name}이/가 사망하였습니다!')
                 return
             print()
+            self.passive()
 
     def explanation(self):
         slow_print(f'[{self.passivename}]은/는 턴이 지날수록 공격력이 증가하는 패시브입니다.')
@@ -146,7 +155,7 @@ class Fighter:
         slow_print(f'오른손의 대미지가 더 강력하며 왼손은 가끔 폐에 주먹을 꽃아 넣습니다.')
         slow_print(f'[{self.buffdebuffname}]은/는 체력이 절반 이하일 시영구적으로 방어력과 공격력을 1.5배로 증가시키는 일회용 (디)버프 스킬입니다.')
         slow_print(f'[{self.ultimatename}]은/는 왼손과 오른손을 번갈아 가며 5번의 주먹을 꽃아 넣는 궁극기 입니다.')
-        slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
+        slow_print(f'여러 턴에 걸쳐 피해 및 (디)버프를 거는 스킬은 해당 스킬의 효과가 끝날 때 까지 재사용이 불가능 합니다.')
         print()
 
 
@@ -184,9 +193,10 @@ class Gambler:
         self.team = team
     def normal(self, target):
         damm = random.randint(1, 2000)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가  ??? 를  사용합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         if target.hp > 0:
             slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
         else:
@@ -236,9 +246,10 @@ class Gambler:
             
     def damageskill(self, target):
         damm = random.randint(1, 2000)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가  ??? 를  사용합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         if target.hp > 0:
             slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
         else:
@@ -287,9 +298,10 @@ class Gambler:
     
     def buffdebuff(self, target):
         damm = random.randint(1, 2000)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가  ??? 를  사용합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         if target.hp > 0:
             slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
         else:
@@ -338,9 +350,10 @@ class Gambler:
     
     def ultimate(self, target):
         damm = random.randint(1, 2000)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가  ??? 를  사용합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         if target.hp > 0:
             slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
         else:
@@ -429,9 +442,10 @@ class Naturalist:
         self.team = team
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가 공격을 시도합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         print()
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -464,9 +478,10 @@ class Naturalist:
             self.normal(target)
         else:
             damm = int((((self.ad*8.98)*0.8) + 310) * (100/(100+target.de)))
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용합니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             print()
             self.mp += self.rmp - 60
             slow_print(f'{self.name}의 마나가 60 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -528,10 +543,11 @@ class Naturalist:
             self.normal(target)
         else:
             damm = int((((self.ad*8.98) * 0.75) + 400) * (100/(100+target.de)))
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.ultimatename}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 2턴 동안 입힙니다.')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 입힙니다.')
+            target.dealdamm(damm)
             print()
             self.mp += self.rmp - 100
             slow_print(f'{self.name}의 마나가 100 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -558,7 +574,7 @@ class Naturalist:
         slow_print(f'[{self.damageskillname}]은/는 5만 년 치의 물의 침식 작용을 주는 기본 스킬입니다.')
         slow_print(f'[{self.buffdebuffname}]은/는 바로 다음 공격이 대상의 방어력을 30% 무시시키는 (디)버프 스킬입니다.')
         slow_print(f'[{self.ultimatename}]은/는 침식과 퇴적을 반복하는 퇴적층에 대상을 가두어 질식시키는 궁극기 입니다.')
-        slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
+        slow_print(f'여러 턴에 걸쳐 피해 및 (디)버프를 거는 스킬은 해당 스킬의 효과가 끝날 때 까지 재사용이 불가능 합니다.')
         print()
 
 
@@ -604,9 +620,10 @@ class Blackdeath:
         self.team = team
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가 공격을 시도합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         print()
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -629,10 +646,11 @@ class Blackdeath:
             self.normal(target)
         else:
             damm = int((target.hp*0.3) * (100/(100+target.de)))
-            target.dealdamm(damm)
+            
             self.hp -= 100
             slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             print()
             self.mp += self.rmp - 50
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -705,7 +723,7 @@ class Blackdeath:
         slow_print(f'[{self.buffdebuffname}]은/는 [{self.passivename}] 효과를 부여하여 시전자의 턴마다 피해를 입히는 (디)버프 스킬입니다.')
         slow_print(f'스킬의 대상은 시전자의 앞, 뒤 플레이어 및 대상자의 앞, 뒤 플레이어 입니다.')
         slow_print(f'[{self.ultimatename}]은/는 자신을 포함해 최대 세번 [{self.passivename}] 효과를 치유하는 궁극기 입니다.')
-        slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
+        slow_print(f'여러 턴에 걸쳐 피해 및 (디)버프를 거는 스킬은 해당 스킬의 효과가 끝날 때 까지 재사용이 불가능 합니다. 궁극기 사용은 최대 3번 입니다.')
         print()
 
 
@@ -746,9 +764,10 @@ class Rider:
         self.team = team    
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가 공격을 시도합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         print()
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -774,9 +793,10 @@ class Rider:
             self.normal(target)
         else:
             damm = int(() * (100/(100+target.de)))
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             print()
             self.mp += self.rmp - 50
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -827,9 +847,10 @@ class Rider:
             self.normal(target)
         else:
             damm = int()
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.damageskillname}을/를 사용했습니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             print()
             self.mp += self.rmp - 50
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -846,7 +867,7 @@ class Rider:
         slow_print(f'[{self.damageskillname}]은/는 오토바이로 대상의 발가락을 밟고가 골절 시키는 기본 스킬입니다.')
         slow_print(f'[{self.buffdebuffname}]은/는 2턴 동안 방어력이 0.5배가 증가하고 공격력을 2배로 증가시키는 (디)버프 스킬입니다.')
         slow_print(f'[{self.ultimatename}]은/는 속력에 비례해 상대방에게 들이 박고 3턴 동안 휠체어를 타 방어력을 높이는 궁극기 입니다.')
-        slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
+        slow_print(f'여러 턴에 걸쳐 피해 및 (디)버프를 거는 스킬은 해당 스킬의 효과가 끝날 때 까지 재사용이 불가능 합니다.')
         print()
 
 
@@ -890,9 +911,10 @@ class Harrypotter:
         self.team = team    
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가 공격을 시도합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         print()
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -918,9 +940,10 @@ class Harrypotter:
             self.normal(target)
         else:
             damm = int(() * (100/(100+target.de)))
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             print()
             self.mp += self.rmp - 50
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -970,9 +993,10 @@ class Harrypotter:
             self.normal(target)
         else:
             damm = int()
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.damageskillname}을/를 사용했습니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             print()
             self.mp += self.rmp - 50
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -989,7 +1013,7 @@ class Harrypotter:
         slow_print(f'[{self.damageskillname}]은/는 해리포터 책으로 학습한 공격 마법으로 공격하는 기본 스킬입니다.')
         slow_print(f'[{self.buffdebuffname}]은/는 해리포터 책으로 학습한 방어 마법으로 보호막을 펼쳐 3턴간 대미지를 감소시키는 (디)버프 스킬입니다.')
         slow_print(f'[{self.ultimatename}]은/는 대상에게 죽음의 공포를 선사하여 피해를 입히고 마비를 시키는 궁극기 입니다.')
-        slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
+        slow_print(f'여러 턴에 걸쳐 피해 및 (디)버프를 거는 스킬은 해당 스킬의 효과가 끝날 때 까지 재사용이 불가능 합니다.')
         print()
 
 
@@ -1028,9 +1052,10 @@ class Chemist:
         self.team = team
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가 나트륨 플라스크를 던집니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         self.compoundlist.append('Na')
         print()
         self.mp += self.rmp
@@ -1050,9 +1075,10 @@ class Chemist:
         self.passive(target)
     def damageskill(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2.5)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가 수소 플라스크를 던집니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         self.compoundlist.append('H2')
         print()
         self.mp += self.rmp - 40
@@ -1072,10 +1098,11 @@ class Chemist:
         self.passive(target)
     def buffdebuff(self, target):
         damm = int((self.ad * (100/(100+target.de)))*1.5)
-        target.dealdamm(damm)
+        
         target.de -= 4
         slow_print(f'{self.name}이/가 산소 플라스크를 던집니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다. 또한 {target.name}의 방어력이 4 감소합니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다. 또한 {target.name}의 방어력이 4 감소합니다.')
+        target.dealdamm(damm)
         self.compoundlist.append('O2')
         print()
         self.mp += self.rmp - 40
@@ -1119,11 +1146,11 @@ class Chemist:
                         self.compoundlist.remove(i.split(' + ')[0])
                         self.compoundlist.remove(i.split(' + ')[1])
                         totaldamm += int((self.ad * (100/(100+target.de)))*3)
-                        slow_print(f'{self.name}이/가 {i.split(" + ")[0]}과 {i.split(" + ")[1]}을/를 반응시켜 {self.productlist[i]}을/를 생성하여 모든적에게 {int((self.ad * (100/(100+target.de)))*3)}만큼 피해를 입혔습니다!')
+                        slow_print(f'{self.name}이/가 {i.split(" + ")[0]}과 {i.split(" + ")[1]}을/를 반응시켜 {self.productlist[i]}을/를 생성하여 모든적에게 {int((self.ad * (100/(100+target.de)))*3)}만큼 피해를 입힙니다!')
                      
-            target.dealdamm(totaldamm)
-            args.dealdamm(totaldamm)
-            slow_print(f'{self.name}이/가 저장된 화합물을 모두 반응시켜 ㄷ에게 총 {totaldamm}만큼 피해를 입혔습니다!')
+            
+            slow_print(f'{self.name}이/가 저장된 화합물을 모두 반응시켜 {target.name}에게 총 {totaldamm}만큼 피해를 입힙니다!')
+            target.dealdamm(totaldamm, args)
             print()
             self.compoundlist = []
             self.mp += self.rmp - 100
@@ -1142,7 +1169,6 @@ class Chemist:
         slow_print(f'[{self.damageskillname}]은/는 수소 플라스크를 던져 적에게 피해를 입히는 기본 스킬입니다. 화합물에 수소를 저장합니다.')
         slow_print(f'[{self.buffdebuffname}]은/는 산소 플라스크를 던져 적에게 피해를 입히고 방어력을 감소시키며, 화합물에 산소를 저장하는 (디)버프 스킬입니다.')
         slow_print(f'[{self.ultimatename}]은/는 저장된 화합물을 모두 반응시키는 궁극기 입니다. 화합물의 종류에 따라 다른 반응이 일어나며, 반응이 일어날 때마다 적에게 피해를 입힙니다.')
-        slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
         print()
 
 class ChessPlayer:
@@ -1213,11 +1239,12 @@ class ChessPlayer:
             print()
         else:
             damm = 400
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 퀸으로 {target.name}에게 공격을 시도합니다!')
             slow_print(f'체크!')
             self.passive(target)
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             print()
             self.mp += self.rmp
             slow_print(f'{self.name}의 마나가 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -1247,11 +1274,13 @@ class ChessPlayer:
             print()
         else:
             damm = 700
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 퀸으로 {target.name}에게 공격을 시도합니다!')
+            
             slow_print(f'체크!')
             self.passive(target)
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             print()
             self.mp += self.rmp - 60
             slow_print(f'{self.name}의 마나가 60만큼 소모되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -1301,11 +1330,13 @@ class ChessPlayer:
             self.normal(target)
         else:
             damm = 1000+int((target.hhp-target.hp)*0.3)
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용합니다! 잃은 체력에 비례해 추가 피해를 입힙니다!')
+            
             slow_print('체크!')
             self.passive(target)
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다!')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다!')
+            target.dealdamm(damm)
             print()
             self.mp += self.rmp - 100
             slow_print(f'{self.name}의 마나가 100 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -1323,14 +1354,12 @@ class ChessPlayer:
             slow_print(f'[{self.normalname}]은/는 폰을 전진시키는 기본 스킬입니다.')
             slow_print(f'[{self.damageskillname}]은/는 폰을 전진시키는 기본 스킬입니다.')
             slow_print(f'[{self.buffdebuffname}]은/는 캐슬링을 하는 (디)버프 스킬입니다. 캐슬링을 하면 방어력이 50 상승하며, 체력을 잃은 체력에 비례해 회복합니다. 최대 1회 사용 가능합니다.')
-            slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
         else:
             slow_print(f'[{self.passivename}]은/는 적에게 고정 피해를 입히며, 적이 체력이 10% 이하로 떨어졌을 때 체크메이트가 발동하는 패시브입니다.')
             slow_print(f'[{self.normalname}]은/는 퀸으로 적에게 공격하는 기본 스킬입니다.')
             slow_print(f'[{self.damageskillname}]은/는 퀸으로 적에게 공격하는 공격 스킬입니다.')
             slow_print(f'[{self.buffdebuffname}]은/는 캐슬링을 하는 (디)버프 스킬입니다. 캐슬링을 하면 방어력이 50 상승하며, 체력을 잃은 체력에 비례해 회복합니다. 최대 1회 사용 가능합니다.')
             slow_print(f'[{self.ultimatename}]은/는 퀸으로 적에게 공격하는 궁극기입니다. 적의 잃은 체력에 비례한 피해를 입힙니다.')
-            slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
         print()
 
 
@@ -1398,9 +1427,10 @@ class Politician:
     def normal(self, target):
         if self.ultimateturn > 0:
             damm = int(self.ad*self.popularity/50)
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 대선 토론에서 정책을 제안합니다! 공격이 방어력을 무시하며, 지지율에 비례한 피해를 입힙니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             if damm % 2 == 0:
                 self.popularity += 10
                 slow_print(f'정책 제안이 호응을 얻어 지지율이 {10}% 증가하여 {self.popularity}%가 되었습니다.')
@@ -1409,9 +1439,10 @@ class Politician:
                 slow_print(f'정책 제안이 비판을 받아 지지율이 {10}% 감소하여 {self.popularity}%가 되었습니다.')
         else:
             damm = int((self.ad * (100/(100+target.de)))*2*(self.popularity/100)*2)
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 전국을 순회하며 연설을 합니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             if damm % 2 == 0:
                 self.popularity += 10
                 slow_print(f'연설이 성공적으로 끝나 지지율이 {10}% 증가하여 {self.popularity}%가 되었습니다.')
@@ -1438,9 +1469,10 @@ class Politician:
     def damageskill(self, target):
         if self.ultimateturn > 0:
             damm = int(self.ad*self.popularity/50*2)
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 대선 토론에서 상대 후보에게 반론을 제시합니다! 공격이 방어력을 무시하며, 지지율에 비례한 피해를 입힙니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             if damm % 2 == 1:
                 self.popularity += 15
                 slow_print(f'반론이 성공적으로 끝나 지지율이 {15}% 증가하여 {self.popularity}%가 되었습니다.')
@@ -1449,9 +1481,10 @@ class Politician:
                 slow_print(f'반론이 터무니없어서 지지율이 {15}% 감소하여 {self.popularity}%가 되었습니다.')
         else:
             damm = int((self.ad * (100/(100+target.de)))*2*(self.popularity/100)*2)
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 상대 후보를 공격합니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             if damm % 2 == 1:
                 self.popularity += 15
                 slow_print(f'공격이 호응을 얻어 지지율이 {15}% 증가하여 {self.popularity}%가 되었습니다.')
@@ -1530,7 +1563,6 @@ class Politician:
         slow_print(f'[{self.damageskillname}]은/는 상대 후보를 공격하는 공격 스킬입니다. 입힌 피해량이 홀수이면 지지율이 증가하며, 짝수이면 지지율이 감소합니다. (증가/감소량은 피해량의 15%입니다.)')
         slow_print(f'[{self.buffdebuffname}]은/는 당의 지원을 받는 (디)버프 스킬입니다. 방어력이 30 상승하며, 지지율이 50% 이상이면 추가로 체력이 20% 회복됩니다. 최대 1회 사용 가능합니다.')
         slow_print(f'[{self.ultimatename}]은/는 대선 토론을 여는 궁극기입니다. 다음 3턴동안 공격이 방어력을 무시하며, 3턴 후 입힌 피해량에 따라 지지율이 변동합니다. 입힌 피해량이 상대보다 많다면 지지율을 40% 획득하며, 적보다 피해량이 적다면 지지율을 40% 잃습니다.')
-        slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
         print()
 
 class Engineer:
@@ -1565,9 +1597,10 @@ class Engineer:
             slow_print(f'{self.name}이/가 부품을 획득하여 현재 {self.parts}개입니다!')
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가 스패너를 적에게 던집니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         if self.normalname != '평타':
             slow_print(f'{self.name}이/가 스패너에 맞아 방어력이 5 감소합니다!')
             target.de -= 5
@@ -1587,13 +1620,15 @@ class Engineer:
         self.passive(target)
     def damageskill(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2.5)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가 용접용 레이저를 적의 위치에 발사합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         if self.damageskillname != '레이저 용접':
             slow_print(f'{target.name} 주변의 지면이 온도가 급격히 높아져 폭발합니다!')
+            
+            slow_print(f'{target.name}이/가 폭발에 휘말려 {int(damm*1.1)}만큼 피해를 입힙니다!')
             target.dealdamm(damm)
-            slow_print(f'{target.name}이/가 폭발에 휘말려 {int(damm*1.1)}만큼 피해를 입었습니다!')
         print()
         self.mp += self.rmp - 40
         slow_print(f'{self.name}의 마나가 40 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -1664,15 +1699,17 @@ class Engineer:
         else:
             damm = int((self.ad * (100/(100+target.de/2)))*3)
             
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용합니다!')
             
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
             if self.ultimatename == '로켓 발사+':
                 extradamm = int((self.hhp-self.hp)*0.3)
                 slow_print(f'로켓이 폭발했습니다! 폭발이 적이 잃은 체력에 비례한 추가 고정 피해를 입힙니다!')
+                
+                slow_print(f'{self.name}이/가 {extradamm}만큼 피해를 입힙니다!')
                 target.dealdamm(extradamm, self.name)
-                slow_print(f'{self.name}이/가 {extradamm}만큼 피해를 입혔습니다!')
             print()
             self.mp += self.rmp - 100
             slow_print(f'{self.name}의 마나가 100 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -1692,7 +1729,6 @@ class Engineer:
         slow_print(f'[{self.damageskillname}]은/는 용접용 레이저를 적에게 발사하는 공격 스킬입니다. 레이저 용접이 업그레이드되면, 지면을 폭발시켜 추가피해를 입힙니다.')
         slow_print(f'[{self.buffdebuffname}]은/는 업그레이드 메뉴를 여는 (디)버프 스킬입니다. 부품을 사용하여 공격력 또는 방어력을 증가시키거나, 스킬을 업그레이드할 수 있습니다.')
         slow_print(f'[{self.ultimatename}]은/는 로켓을 적에게 발사하는 궁극기입니다. 로켓 발사가 업그레이드되면, 상대의 방어력을 무시하며, 또한 잃은 체력에 비례하는 추가피해를 입힙니다.')
-        slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
         print()
         
 class Musician:
@@ -1767,14 +1803,16 @@ class Musician:
             if self.hp > self.hhp:
                 self.hp = self.hhp
             damm = int((self.ad * (100/(100+target.de)))*2)
-            self.dealdamm(damm, self.name)
+            
             slow_print(f'{self.name}이/가 잔잔한 선율을 연주합니다! 선율이 아름다워 체력이 {heal}만큼 회복됩니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
         elif self.instrument == '바이올린':
             damm = int((self.ad * (100/(100+target.de)))*2 + target.hhp*0.05)
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 강렬한 선율을 쌓아올립니다! 적의 최대체력에 비례한 추가 피해를 입힙니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
         print()
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -1798,14 +1836,16 @@ class Musician:
             if self.hp > self.hhp:
                 self.hp = self.hhp
             damm = int((self.ad * (100/(100+target.de)))*2.5)
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 피아노를 연주합니다! 선율이 더욱 아름다워 체력이 {heal}만큼 회복됩니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
         elif self.instrument == '바이올린':
             damm = int((self.ad * (100/(100+target.de)))*2.5 + target.hhp*0.1)
-            target.dealdamm(damm)
+            
             slow_print(f'{self.name}이/가 바이올린을 연주합니다! 적의 최대체력에 비례한 추가 피해를 입힙니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            target.dealdamm(damm)
         print()
         self.mp += self.rmp - 40
         slow_print(f'{self.name}의 마나가 40 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -1874,10 +1914,11 @@ class Musician:
                 print()
             elif self.instrument == '바이올린':
                 damm = int(target.hhp*0.3)
-                target.dealdamm(damm)
+                
                 target.de = int(target.de*0.7)
                 slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용합니다! 피날레에 들어갑니다! 적의 최대체력의 20%에 해당하는 고정피해를 입히며, 적의 방어력을 영구적으로 10% 감소시킵니다!')
-                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다!')
+                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다!')
+                target.dealdamm(damm)
                 print()
             self.mp += self.rmp - 100
             slow_print(f'{self.name}의 마나가 100 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -1899,15 +1940,13 @@ class Musician:
             slow_print(f'[{self.damageskillname}]은/는 피아노로 아름다운 곡을 연주하여 적에게 피해를 입히는 공격 스킬입니다. 스킬사용시 체력을 100 회복합니다.')
             slow_print(f'[{self.buffdebuffname}]은/는 조화로운 멜로디를 피아노로 연주하는 (디)버프 스킬입니다. 선율이 조화로워 체력이 10% 회복됩니다.')
             slow_print(f'[{self.ultimatename}]은/는 피날레를 피아노로 연주하는 궁극기입니다. 선율이 절정에 달하여 체력이 30% 회복되고, 방어력이 영구적으로 50 증가합니다. 최대 1회 사용 가능합니다.')
-            slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
         elif self.instrument == '바이올린':
             slow_print(f'[{self.passivename}]은/는 공격력이 100 증가하며, 모든 스킬이 적의 최대체력에 비례한 피해를 입히는 패시브입니다.')
             slow_print(f'[{self.normalname}]은/는 바이올린을 연주하여 적에게 피해를 입히는 기본 공격입니다. 또한 적의 최대체력의 5%에 비례한 추가 피해를 입힙니다.')
             slow_print(f'[{self.damageskillname}]은/는 바이올린으로 강렬한 곡을 연주하여 적에게 피해를 입히는 공격 스킬입니다. 또한 적의 최대체력의 10%에 비례한 추가 피해를 입힙니다.')
             slow_print(f'[{self.buffdebuffname}]은/는 조화로운 멜로디를 바이올린으로 연주하는 버프 스킬입니다. 선율이 조화로워 공격력이 50 증가합니다. 공격력 증가는 2턴동안 유지되며, 최대 1회 사용 가능합니다.')
             slow_print(f'[{self.ultimatename}]은/는 피날레를 바이올린으로 연주하는 궁극기입니다. 적의 최대체력의 30%에 해당하는 고정피해를 입히며, 적의 방어력을 영구적으로 30% 감소시킵니다. 최대 1회 사용 가능합니다.')
-            slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
-            
+
 class Pitcher:
     def __init__(self, name):
         self.name, self.team = name, []
@@ -1941,9 +1980,10 @@ class Pitcher:
         slow_print(f'{target.name} {str(self.strikelist[target])} 스트라이크!')
         if self.strikelist[target] == 3:
             damm = int(300 +  self.ad * 0.5)
-            target.dealdamm(damm)
+            
             slow_print(f'{target.name}이/가 삼진아웃되었습니다!')
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 추가피해를 입혔습니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 추가피해를 입힙니다.')
+            target.dealdamm(damm)
             self.strikelist[target] = 0
             self.out += 1
             slow_print(f'{self.out} 아웃!')
@@ -1952,10 +1992,11 @@ class Pitcher:
 
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*1)
-        target.dealdamm(damm)
         slow_print(f'{self.name}이/가 직구를 던집니다!')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
         self.passive(target)
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        
         print()
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -1978,9 +2019,10 @@ class Pitcher:
         else:
             slow_print(f'{self.name}이/가 {target.name}을 향해 {self.damageskillname}을/를 던집니다!')
             damm = int((self.ad * (100/(100+target.de)))*2)
-            self.passive(target)
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
             target.dealdamm(damm)
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+            self.passive(target)
+            
             print()
             self.mp += self.rmp - 50
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -2009,7 +2051,7 @@ class Pitcher:
             self.passive(target)
             damm =  int((self.ad * (100/(100+target.de)))*2)
             target.de -= 10
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다. 또한 {target.name}의 방어력을 10만큼 감소시킵니다.')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다. 또한 {target.name}의 방어력을 10만큼 감소시킵니다.')
             print()
             self.mp += self.rmp - 80
             slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -2065,7 +2107,6 @@ class Pitcher:
         slow_print(f'[{self.damageskillname}]은/는 강속구를 던지는 기본 스킬입니다.')
         slow_print(f'[{self.buffdebuffname}]은/는 포크볼을 던져 피해를 주고 방어력을 감소시키는 (디)버프 스킬입니다.')
         slow_print(f'[{self.ultimatename}]은/는 아웃횟수에 따라 버프를 얻는 궁극기입니다. 최대 1회 사용 가능합니다.')
-        slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
         print()
 
 class Carpenter:
@@ -2114,8 +2155,7 @@ class Carpenter:
             print()
             moreslow_print(self.line[self.resurractingtime])
             if self.resurractingtime == 2:
-                moreslow_print(f'“그가 여기 계시지 않고 살아나셨느니라.”')
-                slow_print(f'{self.name}이/가 무덤에 존재하지 않습니다!')
+                moreslow_print(f'{self.name}이/가 부활하였습니다!')
                 self.ressuractingtime = 0
                 self.resurracting = False
                 self.hp = self.hhp
@@ -2138,10 +2178,10 @@ class Carpenter:
                     self.damageskillname = '못 박기'
                     self.passivename = '고된 업무'
             else:
-                heal += (((((self.hhp - self.hp)/self.hhp)*100)//(self.hhp*0.05))/100*self.hp)
-                if self.hp + heal >= self.hhp:
+                self.hp += 30
+                if self.hp >= self.hhp:
                     self.hp = self.hhp
-                slow_print(f'{self.name}이가 고된 업무 후에 휴식을 취하며 체력을 {heal} 재생했습니다.')
+                slow_print(f'{self.name}이가 고된 업무 후에 휴식을 취하며 체력을 30 재생했습니다.')
                 if self.uturn > 0:
                     self.uturn -= 1
                 if self.bdbturn > 0:
@@ -2162,7 +2202,7 @@ class Carpenter:
             if self.ultimateon == 0:
                 slow_print(f'{self.name}이/가 {target.name}을/를 공격합니다.')
                 damm = int(self.ad * (100/(target.de+100))*1.5)
-                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
                 target.dealdamm(damm)
                 self.passive(target)
                 print()
@@ -2179,7 +2219,7 @@ class Carpenter:
                 moreslow_print('“원수를 사랑하라.”')
                 slow_print(f'{self.name}이/가 {target.name}에게 공격을 시도합니다!')
                 self.passive(target)
-                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
                 target.dealdamm(damm)
                 print()
                 self.mp += self.rmp
@@ -2198,7 +2238,7 @@ class Carpenter:
             if self.ultimateon == 0:
                 slow_print(f'{self.name}이/가 망치로 못을 박습니다!')
                 damm = int(self.ad * (100/(target.de+100))*2)
-                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
                 target.dealdamm(damm)
                 self.passive(target)
                 print()
@@ -2214,7 +2254,7 @@ class Carpenter:
                 damm = int(self.ad * (100/(target.de+100))*3.5)
                 moreslow_print(f'“아버지여, 저들을 사하여 주옵소서.”')
                 slow_print(f'{self.name}이/가 {target.name}을/를 십자가에 매답니다!')
-                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+                slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
                 self.passive(target)
                 target.dealdamm(damm)
                 print()
@@ -2288,13 +2328,11 @@ class Carpenter:
             slow_print(f'[{self.damageskillname}]은/는 못을 박아 적에게 피해를 입히는 기본 스킬입니다.')
             slow_print(f'[{self.buffdebuffname}]은/는 마음을 가다듬어 방어력을 2턴동안 상승시키는 버프 스킬입니다.')
             slow_print(f'{self.ultimatename}은/는 체력이 최대체력의 50% 이하일시 사용 가능합니다. 예수로 각성하며 최대체력과 방어력이 절반 감소하지만, 공격력이 3배 상승하며 행동시 보호막을 얻습니다. 또한 스킬이 모두 업그레이드 됩니다.')
-            slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
         else:
             slow_print(f'[{self.passivename}]은/는 체력이 0에 도달시 3턴에 걸쳐 부활하는 패시브입니다(쿨타임 8턴).')
             slow_print(f'[{self.normalname}]은/는 적에게 공격하는 기본 스킬입니다.')
             slow_print(f'[{self.damageskillname}]은/는 적을 십자가에 매달아 방어력을 소량 무시해 피해를 입히는 공격 스킬입니다.')
             slow_print(f'[{self.buffdebuffname}]은/는 2턴동안 적의 방어력과 공격력을 30 감소시키는 디버프 스킬입니다.')
-            slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
         print()
 
         
@@ -2370,6 +2408,7 @@ class Bodybuilder:
         for i in range(increase+1):
             print(f'\r팀원 모두가 최대체력이 {i} 증가합니다!', end='')
             time.sleep(0.06)
+        time.sleep(0.7)
         print()
         for i in self.team:
             i.hhp += increase
@@ -2377,9 +2416,10 @@ class Bodybuilder:
     def normal(self, target):
         self.warmingup = False
         damm = int((self.ad * (100/(100+target.de)))*2 * self.damageincrease)
-        target.dealdamm(damm)
+        
         slow_print(f'{self.name}이/가 공격을 시도합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힘니다.')
+        target.dealdamm(damm)
         print()
         self.passive(damm)
         self.mp += self.rmp
@@ -2405,8 +2445,9 @@ class Bodybuilder:
             self.warmingup = False
             slow_print(f'{self.name}이/가 200kg 바벨을 휘두릅니다!')
             damm = int((self.ad + 140 + (target.hp/100)*(1+(self.ad*0.03)) + (self.ad*0.55)) * (100/(100+target.de)))
+            
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
             target.dealdamm(damm)
-            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입혔습니다.')
             print()
             self.passive(damm)
             self.mp += self.rmp - 50
@@ -2501,7 +2542,6 @@ class Bodybuilder:
             slow_print(f'[{self.buffdebuffname}]은/는 팀 전체를 운동시켜 영구적으로 최대체력을 증가시키는 버프 스킬입니다.')
         slow_print(f'[{self.ultimatename}]의 기본지속효과는 턴이 돌아올 때마다 팀의 최대체력을 증가시키는 효과입니다.')
         slow_print(f'[{self.ultimatename}]은/는 벌크업을 하여 3턴동안 최대체력을 3000 증가시키는 궁극기입니다.')
-        slow_print(f'(디)버프 및 궁극기 쿨타임을 가집니다.')
         print()
 
 class Dummy:
@@ -2511,3 +2551,140 @@ class Dummy:
         self.hp = self.hhp
     def updateteam(self, team):
         self.team = team
+
+class Baker:
+    def __init__(self,name):
+        self.name, self.team = name, []
+        self.shield = 0
+        self.hhp = 3000
+        self.hp = self.hhp
+        self.ad = 100
+        self.de = 130
+        self.hmp = 295
+        self.mp = self.hmp
+        self.rmp = 8
+        self.bdbturn = 0
+        self.uturn = 0
+        self.turn = 0
+        self.passivename = '빵 데우기'
+        self.normalname = '평타'
+        self.damageskillname = '프랑스식 전술'
+        self.buffdebuffname = '반죽'
+        self.ultimatename = '빵 굽기'
+        self.debufflist = []
+    def dealdamm(self, damage):
+        self.hp -= int(damage)
+    def passive(self, target):
+        self.passiveturn += 1
+        self.ad += self.passiveturn * 2
+    def updateteam(self, team):
+        self.team = team    
+    def normal(self, target):
+        damm = int((self.ad * (100/(100+target.de)))*2)
+        slow_print(f'{self.name}이/가 공격을 시도합니다!')
+        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        target.dealdamm(damm)
+        if target in self.debufflist:
+            slow_print(f'{target.name}이/가 화상 상태입니다! 추가 고정 피해를 입힙니다!')
+            damm = int(self.ad * 1.5)
+            slow_print(f'{self.name}이/가 {damm} 만큼의 추가 고정피해를 입힙니다.')
+            target.dealdamm(damm)
+        print()
+        self.mp += self.rmp
+        slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+        print()
+        if target.hp > 0:
+            slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+        else:
+            slow_print(f'{target.name}이/가 사망하였습니다!')
+            return
+        print()
+        if self.uturn > 0:
+            self.uturn -= 1
+        if self.bdbturn > 0:
+         selself.bdbturn -= 1
+        self.turn += 1
+        self.passive()
+   
+    def damageskill(self, target):
+        if self.mp - 50 < 0:
+            slow_print('사용 가능한 마나가 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        else:
+            damm = int(() * (100/(100+target.de)))
+            target.dealdamm(damm)
+            slow_print(f'{self.name}이/가 {target.name}에게 {self.damageskillname}을/를 사용했습니다!')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            print()
+            self.mp += self.rmp - 50
+            slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            if target.hp > 0:
+                slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+            else:
+                slow_print(f'{target.name}이/가 사망하였습니다!')
+                return
+            print()
+            if self.uturn > 0:
+                self.uturn -= 1
+   
+    def buffdebuff(self, target):
+        if self.mp - 80 < 0 :
+            slow_print('사용 가능한 마나가 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        elif self.bdbturn > 0:
+            slow_print('(디)버프 쿨타임 입니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        else:
+            self.de *= 1.5
+            self.ad *= 1.5
+            slow_print(f'{self.name}이/가 {self.buffdebuffname}을/를 사용합니다!')
+            slow_print(f'{self.name}이/가 영구적으로 방어력과 공격력이 1.5배로 증가합니다.')
+            print()
+            self.mp += self.rmp - 80
+            slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            self.bdbturn += 2
+            self.turn += 1
+            self.passive()
+   
+    def ultimate(self, target):
+        if self.mp - 50 < 0:
+            slow_print('사용 가능한 마나가 없습니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        if self.uturn > 0:
+            slow_print('궁극기 쿨타임 입니다.')
+            slow_print('기본 공격으로 대체됩니다.')
+            print()
+            self.normal(target)
+        else:
+            damm = int()
+            target.dealdamm(damm)
+            slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.damageskillname}을/를 사용했습니다!')
+            slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+            print()
+            self.mp += self.rmp - 50
+            slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            print()
+            if target.hp > 0:
+                slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+            else:
+                slow_print(f'{target.name}이/가 사망하였습니다!')
+                return
+            print()
+   
+    def explanation(self):
+        slow_print(f'[{self.passivename}]은/는 매턴 마다 자기 자신에게 피해를 입히는 패시브입니다.')
+        slow_print(f'[{self.damageskillname}]은/는 오토바이로 대상의 발가락을 밟고가 골절 시키는 기본 스킬입니다.')
+        slow_print(f'[{self.buffdebuffname}]은/는 2턴 동안 방어력이 0.5배가 증가하고 공격력을 2배로 증가시키는 (디)버프 스킬입니다.')
+        slow_print(f'[{self.ultimatename}]은/는 속력에 비례해 상대방에게 들이 박고 3턴 동안 휠체어를 타 방어력을 높이는 궁극기 입니다.')
+        slow_print(f'여러 턴에 걸쳐 피해 및 (디)버프를 거는 스킬은 해당 스킬의 효과가 끝날 때 까지 재사용이 불가능 합니다.')
+        print()        
