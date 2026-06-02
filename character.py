@@ -2,14 +2,85 @@ import random
 from Util import *
 import time
 
-class Fighter:
+class Player:
     def __init__(self, name):
-        self.name, self.team = name, []
+        self.name = name
+        self.team = []
         self.shield = 0
+        self.bdbturn=0
+        self.uturn=0
+        self.turn=0
+        self.bufflist = [] #turn=2/stack=3/target.de -= 10
+        self.crowdcontrol = ['기절', '빙결', '침묵']
+    def updateteam(self, team):
+        self.team = team
+    def endingturn(target):
+        if target.hp > 0:
+            slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
+        else:
+            slow_print(f'{target.name}이/가 사망하였습니다!')
+            return
+        print()
+        self.turn += 1
+    def sortbufflist(self):
+        c = []
+        for buff in self.bufflist:
+            bufftrait = buff.split('/')
+            if bufftrait[3][0] == '*':
+                c.append(buff)
+            else:
+                c.insert(0, buff)
+        self.bufflist = c
+    def bufftimerenewal(self):
+        for buff in self.bufflist:
+            bufftrait = buff.split('/')#버프 이름/지속시간/스택/수치/출력방식
+            bufftrait[1] = str(int(bufftrait[1]) - 1)
+            if bufftrait[1] == '0':
+                self.bufflist.remove(buff)
+                if bufftrait[0] in self.crowdcontrol:
+                    slow_print(f'{self.name}이/가 {bufftrait[0]} 상태에서 풀렸습니다!')
+                    print()
+            else:
+                self.bufflist[self.bufflist.index(buff)] = '/'.join(bufftrait)
+    def buffdo(self):
+        self.de = self.orginalde
+        self.sortbufflist()
+        for buff in self.bufflist:
+            bufftrait = buff.split('/')#버프 이름/지속시간/스택/수치/출력텍스트/감소대상
+            if bufftrait[4] == 1:
+                slow_print_with_end(f'{self.name}이/가 {bufftrait[0]} 상태입니다!\r')
+            if bufftrait[0] in self.crowdcontrol:
+                skipturn = True
+            else:
+                num = 0
+                for x in range(int(bufftrait[2])):
+                    exec(bufftrait[5]+'='+bufftrait[5] + bufftrait[3])
+                    if bufftrait[4] != 'Null':
+                        num += bufftrait[3][1:]
+                        print(bufftrait[4]+str(num)+[' 감소합니다!', ' 증가합니다!'][int(bufftrait[3][0] == '+')], end='')
+                print()
+                    
+            print()
+                    
+        if skipturn:
+            slow_print(f'{self.name}이/가 군중 제어 상태로 인해 행동할 수 없습니다!')
+            moreslow_print(f'{self.name}의 턴이 넘어갑니다...')
+            print()
+            return True
+        else:
+            return False
+            
+        
+        
+            
+            
+class Fighter(Player):
+    def __init__(self):
         self.hhp = 4908
         self.hp = self.hhp
         self.ad = 407
         self.de = 163
+        self.originalde = self.de
         self.hmp = 295
         self.mp = self.hmp
         self.rmp = 8
@@ -38,13 +109,7 @@ class Fighter:
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        if target.hp > 0:
-            slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
-        else:
-            slow_print(f'{target.name}이/가 사망하였습니다!')
-            return
-        print()
-        self.turn += 1
+                self.endingturn(target)
         self.passive()
 
     
@@ -166,16 +231,15 @@ class Fighter:
 
 
 
-class Gambler:
+class Gambler(Player):
     
-    def __init__(self, name):
-        self.name, self.team = name, []
-        self.team = team
+    def __init(self):
         self.hhp = random.randint(1670, 3388)
         self.hp = self.hhp
         self.ad = 0
         self.shield = 0
         self.de = random.randint(93, 126)
+        self.originalde = self.de
         self.hmp = 0
         self.mp = 0
         self.rmp = 0
@@ -412,13 +476,12 @@ class Gambler:
 
 
 class Naturalist:
-    def __init__(self, name,team):
-        self.name, self.team = name, []
-        self.team = team
+    def __init__(self):
         self.hhp = 2109
         self.hp = self.hhp
         self.ad = 89
         self.de = 104
+        self.orginalde = self.de
         self.hmp = 365
         self.mp = self.hmp
         self.rmp = 11
@@ -585,14 +648,15 @@ class Naturalist:
 
 
 
-class Blackdeath:
-    def __init__(self, name):
-        self.name, self.team = name, []
+class Blackdeath(Player):
+    def __init(self):
+        
         self.hhp = 4682
         self.hp = self.hhp
         self.shield = 0
         self.ad = 120
         self.de = 160
+        self.orginalde = self.de
         self.hmp = 330
         self.mp = self.hmp
         self.rmp = 8
@@ -628,13 +692,7 @@ class Blackdeath:
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        if target.hp > 0:
-            slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
-        else:
-            slow_print(f'{target.name}이/가 사망하였습니다!')
-            return
-        print()
-        self.turn += 1
+                self.endingturn(target)
         self.passive()
 
     
@@ -735,13 +793,15 @@ class Blackdeath:
 
 
 
-class Rider:
-    def __init__(self, name):
-        self.namee = name
+class Rider(Player):
+    def __init(self):
+        
+        
         self.hhp = 4410
         self.hp = self.hhp
         self.ad = 421
         self.de = 124
+        self.originalde = self.de
         self.hmp = 280
         self.mp = self.hmp
         self.rmp = 7
@@ -876,13 +936,14 @@ class Rider:
 
 
 
-class Harrypotter:
-    def __init__(self, name):
-        self.name, self.team = name, []
+class Harrypotter(Player):
+    def __init(self):
+        
         self.hhp = 4410
         self.hp = self.hhp
         self.ad = 421
         self.de = 124
+        self.originalde = self.de
         self.hmp = 280
         self.mp = self.hmp
         self.rmp = 7
@@ -1020,13 +1081,14 @@ class Harrypotter:
 
 
 
-class Chemist:
-    def __init__(self, name):
-        self.name, self.team = name, []
+class Chemist(Player):
+    def __init(self):
+        
         self.hhp = 2500
         self.hp = self.hhp
         self.ad = 200
         self.de = 100
+        self.originalde = self.de
         self.hmp = 300
         self.mp = self.hmp
         self.rmp = 20
@@ -1171,13 +1233,14 @@ class Chemist:
         slow_print(f'[{self.ultimatename}]은/는 저장된 화합물을 모두 반응시키는 궁극기 입니다. 화합물의 종류에 따라 다른 반응이 일어나며, 반응이 일어날 때마다 적에게 피해를 입힙니다.')
         print()
 
-class ChessPlayer:
-    def __init__(self, name):
-        self.name, self.team = name, []
+class ChessPlayer(Player):
+    def __init(self):
+        
         self.hhp = 2000
         self.hp = self.hhp
         self.ad = 80
         self.de = 100
+        self.originalde = self.de
         self.hmp = 200
         self.mp = self.hmp
         self.rmp = 20
@@ -1363,13 +1426,14 @@ class ChessPlayer:
         print()
 
 
-class Politician:
-    def __init__(self, name):
-        self.name, self.team = name, []
+class Politician(Player):
+    def __init(self):
+        
         self.hhp = 2200
         self.hp = self.hhp
         self.ad = 150
         self.de = 100
+        self.originalde = self.de
         self.hmp = 250
         self.mp = self.hmp
         self.shield = 0
@@ -1565,13 +1629,14 @@ class Politician:
         slow_print(f'[{self.ultimatename}]은/는 대선 토론을 여는 궁극기입니다. 다음 3턴동안 공격이 방어력을 무시하며, 3턴 후 입힌 피해량에 따라 지지율이 변동합니다. 입힌 피해량이 상대보다 많다면 지지율을 40% 획득하며, 적보다 피해량이 적다면 지지율을 40% 잃습니다.')
         print()
 
-class Engineer:
-    def __init__(self, name):
-        self.name, self.team = name, []
+class Engineer(Player):
+    def __init(self):
+        
         self.hhp = 2400
         self.hp = self.hhp
         self.ad = 120
         self.de = 100
+        self.orginalde = self.de
         self.hmp = 200
         self.mp = self.hmp
         self.rmp = 20
@@ -1731,13 +1796,14 @@ class Engineer:
         slow_print(f'[{self.ultimatename}]은/는 로켓을 적에게 발사하는 궁극기입니다. 로켓 발사가 업그레이드되면, 상대의 방어력을 무시하며, 또한 잃은 체력에 비례하는 추가피해를 입힙니다.')
         print()
         
-class Musician:
-    def __init__(self, name):
-        self.name, self.team = name, []
+class Musician(Player):
+    def __init(self):
+        
         self.hhp = 1800
         self.hp = self.hhp
         self.ad = 100
         self.de = 100
+        self.originalde = self.de
         self.hmp = 300
         self.mp = self.hmp
         self.rmp = 20
@@ -1947,13 +2013,14 @@ class Musician:
             slow_print(f'[{self.buffdebuffname}]은/는 조화로운 멜로디를 바이올린으로 연주하는 버프 스킬입니다. 선율이 조화로워 공격력이 50 증가합니다. 공격력 증가는 2턴동안 유지되며, 최대 1회 사용 가능합니다.')
             slow_print(f'[{self.ultimatename}]은/는 피날레를 바이올린으로 연주하는 궁극기입니다. 적의 최대체력의 30%에 해당하는 고정피해를 입히며, 적의 방어력을 영구적으로 30% 감소시킵니다. 최대 1회 사용 가능합니다.')
 
-class Pitcher:
-    def __init__(self, name):
-        self.name, self.team = name, []
+class Pitcher(Player):
+    def __init(self):
+        
         self.hhp = 2200
         self.hp = self.hhp
         self.ad = 200
         self.de = 120
+        self.originalde = self.de
         self.shield = 0
         self.hmp = 300
         self.mp = self.hmp
@@ -2001,13 +2068,7 @@ class Pitcher:
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        if target.hp > 0:
-            slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
-        else:
-            slow_print(f'{target.name}이/가 사망하였습니다!')
-            return
-        print()
-        self.turn += 1
+                self.endingturn(target)
 
     
     def damageskill(self, target):
@@ -2109,13 +2170,14 @@ class Pitcher:
         slow_print(f'[{self.ultimatename}]은/는 아웃횟수에 따라 버프를 얻는 궁극기입니다. 최대 1회 사용 가능합니다.')
         print()
 
-class Carpenter:
-    def __init__(self, name):
-        self.name, self.team = name, []
+class Carpenter(Player):
+    def __init(self):
+        
         self.hhp = 4000
         self.hp = self.hhp
         self.ad = 80
         self.de = 120
+        self.originalde = self.de
         self.hmp = 200
         self.mp = self.hmp
         self.rmp = 20
@@ -2336,14 +2398,15 @@ class Carpenter:
         print()
 
         
-class Bodybuilder:
-    def __init__(self, name):
-        self.name, self.team = name, []
+class Bodybuilder(Player):
+    def __init(self):
+        
         self.shield = 0
         self.hhp = 3000
         self.hp = self.hhp
         self.ad = 100
         self.de = 130
+        self.orginalde = self.de
         self.hmp = 295
         self.mp = self.hmp
         self.rmp = 8
@@ -2425,13 +2488,7 @@ class Bodybuilder:
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        if target.hp > 0:
-            slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
-        else:
-            slow_print(f'{target.name}이/가 사망하였습니다!')
-            return
-        print()
-        self.turn += 1
+        self.endingturn(target)
 
 
     
@@ -2453,20 +2510,12 @@ class Bodybuilder:
             self.mp += self.rmp - 50
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-            if target.hp > 0:
-                slow_print(f'{target.name}의 체력이 {target.hp} 남았습니다.')
-            else:
-                slow_print(f'{target.name}이/가 사망하였습니다!')
-                return
-            print()
-            self.turn += 1
+            self.endingturn(target)
 
     def buffdebuff(self, target):
         if self.warmingup:
             slow_print(f'{self.name}이/가 몸을 풉니다!')
-            time.sleep(1)
-            print(f'\r최대체력이 {0} 증가합니다!', end='')
-            time.sleep(0.7)
+            slow_print_with_end(f'\r최대체력이 {0} 증가합니다!')
             for i in range(101):
                 print(f'\r최대체력이 {i} 증가합니다!', end='')
                 time.sleep(0.02)
@@ -2494,7 +2543,12 @@ class Bodybuilder:
                 for i in self.team:
                     i.hhp += increase
                     i.hp += increase
-                    slow_print(f'{i.name}이/가 트레이닝의 결과로 영구적으로 최대체력이 {increase} 증가합니다!')
+                    slow_print_with_end(f'{i.name}이/가 트레이닝의 결과로 영구적으로 최대체력이 {0} 증가합니다!')
+                    for x in range(increase+1):
+                        print(f'\r{i.name}이/가 트레이닝의 결과로 영구적으로 최대체력이 {x} 증가합니다!', end='')
+                        time.sleep(0.02)
+                    time.sleep(0.7)
+                    print()
                 self.bdbturn += 5
                 
                 
@@ -2515,14 +2569,13 @@ class Bodybuilder:
             self.warmingup = False
             slow_print(f'{self.name}이/가 벌크업 합니다!')
             slow_print(f'{self.name}의 최대체력이 3턴동안 3000 증가합니다!')
-            time.sleep(1)
-            print(f'\r{self.name}의 체력이 {self.hp}({self.hhp}) 남았습니다!', end='')
-            time.sleep(0.5)
+            slow_print_with_end(f'\r{self.name}의 체력이 {self.hp}({self.hhp}) 남았습니다!', end='')
             for x in range(100):
                 print(f'\r{self.name}의 체력이 {self.hp}({self.hhp}) 남았습니다!', end='')
                 self.hp += 30
                 self.hhp += 30
                 time.sleep(0.04)
+            time.sleep(0.7)
             print()
             self.passive(0)
             self.mp += self.rmp - 100
@@ -2544,22 +2597,23 @@ class Bodybuilder:
         slow_print(f'[{self.ultimatename}]은/는 벌크업을 하여 3턴동안 최대체력을 3000 증가시키는 궁극기입니다.')
         print()
 
-class Dummy:
-    def __init__(self, name):
-        self.name, self.team = name, []
+class Dummy(Player):
+    def __init(self):
+        
         self.hhp = 10000
         self.hp = self.hhp
     def updateteam(self, team):
         self.team = team
 
-class Baker:
-    def __init__(self,name):
-        self.name, self.team = name, []
+class Baker(Player):
+    def __init(self):
+        
         self.shield = 0
         self.hhp = 3000
         self.hp = self.hhp
         self.ad = 100
         self.de = 130
+        self.orginalde = self.de
         self.hmp = 295
         self.mp = self.hmp
         self.rmp = 8

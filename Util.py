@@ -12,7 +12,12 @@ def moreslow_print(text, delay = 0.1):
         time.sleep(delay)
     print()
 
-
+def slow_print_with_end(text,delay=0.02):
+    time.sleep(1)
+    for char in text:
+        print(char, end='', flush = True)
+        time.sleep(delay)
+    time.sleep(0.7)
 
 
 #모든 캐릭터 [도박꾼, 격투가, 자연술사, 흑사병 보균자, 화학자, 체스선수, 정치인, 엔지니어, 음악가, 투수, 목수, 보디빌더
