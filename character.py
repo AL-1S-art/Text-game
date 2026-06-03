@@ -7,9 +7,9 @@ class Player:
         self.name = name
         self.team = []
         self.shield = 0
-        self.bdbturn=0
-        self.uturn=0
-        self.turn=0
+        self.bdbturn = 0
+        self.uturn = 0
+        self.turn = 0
         self.bufflist = [] #turn=2/stack=3/target.de -= 10
         self.crowdcontrol = ['기절', '빙결', '침묵']
     def updateteam(self, team):
@@ -43,10 +43,11 @@ class Player:
             else:
                 self.bufflist[self.bufflist.index(buff)] = '/'.join(bufftrait)
     def buffdo(self):
-        self.de = self.orginalde
+        self.de = self.originalde
+        self.ad = self.originalad
         self.sortbufflist()
         for buff in self.bufflist:
-            bufftrait = buff.split('/')#버프 이름/지속시간/스택/수치/출력텍스트/감소대상
+            bufftrait = buff.split('/')#버프 이름/지속시간/스택/수치/출력여부/감소대상
             if bufftrait[4] == 1:
                 slow_print_with_end(f'{self.name}이/가 {bufftrait[0]} 상태입니다!\r')
             if bufftrait[0] in self.crowdcontrol:
@@ -57,14 +58,14 @@ class Player:
                     exec(bufftrait[5]+'='+bufftrait[5] + bufftrait[3])
                     if bufftrait[4] != 'Null':
                         num += bufftrait[3][1:]
-                        print(bufftrait[4]+str(num)+[' 감소합니다!', ' 증가합니다!'][int(bufftrait[3][0] == '+')], end='')
+                        slow_print_with_end(f'{self.name}이/가 {bufftrait[0]}으로 인해 {bufftrait[5]}이/가 {num}만큼 {"감소" if bufftrait[3][0] == "-" else "증가"}합니다!\r')
                 print()
                     
             print()
                     
         if skipturn:
             slow_print(f'{self.name}이/가 군중 제어 상태로 인해 행동할 수 없습니다!')
-            moreslow_print(f'{self.name}의 턴이 넘어갑니다...')
+            slow_print(f'{self.name}의 턴이 넘어갑니다...')
             print()
             return True
         else:
@@ -75,12 +76,13 @@ class Player:
             
             
 class Fighter(Player):
-    def __init__(self):
+    def __init__(self,name):
         self.hhp = 4908
         self.hp = self.hhp
         self.ad = 407
         self.de = 163
         self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 295
         self.mp = self.hmp
         self.rmp = 8
@@ -92,6 +94,7 @@ class Fighter(Player):
         self.damageskillname = '훅'
         self.buffdebuffname = '배면기'
         self.ultimatename = '오라러쉬'
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
     def updateteam(self, team):
@@ -109,7 +112,7 @@ class Fighter(Player):
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-                self.endingturn(target)
+        self.endingturn(target)
         self.passive()
 
     
@@ -233,13 +236,14 @@ class Fighter(Player):
 
 class Gambler(Player):
     
-    def __init(self):
+    def __init__(self):
         self.hhp = random.randint(1670, 3388)
         self.hp = self.hhp
         self.ad = 0
         self.shield = 0
         self.de = random.randint(93, 126)
         self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 0
         self.mp = 0
         self.rmp = 0
@@ -251,6 +255,7 @@ class Gambler(Player):
         self.damageskillname = '???'
         self.buffdebuffname = '???'
         self.ultimatename = '???'
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
     def updateteam(self, team):
@@ -475,13 +480,14 @@ class Gambler(Player):
 
 
 
-class Naturalist:
+class Naturalist(Player):
     def __init__(self):
         self.hhp = 2109
         self.hp = self.hhp
         self.ad = 89
         self.de = 104
-        self.orginalde = self.de
+        self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 365
         self.mp = self.hmp
         self.rmp = 11
@@ -496,6 +502,7 @@ class Naturalist:
         self.ultimatename = '퇴적층 생성'
         self.bdbtarget = []
         self.utarget = []        
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
     def passive(self):
@@ -656,7 +663,8 @@ class Blackdeath(Player):
         self.shield = 0
         self.ad = 120
         self.de = 160
-        self.orginalde = self.de
+        self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 330
         self.mp = self.hmp
         self.rmp = 8
@@ -671,6 +679,7 @@ class Blackdeath(Player):
         self.ultimatename = '항생제' #대상을 지정해 흑사병을 치료(최대 3번)
         self.bdbtarget = []
         self.utarget = []
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
     def passive(self):
@@ -692,7 +701,7 @@ class Blackdeath(Player):
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-                self.endingturn(target)
+        self.endingturn(target)
         self.passive()
 
     
@@ -802,6 +811,7 @@ class Rider(Player):
         self.ad = 421
         self.de = 124
         self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 280
         self.mp = self.hmp
         self.rmp = 7
@@ -815,6 +825,7 @@ class Rider(Player):
         self.damageskillname = '발가락 골절' #상대를 밟고 간다
         self.buffdebuffname = '윌리' #앞바퀴를 들어올려 방어력을 낮추고 공격력을 높임
         self.ultimatename = '준자살' #교통사고 속력 비례 대미지 입히고 3턴동안 휠체어를 타서 방어력을 높인다
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
     def passive(self, target):
@@ -944,6 +955,7 @@ class Harrypotter(Player):
         self.ad = 421
         self.de = 124
         self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 280
         self.mp = self.hmp
         self.rmp = 7
@@ -957,6 +969,7 @@ class Harrypotter(Player):
         self.buffdebuffname = '프루타이고' #3턴 동안 마법 보호막 생성해서 데미지 감소
         self.ultimatename = '아부다카다브라' #1턴 마비
         self.shield = 0
+        super().__init__(name)
     def dealdamm(self, damage):
         if self.shield > 0:
             slow_print(f'마법 보호막이 피해를 대신 받았습니다!')
@@ -1089,6 +1102,7 @@ class Chemist(Player):
         self.ad = 200
         self.de = 100
         self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 300
         self.mp = self.hmp
         self.rmp = 20
@@ -1105,6 +1119,7 @@ class Chemist(Player):
         self.compoundlist = []
         self.reactionlist = ['O2 + H2', 'H2O + Na']
         self.productlist = {'O2 + H2':'H2O', 'H2O + Na':'H2'}
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
     def passive(self, target):
@@ -1241,6 +1256,7 @@ class ChessPlayer(Player):
         self.ad = 80
         self.de = 100
         self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 200
         self.mp = self.hmp
         self.rmp = 20
@@ -1258,6 +1274,7 @@ class ChessPlayer(Player):
         self.shield = 0
         self.castlingused = False
         self.square = 3
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
     def updateteam(self, team):
@@ -1434,6 +1451,7 @@ class Politician(Player):
         self.ad = 150
         self.de = 100
         self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 250
         self.mp = self.hmp
         self.shield = 0
@@ -1453,6 +1471,7 @@ class Politician(Player):
         self.opptotaldamm = 0
         self.ultimateturn = 0
         self.supportused = False
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
     def updateteam(self, team):
@@ -1636,7 +1655,8 @@ class Engineer(Player):
         self.hp = self.hhp
         self.ad = 120
         self.de = 100
-        self.orginalde = self.de
+        self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 200
         self.mp = self.hmp
         self.rmp = 20
@@ -1652,6 +1672,7 @@ class Engineer(Player):
         self.ultimatename = '로켓 발사' #.메가와트급 레이저를 적에게 발사합니다.
         self.parts = 0
         self.upgradelist = ['공격력 20 증가', '방어력 20 증가', '평타+', '레이저 용접+', '로켓 발사+', '설명']
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
     def updateteam(self, team):
@@ -1804,6 +1825,7 @@ class Musician(Player):
         self.ad = 100
         self.de = 100
         self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 300
         self.mp = self.hmp
         self.rmp = 20
@@ -1821,6 +1843,7 @@ class Musician(Player):
         self.ultimateused = False
         self.bdbtime = 0
         self.passive()
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
     def updateteam(self, team):
@@ -2021,6 +2044,7 @@ class Pitcher(Player):
         self.ad = 200
         self.de = 120
         self.originalde = self.de
+        self.originalad = self.ad
         self.shield = 0
         self.hmp = 300
         self.mp = self.hmp
@@ -2036,6 +2060,7 @@ class Pitcher(Player):
         self.strikelist = {}
         self.out = 0
         self.ultimateused = False
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
     def updateteam(self, team):
@@ -2068,7 +2093,7 @@ class Pitcher(Player):
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-                self.endingturn(target)
+        self.endingturn(target)
 
     
     def damageskill(self, target):
@@ -2178,6 +2203,7 @@ class Carpenter(Player):
         self.ad = 80
         self.de = 120
         self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 200
         self.mp = self.hmp
         self.rmp = 20
@@ -2199,6 +2225,7 @@ class Carpenter(Player):
         self.oad = 120
         self.bdbtime = 0
         self.line = ['그리스도께서 우리 죄를 위하여 죽으시고','장사 지낸 바 되셨다가','성경대로 사흘 만에 다시 살아나사']
+        super().__init__(name)
     def dealdamm(self, damage):
         if not self.resurracting:
             self.shield -= int(damage)
@@ -2406,7 +2433,8 @@ class Bodybuilder(Player):
         self.hp = self.hhp
         self.ad = 100
         self.de = 130
-        self.orginalde = self.de
+        self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 295
         self.mp = self.hmp
         self.rmp = 8
@@ -2424,6 +2452,7 @@ class Bodybuilder(Player):
         self.ad = self.ad + self.hhp // 60
         self.utime = 0
         self.wtime = 0
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
         self.hhp += int(damage // 10)
@@ -2602,6 +2631,7 @@ class Dummy(Player):
         
         self.hhp = 10000
         self.hp = self.hhp
+        super().__init__(name)
     def updateteam(self, team):
         self.team = team
 
@@ -2613,7 +2643,8 @@ class Baker(Player):
         self.hp = self.hhp
         self.ad = 100
         self.de = 130
-        self.orginalde = self.de
+        self.originalde = self.de
+        self.originalad = self.ad
         self.hmp = 295
         self.mp = self.hmp
         self.rmp = 8
@@ -2626,6 +2657,7 @@ class Baker(Player):
         self.buffdebuffname = '반죽'
         self.ultimatename = '빵 굽기'
         self.debufflist = []
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
     def passive(self, target):
