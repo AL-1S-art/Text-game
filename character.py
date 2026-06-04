@@ -2,6 +2,37 @@ import random
 from Util import *
 import time
 
+
+
+class Buff:
+    def __init__(self, name, bufftype, duration, stack, value, variant):
+        self.name = name
+        self.type = bufftype
+        self.duration = duration
+        self.stack = stack
+        self.value = value
+        self.variant = variant
+        self.bufftype = bufftype
+    def buffrenewal(self):
+        self.duration -= 1
+    def buffdo(self, target):
+        slow_print(f'{target.name}이/가 {self.name} 상태입니다!')
+        if self.bufftype == 'cc':
+            pass
+        elif self.bufftype == 'dot':
+            totaldamm = 0
+            slow_print_with_end(f'\r{target.name}이/가 {abs(int(self.value))}만큼 피해를 입습니다!')
+            time.sleep(0.1)
+            for x in range(self.stack):
+                print(f'\r{target.name}이/가 {abs(int(self.value))} x {x+1} 만큼 피해를 입습니다!', end='', flush=True)
+                target.dealdamm(self.value)
+                time.sleep(0.1)
+            time.sleep(0.3)
+            print()
+        elif self.bufftype == 'statischange':
+            eval(f'target.self.variant = target.self.variant{self.value}')
+        self.buffrenewal()
+        
 class Player:
     def __init__(self, name):
         self.name = name
@@ -10,8 +41,8 @@ class Player:
         self.bdbturn = 0
         self.uturn = 0
         self.turn = 0
-        self.bufflist = [] #turn=2/stack=3/target.de -= 10
-        self.crowdcontrol = ['기절', '빙결', '침묵']
+        self.bufflist = []
+        self.skipturn = False
     def updateteam(self, team):
         self.team = team
     def endingturn(target):
@@ -22,48 +53,19 @@ class Player:
             return
         print()
         self.turn += 1
-    def sortbufflist(self):
-        c = []
+    def startingturn(self):
+        self.skipturn = False
         for buff in self.bufflist:
-            bufftrait = buff.split('/')
-            if bufftrait[3][0] == '*':
-                c.append(buff)
+            if buff.duration > 0:
+                if buff.type == 'cc':
+                    self.skipturn = True
+                buff.buffdo(self)
             else:
-                c.insert(0, buff)
-        self.bufflist = c
-    def bufftimerenewal(self):
-        for buff in self.bufflist:
-            bufftrait = buff.split('/')#버프 이름/지속시간/스택/수치/출력방식
-            bufftrait[1] = str(int(bufftrait[1]) - 1)
-            if bufftrait[1] == '0':
-                self.bufflist.remove(buff)
-                if bufftrait[0] in self.crowdcontrol:
-                    slow_print(f'{self.name}이/가 {bufftrait[0]} 상태에서 풀렸습니다!')
-                    print()
-            else:
-                self.bufflist[self.bufflist.index(buff)] = '/'.join(bufftrait)
-    def buffdo(self):
-        self.de = self.originalde
-        self.ad = self.originalad
-        self.sortbufflist()
-        for buff in self.bufflist:
-            bufftrait = buff.split('/')#버프 이름/지속시간/스택/수치/출력여부/감소대상
-            if bufftrait[4] == 1:
-                slow_print_with_end(f'{self.name}이/가 {bufftrait[0]} 상태입니다!\r')
-            if bufftrait[0] in self.crowdcontrol:
-                skipturn = True
-            else:
-                num = 0
-                for x in range(int(bufftrait[2])):
-                    exec(bufftrait[5]+'='+bufftrait[5] + bufftrait[3])
-                    if bufftrait[4] != 'Null':
-                        num += bufftrait[3][1:]
-                        slow_print_with_end(f'{self.name}이/가 {bufftrait[0]}으로 인해 {bufftrait[5]}이/가 {num}만큼 {"감소" if bufftrait[3][0] == "-" else "증가"}합니다!\r')
-                print()
+                slow_print(f'{self.name}의 {buff.name} 상태가 해제되었습니다!')
+                self.bufflist.remove(buff)           
+    
                     
-            print()
-                    
-        if skipturn:
+        if self.skipturn:
             slow_print(f'{self.name}이/가 군중 제어 상태로 인해 행동할 수 없습니다!')
             slow_print(f'{self.name}의 턴이 넘어갑니다...')
             print()
