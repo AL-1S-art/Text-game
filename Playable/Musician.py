@@ -26,8 +26,8 @@ class Musician(Player):
         self.instrument = ''
         self.ultimateused = False
         self.bdbtime = 0
-        self.passive()
         super().__init__(name)
+        self.passive()
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -36,8 +36,7 @@ class Musician(Player):
             slow_print(f'{self.name}이/가 사망하였습니다!')
             return
         print()
-    def updateteam(self, team):
-        self.team = team
+    
     def passive(self):
         if self.instrument == '':
             print(f'{self.name}이/가 악기를 선택합니다!')
@@ -50,6 +49,7 @@ class Musician(Player):
                     break
             if self.instrument == '피아노':
                 self.hhp += 2500
+                self.ultimatetarget = 'self'
                 self.hp += 2500
                 self.de += 50
                 self.passivename = '악기 전문가 - 피아노'
@@ -61,6 +61,7 @@ class Musician(Player):
                 print()
             elif self.instrument == '바이올린':
                 self.ad += 100
+                self.ultimatetarget = 'enemy'
                 self.passivename = '악기 전문가 - 바이올린'
                 self.normalname = '평타'
                 self.damageskillname = '바이올린 협주곡 제1번'

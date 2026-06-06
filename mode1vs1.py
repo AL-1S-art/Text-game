@@ -46,9 +46,7 @@ player2_character = []
 player1 = Fighter(f'{player1_name}')
 player2 = Fighter(f'{player2_name}')
 players = []
-players.append(player1)
-players.append(player2)
-random.shuffle(players)
+
 def player1_pick():
     global player1
     character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]','[목수]', '[보디빌더]']
@@ -88,6 +86,7 @@ def player1_pick():
     elif pick == '보디빌더':
         player1 = Bodybuilder(f'{player1_name}')
     print()
+    players.append(player1)
 
 
 
@@ -131,22 +130,16 @@ def player2_pick():
         player2 = Carpenter(f'{player2_name}')
     elif pick == '보디빌더':
         player2 = Bodybuilder(f'{player2_name}')
+    players.append(player2)
     print()
 
 
-
+random.shuffle(players)
 team1 = []
 team2 = []
 teams = []
 teams.append(team1)
 teams.append(team2)
-for x in range(len(players)):
-    teams[x%(len(teams))].append(players[x])
-for i in team1:
-    i.updateteam(team1)
-for i in team2:
-    i.updateteam(team2)
-
 slow_print(f'{player1_name}의 캐릭터 선택 차례입니다.')
 print()
 player1_pick()
@@ -155,13 +148,22 @@ slow_print(f'{player2_name}의 캐릭터 선택 차례입니다.')
 print()
 player2_pick()
 print()
+for x in range(len(players)):
+    teams[x%(len(teams))].append(players[x])
 
 
-teamlist = {}
+
+
+
+random.shuffle(teams)
+teamlist = []
 cnt = 0
 for team in teams:
-    teamlist['team'+str(cnt)] = team
-teamnamelist = list(teamlist.keys())
+    teamlist.append('team'+str(cnt+1))
+for i in team1:
+    i.updateteam(team1,teams,teamlist)
+for i in team2:
+    i.updateteam(team2,teams,teamlist)
 slow_print(f'각 플레이어와 캐릭터를 확인하세요!')
 print()
 print(f'{player1_name}: {player1_character[0]}')
@@ -186,7 +188,7 @@ time.sleep(5)
 
 slow_print(f'게임을 시작합니다!')
 print()
-slow_print(f'순서는 {teamnamelist} 입니다.')
+slow_print(f'순서는 {teamlist} 입니다.')
 while 1:
     for x in range(len(teams[0])):
         for team in teams:

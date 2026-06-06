@@ -3,7 +3,6 @@ from Util import *
 import time
 
 
-
 class Buff:
     def __init__(self, name, bufftype, duration, stack, value, variant):
         self.name = name
@@ -42,21 +41,57 @@ class Player:
         self.turn = 0
         self.bufflist = []
         self.skipturn = False
-    def updateteam(self, team):
+        self.normaltarget = 'enemy'
+        self.damageskilltarget = 'enemy'
+        self.buffskilltarget = 'self'
+        self.ultimatetarget = 'enemy'
+    def updateteam(self, team,teams,teamlist):
         self.team = team
-    
-    def endingturn(self,target):
+        self.teams = teams
+        self.teamlist = teamlist
+    def endingturn(self):
         self.turn += 1
-        global teams
-        for team in teams:
+        for team in self.teams:
             print(f'{team}')
             for player in team:
                 print(f'{player.name}, {player.name}의 현재 상태')
                 print()
-                print(f'{player.name}: {player.character[0]}')
+                print(f'{player.name}: {player.__class__.__name__[0]}')
                 print(f'체력/보호막: [ {player.hp}({player.hhp}) / {player.shield} ], 마나: [ {player.mp} / {player.hmp} ] ')
                 print(f'공격력 / 방어력: [ {player.ad} / {player.de} ]')
                 print()
+    def settarget(self,targetrange):
+        targetname = []
+        if targetrange == 'self':
+            return self
+        elif targetrange == 'team':
+            slow_print('스킬 사용 대상을 지정해 주십시오')
+            for teammate in self.team:
+                slow_print_with_end(f'[{teammate.name}], ')
+                targetname.append(f'{teammate.name}')
+            print()
+            while 1:
+                target = input()
+                if target in targetname:
+                    return self.team[targetname.index(target)]
+        elif targetrange == 'enemy':
+            targets = []
+            teamlist1 = self.teamlist
+            teams1 = self.teams
+            del teamlist1[teams1.index(self.team)]
+            teams1.remove(self.team)
+            slow_print('스킬 사용 대상을 지정해 주십시오')
+            for team in teams1:
+                slow_print_with_end(f'{teamlist1[teams1.index(team)]}: ')
+                for enemy in team:
+                    slow_print_with_end(f'[{enemy.name}] ')
+                    targetname.append(f'{enemy.name}')
+                    targets.append(enemy)
+            print()
+            while 1:
+                target = input()
+                if target in targetname:
+                    return targets[targetname.index(target)]
     def startingturn(self):
         self.skipturn = False
         for buff in self.bufflist:
@@ -78,99 +113,42 @@ class Player:
             self.passive(self)
         
         else:
-            slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
-
-            if self.bdbturn == 0:
-                if self.uturn == 0:
-                    slow_print(f'[{self.normalname}], [{self.damageskillname}], [{self.buffdebuffname}], [{self.ultimatename}], [설명]')
-                if self.uturn > 0:
-                    slow_print(f'[{self.normalname}], [{self.damageskillname}], [{self.buffdebuffname}], [설명]')
-            elif self.bdbturn > 0:
-                if self.uturn == 0:
-                    slow_print(f'[{self.normalname}], [{self.damageskillname}], [{self.ultimatename}], [설명]')
-                if self.uturn > 0:
-                    slow_print(f'[{self.normalname}], [{self.damageskillname}], [설명]')
-
-            attact_pick = input()
-
-            if self.normalname in attact_pick:
-                self.normal(self)
-            elif self.damageskillname in attact_pick:
-                self.damageskill(self)
-            elif self.buffdebuffname in attact_pick:
-                self.buffdebuff(self)
-                if not '[보디빌더]' in self.__class__.__name__ or not self.warmingup:
-                    slow_print(f'다시 {self.name}의 차례 입니다.')
-                    slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
-
-                    if self.uturn == 0:
-                        slow_print(f'[{self.normalname}], [{self.damageskillname}], [{self.ultimatename}]')
-                    if self.uturn > 0:
-                        slow_print(f'[{self.normalname}], [{self.damageskillname}]')
-
-                    attact_pick = input()
-
-                    if self.normalname in attact_pick:
-                        self.normal(self)
-                    elif self.damageskillname in attact_pick:
-                        self.damageskill(self)
-                    elif self.ultimatename in attact_pick:
-                        self.ultimate(self)
-
-            elif self.ultimatename in attact_pick:
-                self.ultimate(self)
-            elif '설명' in attact_pick:
-                self.explanation()
-
-                slow_print(f'{self.name}의 차례 입니다.')
-                slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
-
-                if self.bdbturn == 0:
-                    if self.uturn == 0:
-                        slow_print(f'[{self.normalname}], [{self.damageskillname}], [{self.buffdebuffname}], [{self.ultimatename}]')
-                    if self.uturn > 0:
-                        slow_print(f'[{self.normalname}], [{self.damageskillname}], [{self.buffdebuffname}]')
-                elif self.bdbturn > 0:
-                    if self.uturn == 0:
-                        slow_print(f'[{self.normalname}], [{self.damageskillname}], [{self.ultimatename}]')
-                    if self.uturn > 0:
-                        slow_print(f'[{self.normalname}], [{self.damageskillname}]')
-
-                attact_pick = input()
-
-                if self.normalname in attact_pick:
-                    self.normal(self)
-                elif self.damageskillname in attact_pick:
-                    self.damageskill(self)
-                elif self.buffdebuffname in attact_pick:
-                    self.buffdebuff(self)
-
-                    slow_print(f'다시 {self.name}의 차례 입니다.')
-                    slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
-
-                    if self.uturn == 0:
-                        slow_print(f'[{self.normalname}], [{self.damageskillname}], [{self.ultimatename}]')
-                    if self.uturn > 0:
-                        slow_print(f'[{self.normalname}], [{self.damageskillname}]')
-
-                    attact_pick = input()
-
-                    if self.normalname in attact_pick:
-                        self.normal(self)
-                    elif self.damageskillname in attact_pick:
-                        self.damageskill(self)
-                    elif self.ultimatename in attact_pick:
-                        self.ultimate(self)
-                
-                elif self.ultimatename in attact_pick:
-                    self.ultimate(self)
-                    return
-
+            self.skillturn()
         if self.hp <= 0:
             slow_print(f'축하드립니다! {self.name}의 승리입니다!')
         if '흑사병 보균자' in self.__class__.__name__:
             self.passive()
-        elif '흑사병 보균자' in self.__class__.__name__:
-            self.passive()
-        self.endingturn
+        self.endingturn()
+    
+    
+    def skillturn(self):
+        slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
+        self.skills = [self.normalname, self.damageskillname, self.buffdebuffname, self.ultimatename]
+        if self.bdbturn > 0:
+            self.skills.remove(self.buffdebuffname)
+        if self.uturn > 0:
+            self.skills.remove(self.ultimatename)
+        for skill in self.skills:
+            slow_print_with_end(f'[{skill}], ')
+        slow_print('[설명]')
+
+        attact_pick = input()
+        if self.normalname in attact_pick:
+            self.normal(self.settarget(self.normaltarget))
+        elif self.damageskillname in attact_pick:
+            
+            self.damageskill(self.settarget(self.damageskilltarget))
+        elif self.buffdebuffname in attact_pick:
+            self.buffdebuff(self.settarget(self.buffskilltarget))
+            if not '[보디빌더]' in self.__class__.__name__ or not self.warmingup:
+                slow_print_with_end(f'다시 ')
+                self.skillturn(self.setttarget(self.ultimatetarget))
+
+        elif self.ultimatename in attact_pick:
+            self.ultimate()
+        elif '설명' in attact_pick:
+            self.explanation()
+            self.skillturn()
+
+        
                 

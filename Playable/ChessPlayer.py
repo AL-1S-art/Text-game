@@ -38,8 +38,7 @@ class ChessPlayer(Player):
             slow_print(f'{self.name}이/가 사망하였습니다!')
             return
         print()
-    def updateteam(self, team):
-        self.team = team
+    
     def passive(self, target):
         if self.square == 9 and self.piece == 'Pawn':
             self.piece = 'Queen'

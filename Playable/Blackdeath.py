@@ -43,8 +43,7 @@ class Blackdeath(Player):
             for i in range(len(self.bdbtarget)):
                 self.bdbtarget[i].hp -= damm
    
-    def updateteam(self, team):
-        self.team = team
+    
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
         

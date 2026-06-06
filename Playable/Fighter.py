@@ -30,8 +30,7 @@ class Fighter(Player):
             slow_print(f'{self.name}이/가 사망하였습니다!')
             return
         print()
-    def updateteam(self, team):
-        self.team = team
+    
     def passive(self):
         self.ad = self.ad + (self.turn * 2)
 

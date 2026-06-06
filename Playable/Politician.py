@@ -39,8 +39,7 @@ class Politician(Player):
             slow_print(f'{self.name}이/가 사망하였습니다!')
             return
         print()
-    def updateteam(self, team):
-        self.team = team
+    
     def passive(self, target):
         self.prevhp = self.hp
         if self.ultimateturn > 0:

@@ -25,6 +25,7 @@ class Gambler(Player):
         self.buffdebuffname = '???'
         self.ultimatename = '???'
         super().__init__(name)
+        self.buffskilltarget = 'enemy'
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -33,8 +34,7 @@ class Gambler(Player):
             slow_print(f'{self.name}이/가 사망하였습니다!')
             return
         print()
-    def updateteam(self, team):
-        self.team = team
+    
     def normal(self, target):
         damm = random.randint(1, 2000)
         

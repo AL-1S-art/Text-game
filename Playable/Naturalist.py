@@ -25,6 +25,7 @@ class Naturalist(Player):
         self.bdbtarget = []
         self.utarget = []        
         super().__init__(name)
+        self.buffskilltarget = 'enemy'
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -36,8 +37,7 @@ class Naturalist(Player):
     def passive(self):
         if self.turn%2 == 0:
             self.hp += self.hhp*(23/1000)
-    def updateteam(self, team):
-        self.team = team
+    
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
         

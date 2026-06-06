@@ -27,6 +27,7 @@ class Chemist(Player):
         self.reactionlist = ['O2 + H2', 'H2O + Na']
         self.productlist = {'O2 + H2':'H2O', 'H2O + Na':'H2'}
         super().__init__(name)
+        self.buffskilltarget = 'enemy'
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -38,8 +39,7 @@ class Chemist(Player):
     def passive(self, target):
         if len(self.compoundlist) > 7:
             self.compoundlist.pop(0)
-    def updateteam(self, team):
-        self.team = team
+    
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
         

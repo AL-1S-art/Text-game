@@ -32,6 +32,7 @@ class Carpenter(Player):
         self.bdbtime = 0
         self.line = ['그리스도께서 우리 죄를 위하여 죽으시고','장사 지낸 바 되셨다가','성경대로 사흘 만에 다시 살아나사']
         super().__init__(name)
+        self.ultimatetarget = 'self'
     def dealdamm(self, damage):
         if not self.resurracting:
             self.shield -= int(damage)
@@ -49,8 +50,7 @@ class Carpenter(Player):
                 slow_print(f'{self.name}이/가 사망하였습니다!')
                 return
         print()                
-    def updateteam(self, team):
-        self.team = team            
+                
     def passive(self, target):
         if self.resurracting:
             print()
@@ -68,6 +68,7 @@ class Carpenter(Player):
             
         else:
             if self.ultimateon > 0:
+                self.buffskilltarget = 'enemy'
                 self.ultimateon -= 1
                 self.shield += 300
                 if self.shield > 700:
@@ -80,6 +81,7 @@ class Carpenter(Player):
                     self.passivename = '고된 업무'
             else:
                 self.hp += 30
+                self.buffskilltarget = 'self'
                 if self.hp >= self.hhp:
                     self.hp = self.hhp
                 slow_print(f'{self.name}이가 고된 업무 후에 휴식을 취하며 체력을 30 재생했습니다.')

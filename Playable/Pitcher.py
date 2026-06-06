@@ -27,6 +27,8 @@ class Pitcher(Player):
         self.out = 0
         self.ultimateused = False
         super().__init__(name)
+        self.buffskilltarget = 'enemy'
+        self.ultimatetarget = 'self'
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -35,8 +37,7 @@ class Pitcher(Player):
             slow_print(f'{self.name}이/가 사망하였습니다!')
             return
         print()
-    def updateteam(self, team):
-        self.team = team
+    
     def passive(self, target):
         if target not in self.strikelist.keys():
             self.strikelist[target] = 0

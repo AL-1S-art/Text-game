@@ -35,8 +35,7 @@ class Baker(Player):
     def passive(self, target):
         self.passiveturn += 1
         self.ad += self.passiveturn * 2
-    def updateteam(self, team):
-        self.team = team    
+        
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
         slow_print(f'{self.name}이/가 공격을 시도합니다!')

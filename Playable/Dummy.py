@@ -6,5 +6,4 @@ class Dummy(Player):
         self.hhp = 10000
         self.hp = self.hhp
         super().__init__(name)
-    def updateteam(self, team):
-        self.team = team
+    

@@ -30,6 +30,8 @@ class Bodybuilder(Player):
         self.utime = 0
         self.wtime = 0
         super().__init__(name)
+        self.buffskilltarget = 'team'
+        self.ultimatetarget = 'self'
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -46,8 +48,7 @@ class Bodybuilder(Player):
             time.sleep(0.07)
         time.sleep(0.7)
         print()
-    def updateteam(self, team):
-        self.team = team
+    
     def passive(self, damm):
         if damm > 0:
             print(f'\r{self.name}이/가 운동을 하여 체력이 {self.hp}({self.hhp})이 되었습니다!', end='')
