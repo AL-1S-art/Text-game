@@ -22,6 +22,7 @@ class Baker(Player):
         self.damageskillname = '프랑스식 전술'
         self.buffdebuffname = '반죽'
         self.ultimatename = '빵 굽기'
+        self.classname = '제빵사'
         self.debufflist = []
         
     def dealdamm(self, damage):

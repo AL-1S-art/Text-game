@@ -23,6 +23,7 @@ class Harrypotter(Player):
         self.buffdebuffname = '프루타이고' #3턴 동안 마법 보호막 생성해서 데미지 감소
         self.ultimatename = '아부다카다브라' #1턴 마비
         self.shield = 0
+        self.classname = '해리포터'
         super().__init__(name)
     def dealdamm(self, damage):
         if self.shield > 0:

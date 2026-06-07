@@ -26,6 +26,7 @@ class Chemist(Player):
         self.compoundlist = []
         self.reactionlist = ['O2 + H2', 'H2O + Na']
         self.productlist = {'O2 + H2':'H2O', 'H2O + Na':'H2'}
+        self.classname = '화학자'
         super().__init__(name)
         self.buffskilltarget = 'enemy'
     def dealdamm(self, damage):

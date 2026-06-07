@@ -20,6 +20,7 @@ class Fighter(Player):
         self.normalname = '평타'
         self.damageskillname = '훅'
         self.buffdebuffname = '배면기'
+        self.classname = '격투가'
         self.ultimatename = '오라러쉬'
         super().__init__(name)
     def dealdamm(self, damage):

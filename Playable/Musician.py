@@ -26,6 +26,7 @@ class Musician(Player):
         self.instrument = ''
         self.ultimateused = False
         self.bdbtime = 0
+        self.classname = '음악가'
         super().__init__(name)
         self.passive()
     def dealdamm(self, damage):

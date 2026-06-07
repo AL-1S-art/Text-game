@@ -28,6 +28,7 @@ class Blackdeath(Player):
         self.bdbtarget = []
         self.utarget = []
         super().__init__(self.name)
+        self.classname = '흑사병 보균자'
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:

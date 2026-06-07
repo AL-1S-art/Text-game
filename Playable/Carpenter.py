@@ -33,6 +33,7 @@ class Carpenter(Player):
         self.line = ['그리스도께서 우리 죄를 위하여 죽으시고','장사 지낸 바 되셨다가','성경대로 사흘 만에 다시 살아나사']
         super().__init__(name)
         self.ultimatetarget = 'self'
+        self.classname = '목수'
     def dealdamm(self, damage):
         if not self.resurracting:
             self.shield -= int(damage)

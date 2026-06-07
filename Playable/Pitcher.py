@@ -29,6 +29,7 @@ class Pitcher(Player):
         super().__init__(name)
         self.buffskilltarget = 'enemy'
         self.ultimatetarget = 'self'
+        self.classname = '투수'
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:

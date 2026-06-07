@@ -32,6 +32,8 @@ class Bodybuilder(Player):
         super().__init__(name)
         self.buffskilltarget = 'team'
         self.ultimatetarget = 'self'
+        self.classname = '보디빌더'
+        self.increasehealthbuff = Buff('트레이닝의 결실','statischange','Null',1,0,'hhp')
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -40,7 +42,7 @@ class Bodybuilder(Player):
             slow_print(f'{self.name}이/가 사망하였습니다!')
             return
         print()
-        self.hhp += int(damage // 10)
+        self.increasehealthbuff.value += int(damage//10)
         print(f'\r{self.name}이/가 피해를 받아 최대체력이 {0} 증가하였습니다.', end='')
         time.sleep(1)
         for i in range(damage//10 + 1):
@@ -54,10 +56,11 @@ class Bodybuilder(Player):
             print(f'\r{self.name}이/가 운동을 하여 체력이 {self.hp}({self.hhp})이 되었습니다!', end='')
             time.sleep(0.5)
             for i in range(100):
-                print(f'\r{self.name}이/가 운동을 하여 체력이 {self.hp}({self.hhp})이 되었습니다!', end='')
+                print(f'\r{self.name}이/가 운동을 하여 체력이 {self.hp+i*(damm//100)}({self.hhp+i*(damm//100)})이 되었습니다!', end='')
                 self.hhp += damm // 100
                 self.hp += damm // 100
                 time.sleep(0.02)
+            self.increasehealthbuff.value += int(damm)
             print()
         self.ad = 100 + self.hhp // 60
         if not self.warmingup:

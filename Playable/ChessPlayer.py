@@ -29,6 +29,7 @@ class ChessPlayer(Player):
         self.shield = 0
         self.castlingused = False
         self.square = 3
+        self.classname = '체스선수'
         super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)

@@ -4,7 +4,7 @@ from character import Buff, Player
 class Rider(Player):
     def __init__(self,name):
         
-        
+        self.classname = '라이더'
         self.hhp = 4410
         self.hp = self.hhp
         self.ad = 421

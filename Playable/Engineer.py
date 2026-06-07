@@ -27,6 +27,7 @@ class Engineer(Player):
         self.parts = 0
         self.upgradelist = ['공격력 20 증가', '방어력 20 증가', '평타+', '레이저 용접+', '로켓 발사+', '설명']
         super().__init__(name)
+        self.classname = '엔지니어'
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:

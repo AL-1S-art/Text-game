@@ -26,6 +26,7 @@ class Gambler(Player):
         self.ultimatename = '???'
         super().__init__(name)
         self.buffskilltarget = 'enemy'
+        self.classname = '도박꾼'
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:

@@ -30,6 +30,7 @@ class Politician(Player):
         self.opptotaldamm = 0
         self.ultimateturn = 0
         self.supportused = False
+        self.classname = '정치인'
         super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)

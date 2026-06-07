@@ -25,6 +25,7 @@ class Naturalist(Player):
         self.bdbtarget = []
         self.utarget = []        
         super().__init__(name)
+        self.classname = '자연술사'
         self.buffskilltarget = 'enemy'
     def dealdamm(self, damage):
         self.hp -= int(damage)

@@ -148,22 +148,26 @@ slow_print(f'{player2_name}의 캐릭터 선택 차례입니다.')
 print()
 player2_pick()
 print()
-for x in range(len(players)):
-    teams[x%(len(teams))].append(players[x])
-
-
-
-
-
-random.shuffle(teams)
-teamlist = []
 cnt = 0
+teamlist = []
+random.shuffle(teams)
 for team in teams:
     teamlist.append('team'+str(cnt+1))
-for i in team1:
-    i.updateteam(team1,teams,teamlist)
-for i in team2:
-    i.updateteam(team2,teams,teamlist)
+    cnt += 1
+for x in range(len(players)):
+    teams[x%(len(teams))].append(players[x])
+    
+for team in teams:
+    for player in team:
+        player.updateteam(team,teams,teamlist)
+
+
+
+
+
+
+
+
 slow_print(f'각 플레이어와 캐릭터를 확인하세요!')
 print()
 print(f'{player1_name}: {player1_character[0]}')
