@@ -1,5 +1,4 @@
 import random
-import character
 from Util import *
 
 from Playable.Baker import *
@@ -31,7 +30,6 @@ print()
 
 
 
-
 slow_print(f'각 플레이어들의 이름을 확인하세요')
 slow_print(f'{player1_name}, {player2_name}')
 print()
@@ -43,9 +41,9 @@ print()
 player1_character = []
 player2_character = []
 
-player1 = Fighter(f'{player1_name}')
-player2 = Fighter(f'{player2_name}')
-players = []
+player1 = Dummy(f'{player1_name}')
+player2 = Dummy(f'{player2_name}')
+
 
 def player1_pick():
     global player1
@@ -86,7 +84,6 @@ def player1_pick():
     elif pick == '보디빌더':
         player1 = Bodybuilder(f'{player1_name}')
     print()
-    players.append(player1)
 
 
 
@@ -130,16 +127,10 @@ def player2_pick():
         player2 = Carpenter(f'{player2_name}')
     elif pick == '보디빌더':
         player2 = Bodybuilder(f'{player2_name}')
-    players.append(player2)
     print()
 
 
-random.shuffle(players)
-team1 = []
-team2 = []
-teams = []
-teams.append(team1)
-teams.append(team2)
+
 slow_print(f'{player1_name}의 캐릭터 선택 차례입니다.')
 print()
 player1_pick()
@@ -148,6 +139,18 @@ slow_print(f'{player2_name}의 캐릭터 선택 차례입니다.')
 print()
 player2_pick()
 print()
+
+players = []
+players.append(player1)
+players.append(player2)
+
+
+team1 = []
+team2 = []
+teams = []
+teams.append(team1)
+teams.append(team2)
+
 cnt = 0
 teamlist = []
 random.shuffle(teams)
@@ -165,9 +168,6 @@ for team in teams:
 
 
 
-
-
-
 slow_print(f'각 플레이어와 캐릭터를 확인하세요!')
 print()
 print(f'{player1_name}: {player1_character[0]}')
@@ -178,6 +178,8 @@ print(f'{player2_name}: {player2_character[0]}')
 print(f'체력/보호막: [ {player2.hp}({player2.hhp}) / {player2.shield} ], 마나: [ {player2.mp} / {player2.hmp} ] ')
 print(f'공격력 / 방어력: [ {player2.ad} / {player2.de} ]')
 print()
+
+
 
 time.sleep(5)
 
@@ -192,8 +194,10 @@ time.sleep(5)
 
 slow_print(f'게임을 시작합니다!')
 print()
+random.shuffle(teamlist)
 slow_print(f'순서는 {teamlist} 입니다.')
-while 1:
-    for x in range(len(teams[0])):
-        for team in teams:
-            team[x].startingturn()
+print()
+while True:
+    for team in teams:
+        for player in team:
+            player.startingturn()
