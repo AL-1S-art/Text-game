@@ -199,7 +199,7 @@ time.sleep(5)
 slow_print(f'게임을 시작합니다!')
 print()
 random.shuffle(teamnamelist)
-slow_print(f'순서는 {teamnamelist} 입니다.')
+slow_print(f'순서는 {teamnamelist} 입니다.') ------------------------------------------------------------------------------------------------------------
 print()
 while True:
     for team in teams:
