@@ -30,7 +30,6 @@ print()
 
 
 
-
 slow_print(f'각 플레이어들의 이름을 확인하세요')
 slow_print(f'{player1_name}, {player2_name}')
 print()
