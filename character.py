@@ -4,7 +4,7 @@ import time
 
 
 class Buff:
-    def __init__(self, name, bufftype, duration, stack, value, variant):
+    def __init__(self, name, bufftype, duration, stack, value, variant,target):
         self.name = name
         self.type = bufftype
         self.duration = duration
@@ -12,11 +12,22 @@ class Buff:
         self.value = value
         self.variant = variant
         self.bufftype = bufftype
+        self.target = target
     def buffrenewal(self):
         if self.duration != 'Null':
             self.duration -= 1
+    def applybuff(self):
+        if self.bufftype == 'statuschange':
+            for _ in range(self.stack):
+                if self.variant == 'de':
+                    self.target.de += self.value
+                elif self.variant == 'ad':
+                    self.target.ad += self.value
+                elif self.variant == 'hhp':
+                    self.target.hhp += self.value
     def buffdo(self, target):
-        slow_print(f'{target.name}이/가 {self.name} 상태입니다!')
+        if self.bufftype != 'statuschange' and self.bufftype != 'stack':
+            slow_print(f'{target.name}이/가 {self.name} 상태입니다!')
         if self.bufftype == 'cc':
             pass
         elif self.bufftype == 'dot':
@@ -28,8 +39,16 @@ class Buff:
                 time.sleep(0.1)
             time.sleep(0.3)
             print()
-        elif self.bufftype == 'statischange':
-            eval(f'target.self.variant = target.self.variant{self.value}')
+        elif self.bufftype == 'statuschange':
+            for x in range(self.stack):
+                if self.variant == 'de':
+                    self.target.de += self.value
+                elif self.variant == 'ad':
+                    self.target.ad += self.value
+                elif self.variant == 'hhp':
+                    self.target.hhp += self.value
+                    
+                    
         elif self.bufftype == 'stack':
             pass
         self.buffrenewal()
@@ -48,21 +67,31 @@ class Player:
         self.damageskilltarget = 'enemy'
         self.buffskilltarget = 'self'
         self.ultimatetarget = 'enemy'
+        self.onstartpassive = False
+        self.originalhhp = self.hhp
     def updateteam(self, team,teams,teamlist):
         self.team = team
         self.teams = teams
         self.teamlist = teamlist
     def endingturn(self):
+        self.ad, self.de = self.originalad, self.originalde
+        self.hhp = self.originalhhp
+        self.statusrenewal()
         self.turn += 1
         for team in self.teams:
-            print(f'{team}')
+            print(f'{self.teamlist[self.teams.index(team)]}')
             for player in team:
-                print(f'{player.name}, {player.name}의 현재 상태')
-                print()
                 print(f'{player.name}: {player.classname}')
                 print(f'체력/보호막: [ {player.hp}({player.hhp}) / {player.shield} ], 마나: [ {player.mp} / {player.hmp} ] ')
                 print(f'공격력 / 방어력: [ {player.ad} / {player.de} ]')
+                for x in player.bufflist:
+                    print(f'[{x.name}]*{x.stack}',end=' ')
                 print()
+            print()
+                
+    def statusrenewal(self):
+        for buff in self.bufflist:
+            buff.applybuff()
     def settarget(self,targetrange):
         targetname = []
         if targetrange == 'self':
@@ -70,7 +99,7 @@ class Player:
         elif targetrange == 'team':
             slow_print('스킬 사용 대상을 지정해 주십시오')
             for teammate in self.team:
-                slow_print_with_end(f'[{teammate.name}], ')
+                slow_print_with_end(f'[{teammate.name}] ')
                 targetname.append(f'{teammate.name}')
             print()
             while 1:
@@ -97,6 +126,11 @@ class Player:
                     return targets[targetname.index(target)]
     def startingturn(self):
         self.skipturn = False
+        self.ad = self.originalad
+        self.de = self.originalde
+        self.hhp = self.originalhhp
+        if self.onstartpassive:
+            self.startpassive()
         for buff in self.bufflist:
             if buff.duration == 'Null' or buff.duration > 0:
                 if buff.type == 'cc':
@@ -112,14 +146,14 @@ class Player:
             print()
             return
         slow_print(f'{self.name}의 차례 입니다.')
-        if self.__class__.__name__ == ['목수'] and self.resurracting:
+        if self.classname == '목수' and self.resurracting:
             self.passive(self)
         
         else:
             self.skillturn()
         if self.hp <= 0:
             slow_print(f'축하드립니다! {self.name}의 승리입니다!')
-        if '흑사병 보균자' in self.__class__.__name__:
+        if '흑사병 보균자' in self.classname:
             self.passive()
         self.endingturn()
     
@@ -143,7 +177,7 @@ class Player:
             self.damageskill(self.settarget(self.damageskilltarget))
         elif self.buffdebuffname in attact_pick:
             self.buffdebuff(self.settarget(self.buffskilltarget))
-            if not '[보디빌더]' in self.__class__.__name__ or not self.warmingup:
+            if self.classname != '보디빌더' or not self.warmingup:
                 slow_print_with_end(f'다시 ')
                 self.skillturn()
 

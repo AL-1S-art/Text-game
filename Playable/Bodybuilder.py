@@ -30,10 +30,17 @@ class Bodybuilder(Player):
         self.utime = 0
         self.wtime = 0
         super().__init__(name)
-        self.buffskilltarget = 'team'
+        self.buffskilltarget = 'self'
         self.ultimatetarget = 'self'
         self.classname = '보디빌더'
-        self.increasehealthbuff = Buff('트레이닝의 결실','statischange','Null',1,0,'hhp')
+        self.increasehealthbuff = Buff('트레이닝의 결실','statuschange','Null',1,0,'hhp',self)
+        self.onstartpassive = True
+    def addhhpbuff(self,target,amount):
+        for player in target:
+            if len(list(filter(lambda buff : buff.name == '트레이닝의 결실',player.bufflist))) == 0:
+                player.bufflist.append(Buff('트레이닝의 결실','statuschange','Null',0,1,'hhp',player))
+            list(filter(lambda buff : buff.name == '트레이닝의 결실',player.bufflist))[0].stack += amount
+            self.hp += amount
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -42,9 +49,8 @@ class Bodybuilder(Player):
             slow_print(f'{self.name}이/가 사망하였습니다!')
             return
         print()
-        self.increasehealthbuff.value += int(damage//10)
+        self.addhhpbuff([self],damage//10)
         print(f'\r{self.name}이/가 피해를 받아 최대체력이 {0} 증가하였습니다.', end='')
-        time.sleep(1)
         for i in range(damage//10 + 1):
             print(f'\r{self.name}이/가 피해를 받아 최대체력이 {i} 증가하였습니다.', end='')
             time.sleep(0.07)
@@ -53,18 +59,16 @@ class Bodybuilder(Player):
     
     def passive(self, damm):
         if damm > 0:
-            print(f'\r{self.name}이/가 운동을 하여 체력이 {self.hp}({self.hhp})이 되었습니다!', end='')
-            time.sleep(0.5)
-            for i in range(100):
-                print(f'\r{self.name}이/가 운동을 하여 체력이 {self.hp+i*(damm//100)}({self.hhp+i*(damm//100)})이 되었습니다!', end='')
-                self.hhp += damm // 100
-                self.hp += damm // 100
+            print(f'\r{self.name}이/가 운동을 하여 체력이 {0} 증가합니다!', end='')
+            for i in range(101):
+                print(f'\r{self.name}이/가 운동을 하여 체력이 {(damm/500)*i} 증가합니다!', end='')
                 time.sleep(0.02)
-            self.increasehealthbuff.value += int(damm)
+            self.addhhpbuff([self], (damm//500)*100)
             print()
         self.ad = 100 + self.hhp // 60
         if not self.warmingup:
             self.buffdebuffname = '웨이트 트레이닝'
+            self.buffskilltarget = 'team'
         if self.bdbturn > 0:
             self.bdbturn -= 1
         if self.uturn > 0:
@@ -77,21 +81,17 @@ class Bodybuilder(Player):
                 if self.hp > self.hhp:
                     self.hp = self.hhp
 
-    def ult_passive(self):
+    def startpassive(self):
         slow_print('트레이닝 시간입니다!')
         moreslow_print('하나! 둘! 하나! 둘!')
         increase = self.hhp // 100
-        time.sleep(1)
-        print(f'\r팀원 모두가 최대체력이 {0} 증가합니다!', end='')
-        time.sleep(0.7)
+        slow_print_with_end(f'\r팀원 모두가 최대체력이 {0} 증가합니다!')
         for i in range(increase+1):
             print(f'\r팀원 모두가 최대체력이 {i} 증가합니다!', end='')
             time.sleep(0.06)
         time.sleep(0.7)
         print()
-        for i in self.team:
-            i.hhp += increase
-            i.hp += increase
+        self.addhhpbuff(self.team, increase)
     def normal(self, target):
         self.warmingup = False
         damm = int((self.ad * (100/(100+target.de)))*2 * self.damageincrease)
@@ -134,12 +134,13 @@ class Bodybuilder(Player):
                 print(f'\r최대체력이 {i} 증가합니다!', end='')
                 time.sleep(0.02)
             print()
-            self.hhp += 100
-            self.hp += 100
+            self.addhhpbuff([self],100)
             self.wtime += 1
             if self.wtime == 5:
                 slow_print(f'{self.name}이/가 몸풀기를 끝냈습니다!')
                 self.warmingup = False
+                self.buffdebuffname = '웨이트 트레이닝'
+                self.buffskilltarget = 'team'
         else:
             if self.mp - 80 < 0 :
                 slow_print('사용 가능한 마나가 없습니다.')
@@ -183,7 +184,7 @@ class Bodybuilder(Player):
             self.warmingup = False
             slow_print(f'{self.name}이/가 벌크업 합니다!')
             slow_print(f'{self.name}의 최대체력이 3턴동안 3000 증가합니다!')
-            slow_print_with_end(f'\r{self.name}의 체력이 {self.hp}({self.hhp}) 남았습니다!', end='')
+            slow_print_with_end(f'\r{self.name}의 체력이 {self.hp}({self.hhp}) 남았습니다!')
             for x in range(100):
                 print(f'\r{self.name}의 체력이 {self.hp}({self.hhp}) 남았습니다!', end='')
                 self.hp += 30
