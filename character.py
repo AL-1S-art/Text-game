@@ -148,7 +148,7 @@ class Player:
                 self.skillturn()
 
         elif self.ultimatename in attact_pick:
-            self.ultimate()
+            self.ultimate(self.settarget(self.ultimatetarget))
         elif '설명' in attact_pick:
             self.explanation()
             self.skillturn()
