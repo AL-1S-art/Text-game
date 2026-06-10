@@ -19,7 +19,7 @@ class Buff:
         if self.bufftype == 'statuschange':
             for x in range(self.stack):
                 if 'de' in self.variation.keys():
-                    self.target.de += self.varaion['de']
+                    self.target.de += self.variation['de']
                 if 'ad' in self.variation.keys():
                     self.target.ad += self.variation['ad']
                 if 'hhp' in self.variation.keys():
@@ -29,7 +29,7 @@ class Buff:
             pass
         if self.bufftype == 'resurraction':
             target.hp = 2
-            moreslow_print(self.args[self.duration])
+            moreslow_print(['성경대로 사흘 만에 다시 살아나사','장사 지낸 바 되셨다가','그리스도께서 우리 죄를 위하여 죽으시고'][self.duration])
             self.buffrenewal()
         else:
             if self.bufftype != 'statuschange' and self.bufftype != 'stack':
@@ -46,7 +46,7 @@ class Buff:
             elif self.bufftype == 'statuschange':
                 for x in range(self.stack):
                     if 'de' in self.variation.keys():
-                        self.target.de += self.varaion['de']
+                        self.target.de += self.variation['de']
                     if 'ad' in self.variation.keys():
                         self.target.ad += self.variation['ad']
                     if 'hhp' in self.variation.keys():
@@ -79,8 +79,6 @@ class Player:
         self.teams = teams
         self.teamlist = teamlist
     def endingturn(self):
-        self.ad, self.de = self.originalad, self.originalde
-        self.hhp = self.originalhhp
         self.statusrenewal()
         self.turn += 1
         for team in self.teams:
@@ -98,6 +96,11 @@ class Player:
             print()
                 
     def statusrenewal(self):
+        
+        if len(list(filter(lambda buff : buff.name == '체력이 곧 힘!',self.bufflist))) > 0:
+            list(filter(lambda buff : buff.name == '체력이 곧 힘!',self.bufflist))[0].stack = self.hhp// 30
+        self.ad, self.de = self.originalad, self.originalde
+        self.hhp = self.originalhhp
         for buff in self.bufflist:
             buff.applybuff()
     def settarget(self, targetrange):
@@ -132,12 +135,14 @@ class Player:
                 target = input()
                 if target in targetname:
                     return targets[targetname.index(target)]
+        elif targetrange == 'teamall':
+            return self.team
     def startingturn(self):
         slow_print(f'{self.name}의 차례 입니다.')
         if len(list(filter(lambda x: x.name == '그리스도의 부활',self.bufflist))) > 0:
             self.startturn = False
-            self.res = list(filter(lambda x: x.name == '그리스도의 부활',self.bufflist))[0]
-            self.res.buffdo(self)
+            res = list(filter(lambda x: x.name == '그리스도의 부활',self.bufflist))[0]
+            res.buffdo(self)
             if self.res.duration == 0:
                 slow_print(f'{self.name}이/가 부활하였습니다!')
                 self.bufflist.clear()
@@ -160,6 +165,7 @@ class Player:
                     self.bufflist.remove(buff)           
                     if self.hp > self.hhp:
                         self.hp = self.hhp
+                    self.statusrenewal()
 
                         
             if self.skipturn:
@@ -206,6 +212,4 @@ class Player:
         elif '설명' in attact_pick:
             self.explanation()
             self.skillturn()
-
-        
                 

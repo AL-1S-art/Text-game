@@ -34,7 +34,7 @@ class Bodybuilder(Player):
         self.ultimatetarget = 'self'
         self.classname = '보디빌더'
         self.onstartpassive = True
-        self.bufflist.append(Buff('체력이 힘!', 'statuschange','Null',1,{'ad':self.hhp//50},self))
+        self.bufflist.append(Buff('체력이 곧 힘!', 'statuschange','Null',1,{'ad':1},self))
     def addhhpbuff(self,target,amount):
         for player in target:
             if len(list(filter(lambda buff : buff.name == '트레이닝의 결실',player.bufflist))) == 0:
@@ -61,23 +61,21 @@ class Bodybuilder(Player):
     def passive(self, damm):
         if damm > 0:
             print(f'\r{self.name}이/가 운동을 하여 체력이 {0} 증가합니다!', end='')
-            for i in range(101):
-                print(f'\r{self.name}이/가 운동을 하여 체력이 {(damm//500)*i} 증가합니다!', end='')
+            for i in range(damm//5):
+                print(f'\r{self.name}이/가 운동을 하여 체력이 {i+1} 증가합니다!', end='')
                 time.sleep(0.02)
-            self.addhhpbuff([self], (damm//500)*100)
+            self.addhhpbuff([self], damm//5)
             print()
         if not self.warmingup:
             self.buffdebuffname = '웨이트 트레이닝'
-            self.buffskilltarget = 'team'
+            self.buffskilltarget = 'teamall'
         if self.bdbturn > 0:
             self.bdbturn -= 1
         if self.uturn > 0:
             self.uturn -= 1
         self.updatead()
     def updatead(self):
-        a = list(filter(lambda buff : buff.name == '체력이 힘!',self.bufflist))[0]
-        a.variation == {'ad':self.hhp//60}
-        a.dobuff()
+        list(filter(lambda buff : buff.name == '체력이 곧 힘!',self.bufflist))[0].buffdo(self)
     def startpassive(self):
         slow_print('트레이닝 시간입니다!')
         moreslow_print('하나! 둘! 하나! 둘!')
@@ -135,6 +133,8 @@ class Bodybuilder(Player):
             self.wtime += 1
             if self.wtime == 5:
                 slow_print(f'{self.name}이/가 몸풀기를 끝냈습니다!')
+                slow_print('최대체력이 추가로 500 증가합니다!')
+                self.addhhpbuff([self], 500)
                 self.warmingup = False
                 self.buffdebuffname = '웨이트 트레이닝'
                 self.buffskilltarget = 'team'
@@ -187,6 +187,7 @@ class Bodybuilder(Player):
             time.sleep(0.7)
             print()
             self.bufflist.append(Buff('벌크업!','statuschange',3,1,{'hhp':3000},self))
+            self.hp += 3000
             self.passive(0)
             self.mp += self.rmp - 100
             self.uturn += 6

@@ -4,7 +4,7 @@ from character import Buff, Player
 class Carpenter(Player):
     def __init__(self,name):
         
-        self.hhp = 4000
+        self.hhp = 3000
         self.hp = self.hhp
         self.ad = 80
         self.de = 120
@@ -35,23 +35,25 @@ class Carpenter(Player):
         self.ultimatetarget = 'self'
         self.classname = '목수'
     def dealdamm(self, damage):
-        if not self.resurracting:
+        if len(list(filter(lambda x: x.name == '그리스도의 부활',self.bufflist))) == 0:
             self.shield -= int(damage)
             if self.shield <= 0:
                 self.hp += self.shield
                 self.shield = 0
             if self.hp > 0:
                 slow_print(f'{self.name}의 체력이 {self.hp} 남았습니다.')
-            elif self.passivecool == 0 and self.ultimateon > 0:
+            elif self.passivecool == 0 and len(list(filter(lambda x: x.name == '하나님의 아들',self.bufflist))) != 0:
                 self.hp = 2
-                self.bufflist.append(Buff('그리스도의 부활','resurraction',3,1,{'hp':2},self,['성경대로 사흘 만에 다시 살아나사','장사 지낸 바 되셨다가','그리스도께서 우리 죄를 위하여 죽으시고']))
+                slow_print(f'{self.name}이/가 사망하였습니다...?')
+                self.bufflist.append(Buff('그리스도의 부활','resurraction',3,1,'Null',self))
                 self.passivecool += 8
-                self.bufflist.remove(filter(lambda x: x.name == '하나님의 아들')[0],self.bufflist)
                 self.damageskillname = '못 박기'
                 self.passivename = '고된 업무'
             else:
                 slow_print(f'{self.name}이/가 사망하였습니다!')
                 return
+        else:
+            self.hp = 2
         print()                
                 
     def passive(self, target):
@@ -153,7 +155,7 @@ class Carpenter(Player):
             slow_print(f'{self.name}이/가 예수로 각성합니다!')
             slow_print(f'{self.name}의 최대체력과 방어력이 절반으로 감소하지만, 공격력이 3배로 증가하며, 매 턴마다 보호막을 얻습니다!')
             self.passive(target)
-            self.bufflist.append(Buff('하나님의 아들', 'statuschange','Null',1,{'de':(-1*self.de//2),'ad':(self.ad*3),'hhp':-1*(self.hhp//2)},self))
+            self.bufflist.append(Buff('하나님의 아들', 'statuschange','Null',1,{'de':(-1*self.de//2),'ad':(self.ad*2),'hhp':-1*(self.hhp//2)},self))
             self.passivename = '재림'
             self.damageskillname = '역지사지'
             print()
