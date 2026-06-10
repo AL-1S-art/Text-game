@@ -9,7 +9,7 @@ screen = pygame.display.set_mode([600, 600])
 #글씨 및 이미지 부르기
 font = pygame.font.SysFont("malgungothic", 20, bold=True, italic=False)
 font1 = pygame.font.SysFont("malgungothic", 40, bold=True, italic=False)
-# image = pygame.image.load("player1.bmp")
+# background = pygame.image.load("player1.bmp")
 # image2 = pygame.image.load("제목 없음.png")
 
 
