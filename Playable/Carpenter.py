@@ -45,7 +45,8 @@ class Carpenter(Player):
             elif self.passivecool == 0 and len(list(filter(lambda x: x.name == '하나님의 아들',self.bufflist))) != 0:
                 self.hp = 2
                 slow_print(f'{self.name}이/가 사망하였습니다...?')
-                self.bufflist.append(Buff('그리스도의 부활','resurraction',3,1,'Null',self))
+                self.bufflist.clear()
+                self.bufflist.append(Buff('그리스도의 부활','resurraction',2,1,'Null',self))
                 self.passivecool += 8
                 self.damageskillname = '못 박기'
                 self.passivename = '고된 업무'
@@ -57,7 +58,7 @@ class Carpenter(Player):
         print()                
                 
     def passive(self, target):
-        if self.ultimateon > 0:
+        if len(list(filter(lambda x: x.name == '하나님의 아들',self.bufflist))) != 0:
             self.buffskilltarget = 'enemy'
             self.ultimateon -= 1
             self.shield += 300

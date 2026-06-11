@@ -200,4 +200,21 @@ print()
 while True:
     for team in teams:
         for player in team:
+            slow_print(f'{player.name}의 스킬 선택 차례입니다.')
+            player.chooseskill()
+    for team in teams:
+        for player in team:
             player.startingturn()
+    for team in self.teams:
+            print(f'{self.teamlist[self.teams.index(team)]}')
+            for player in team:
+                print(f'{player.name}: {player.classname}')
+                print(f'체력/보호막: [ {player.hp}({player.hhp}) / {player.shield} ], 마나: [ {player.mp} / {player.hmp} ] ')
+                print(f'공격력 / 방어력: [ {player.ad} / {player.de} ]')
+                for x in player.bufflist:
+                    if x.stack > 1:
+                        print(f'[{x.name}]*{x.stack}',end=' ')
+                    else:
+                        print(f'[{x.name}]',end=' ')
+                print()
+            print()

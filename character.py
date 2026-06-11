@@ -79,30 +79,25 @@ class Player:
         self.teams = teams
         self.teamlist = teamlist
     def endingturn(self):
-        self.statusrenewal()
+        for buff in self.bufflist:
+            if buff.duration != 'Null' and buff.duration <= 0:
+                slow_print(f'{self.name}의 {buff.name} 상태가 해제되었습니다!')
+                self.bufflist.remove(buff)           
+                if self.hp > self.hhp:
+                    self.hp = self.hhp
+            self.statusrenewal()
         self.turn += 1
-        for team in self.teams:
-            print(f'{self.teamlist[self.teams.index(team)]}')
-            for player in team:
-                print(f'{player.name}: {player.classname}')
-                print(f'체력/보호막: [ {player.hp}({player.hhp}) / {player.shield} ], 마나: [ {player.mp} / {player.hmp} ] ')
-                print(f'공격력 / 방어력: [ {player.ad} / {player.de} ]')
-                for x in player.bufflist:
-                    if x.stack > 1:
-                        print(f'[{x.name}]*{x.stack}',end=' ')
-                    else:
-                        print(f'[{x.name}]',end=' ')
-                print()
-            print()
                 
     def statusrenewal(self):
         
-        if len(list(filter(lambda buff : buff.name == '체력이 곧 힘!',self.bufflist))) > 0:
-            list(filter(lambda buff : buff.name == '체력이 곧 힘!',self.bufflist))[0].stack = self.hhp// 30
         self.ad, self.de = self.originalad, self.originalde
         self.hhp = self.originalhhp
         for buff in self.bufflist:
-            buff.applybuff()
+            if buff.name != '체력이 곧 힘!':
+                buff.applybuff()
+        if self.classname == '보디빌더':
+            list(filter(lambda buff : buff.name == '체력이 곧 힘!',self.bufflist))[0].stack = self.hhp// 30
+            list(filter(lambda buff : buff.name == '체력이 곧 힘!',self.bufflist))[0].buffdo(self)
     def settarget(self, targetrange):
         targetname = []
         if targetrange == 'self':
@@ -141,8 +136,8 @@ class Player:
         slow_print(f'{self.name}의 차례 입니다.')
         if len(list(filter(lambda x: x.name == '그리스도의 부활',self.bufflist))) > 0:
             self.startturn = False
-            res = list(filter(lambda x: x.name == '그리스도의 부활',self.bufflist))[0]
-            res.buffdo(self)
+            self.res = list(filter(lambda x: x.name == '그리스도의 부활',self.bufflist))[0]
+            self.res.buffdo(self)
             if self.res.duration == 0:
                 slow_print(f'{self.name}이/가 부활하였습니다!')
                 self.bufflist.clear()
@@ -160,12 +155,7 @@ class Player:
                     if buff.type == 'cc':
                         self.skipturn = True
                     buff.buffdo(self)
-                else:
-                    slow_print(f'{self.name}의 {buff.name} 상태가 해제되었습니다!')
-                    self.bufflist.remove(buff)           
-                    if self.hp > self.hhp:
-                        self.hp = self.hhp
-                    self.statusrenewal()
+                self.statusrenewal()
 
                         
             if self.skipturn:
@@ -184,7 +174,8 @@ class Player:
         self.endingturn()
     
     
-    def skillturn(self):
+    def chooseskill(self):
+        self.statusrenewal()
         slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
         self.skills = [self.normalname, self.damageskillname, self.buffdebuffname, self.ultimatename]
         if self.bdbturn > 0:
@@ -194,22 +185,30 @@ class Player:
         for skill in self.skills:
             slow_print_with_end(f'[{skill}], ')
         slow_print('[설명]')
-
-        attact_pick = input()
-        if self.normalname in attact_pick:
-            self.normal(self.settarget(self.normaltarget))
-        elif self.damageskillname in attact_pick:
-            
-            self.damageskill(self.settarget(self.damageskilltarget))
-        elif self.buffdebuffname in attact_pick:
-            self.buffdebuff(self.settarget(self.buffskilltarget))
-            if self.classname != '보디빌더' or not self.warmingup:
-                slow_print_with_end(f'다시 ')
-                self.skillturn()
-
-        elif self.ultimatename in attact_pick:
-            self.ultimate(self.settarget(self.ultimatetarget))
-        elif '설명' in attact_pick:
+        self.attack_pick = input()
+        self.sk = []
+        if '설명' in self.attack_pick:
             self.explanation()
             self.skillturn()
-                
+        elif self.normalname not in self.attack_pick and self.damageskillname not in self.attack_pick and self.buffdebuffname not in self.attack_pick and self.ultimatename not in self.attack_pick:
+            slow_print('잘못된 입력입니다!')
+            self.chooseskill()
+        else:
+            if self.normalname in self.attack_pick:
+                self.skilltarget = self.settarget(self.normaltarget)
+                self.sk.append('self.normal('+str(self.skilltarget)+')')
+            elif self.damageskillname in self.attack_pick:
+                self.skilltarget = self.settarget(self.damageskilltarget)
+                self.sk.append('self.damageskill('+str(self.skilltarget)+')')
+            elif self.buffdebuffname in self.attack_pick:
+                self.skilltarget = self.settarget(self.buffskilltarget)
+                self.sk.append('self.buffdebuff('+str(self.skilltarget)+')')
+                if self.classname != '보디빌더' or not self.warmingup:
+                    slow_print_with_end(f'다시 ')
+                    self.chooseskill()
+            elif self.ultimatename in self.attack_pick:
+                self.skilltarget = self.settarget(self.ultimatetarget)
+                self.sk.append('self.ultimate('+str(self.skilltarget)+')')
+    def skillturn(self):
+        for skills in self.sk:
+            exec(skills)          

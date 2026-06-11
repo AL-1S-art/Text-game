@@ -41,7 +41,8 @@ class Bodybuilder(Player):
                 player.bufflist.append(Buff('트레이닝의 결실','statuschange','Null',0,{'hhp':1},player))
             list(filter(lambda buff : buff.name == '트레이닝의 결실',player.bufflist))[0].stack += amount
             self.hp += amount
-        self.updatead()
+            if player == self:
+                self.updatead()
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -151,10 +152,9 @@ class Bodybuilder(Player):
                 self.normal(target)
             else:
                 slow_print(f'{self.name}이/가 아군을 모두 웨이트 트레이닝 시킵니다!')
-                increase = self.hhp // 100
+                increase = self.hhp // 70
                 for i in self.team:
-                    i.hhp += increase
-                    i.hp += increase
+                    self.addhhpbuff(i,increase)
                     slow_print_with_end(f'{i.name}이/가 트레이닝의 결과로 영구적으로 최대체력이 {0} 증가합니다!')
                     for x in range(increase+1):
                         print(f'\r{i.name}이/가 트레이닝의 결과로 영구적으로 최대체력이 {x} 증가합니다!', end='')
