@@ -195,18 +195,21 @@ time.sleep(5)
 slow_print(f'게임을 시작합니다!')
 print()
 random.shuffle(teamlist)
-slow_print(f'순서는 {teamlist} 입니다.')
+random.shuffle(teams)
+slow_print(f'순서는 {teams} 입니다.')
 print()
+playerorder = []
+for x in range(len(players)):
+    playerorder.append(teams[x%len(teams)][x//len(teams)])
 while True:
+    for player in playerorder:
+        slow_print(f'{player.name}의 스킬 선택 차례입니다.')
+        player.chooseskill()
+    
+    for player in playerorder:
+        player.startingturn()
     for team in teams:
-        for player in team:
-            slow_print(f'{player.name}의 스킬 선택 차례입니다.')
-            player.chooseskill()
-    for team in teams:
-        for player in team:
-            player.startingturn()
-    for team in self.teams:
-            print(f'{self.teamlist[self.teams.index(team)]}')
+            print(f'{teamlist[teams.index(team)]}')
             for player in team:
                 print(f'{player.name}: {player.classname}')
                 print(f'체력/보호막: [ {player.hp}({player.hhp}) / {player.shield} ], 마나: [ {player.mp} / {player.hmp} ] ')

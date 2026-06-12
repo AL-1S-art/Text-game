@@ -24,13 +24,14 @@ class ChessPlayer(Player):
         self.damageskillname = '1. d3' #폰을 전진시킵니다.
         self.buffdebuffname = '캐슬링' #캐슬링을 합니다. 체스 플레이어의 방어력이 50 상승하며, 체력을 잃은 체력에 비례해 회복합니다. 최대 1회 사용 가능합니다.
         self.ultimatename = '1. d3' #퀸 기물이 존재할때만 사용 가능합니다. 적의 방어력을 무시하고 공격하며, 적의 잃은 체력에 비례한 피해를 입힙니다. 
-        self.piece = 'Pawn'
         self.actioncount = 0
         self.shield = 0
-        self.castlingused = False
         self.square = 3
         self.classname = '체스선수'
         super().__init__(name)
+        self.normaltarget = 'self'
+        self.damageskilltarget = 'self'
+        self.bufflist.append(Buff('전진!','stack','Null',3,'Null',self))
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -41,36 +42,34 @@ class ChessPlayer(Player):
         print()
     
     def passive(self, target):
-        if self.square == 9 and self.piece == 'Pawn':
-            self.piece = 'Queen'
-            self.ad *= 2
-            self.de = int(self.de*1.5)
-            self.hhp += 2000
+        if list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack == 8 and len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0:
+            self.bufflist.remove(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0])
+            self.bufflist.append(Buff('체스판 위의 퀸','statuschange','Null',1,{'ad':self.ad,'de':int(self.de*0.5),'hhp':2000}))
             self.hp += 2000
+            self.statusrenewal()
             self.passivename = '체크메이트'
             self.normalname = '평타'
             self.damageskillname = 'Qxe4+'
             self.ultimatename = '로얄 포크'
+            self.normaltarget = 'enemy'
+            self.damageskilltarget = 'enemy'
             self.uturn = 0
             slow_print(f'{self.name}이/가 체스보드의 끝에 도달해 승진하였습니다! 공격력이 2배로 증가하고 방어력이 1.5배로 증가하며, 최대 체력이 2000 증가하고 모든 스킬이 강화됩니다!')
             print()
             
-        if self.piece == 'Queen':
+        if len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0:
             if target.hp <= target.hhp*0.1:
                 slow_print(f'적이 빠져나갈곳이 없습니다!')
                 time.sleep(0.5)
                 moreslow_print('[체크메이트]')
                 time.sleep(0.5)
-                target.hp = -9999
-                slow_print(f'\r{target.name}의 체력이 {target.hp} 남았습니다.')
-                print()
-                slow_print(f'{target.name}이/가 사망하였습니다!')
+                target.dealdamm(target.hp + 9999)
                 return
     def normal(self, target):
-        if self.piece == 'Pawn':
+        if len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0:
             slow_print(f'{self.name}이/가 폰을 1칸 전진시킵니다!')
-            self.square += 1
-            self.squarename = str(self.square-2)+'. d'+str(self.square)
+            list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack += 1
+            self.squarename = str(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack-2)+'. d'+str(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack)
             self.normalname = self.squarename
             self.damageskillname = self.squarename
             self.passive(target)
@@ -94,13 +93,12 @@ class ChessPlayer(Player):
             self.uturn -= 1
         if self.bdbturn > 0:
             self.bdbturn -= 1
-        self.actioncount += 1
         self.turn += 1
     def damageskill(self, target):
-        if self.piece == 'Pawn':
+        if len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0:
             slow_print(f'{self.name}이/가 폰을 1칸 전진시킵니다!')
-            self.square += 1
-            self.squarename = str(self.square-2)+'. d'+str(self.square)
+            list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack += 1
+            self.squarename = str(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack-1)+'. d'+str(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack+1)
             self.normalname = self.squarename
             self.damageskillname = self.squarename
             self.passive(target)
@@ -125,31 +123,30 @@ class ChessPlayer(Player):
             self.uturn -= 1
         if self.bdbturn > 0:
             self.bdbturn -= 1
-        self.actioncount += 1
         self.turn += 1
     def buffdebuff(self, target):
-        if self.castlingused:
+        if len(list(filter(lambda buff: buff.name == '캐슬링',self.bufflist))) != 0:
             slow_print('캐슬링은 최대 1회 사용 가능합니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
         else:
-            self.de += 50
+            self.bufflist.append(Buff('캐슬링','statuschange','Null',1,{'de':50},self))
             self.hp += int((self.hhp-self.hp)*0.3)
             if self.hp > self.hhp:
                 self.hp = self.hhp
+            self.statusrenewal()
             slow_print(f'{self.name}이/가 캐슬링을 합니다! 방어력이 50 상승하며, 체력을 잃은 체력에 비례하게 회복합니다.')
             print()
             self.mp += self.rmp - 40
             slow_print(f'{self.name}의 마나가 40 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             
-            self.castlingused = True
             if self.uturn > 0:
                 self.uturn -= 1
             self.turn += 1
     def ultimate(self, target):
-        if self.piece != 'Queen':
+        if len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0:
             slow_print('퀸 기물이 존재할 때만 사용할 수 있습니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
@@ -170,8 +167,8 @@ class ChessPlayer(Player):
             
             self.uturn += 3
     def explanation(self):
-        if self.piece == 'Pawn':
-            slow_print(f'[{self.passivename}]은/는 6회 행동 시 퀸으로 승진하는 패시브입니다.')
+        if len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0:
+            slow_print(f'[{self.passivename}]은/는 체스판 끝에 도달할시 퀸으로 승진하는 패시브입니다.')
             slow_print(f'[{self.normalname}]은/는 폰을 전진시키는 기본 스킬입니다.')
             slow_print(f'[{self.damageskillname}]은/는 폰을 전진시키는 기본 스킬입니다.')
             slow_print(f'[{self.buffdebuffname}]은/는 캐슬링을 하는 (디)버프 스킬입니다. 캐슬링을 하면 방어력이 50 상승하며, 체력을 잃은 체력에 비례해 회복합니다. 최대 1회 사용 가능합니다.')

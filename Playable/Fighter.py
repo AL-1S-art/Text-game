@@ -86,12 +86,12 @@ class Fighter(Player):
             self.passive()
 
     def buffdebuff(self, target):
-        if self.mp - 80 < 0 :
+        if self.mp - 80 < 0:
             slow_print('사용 가능한 마나가 없습니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
-        elif self.hp > self.hhp/2 :
+        elif self.hp > self.hhp/2:
             slow_print('체력이 절반 이상이여서 사용 불가합니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
@@ -102,8 +102,8 @@ class Fighter(Player):
             print()
             self.normal(target)
         else:
-            self.de *= 1.5
-            self.ad *= 1.5
+            self.bufflist.append(Buff('배면기','statuschange','Null','1',{'ad':int(self.ad*0.5),'de':int(self.de*0.5)},self))
+            self.statusrenewal()
             slow_print(f'{self.name}이/가 {self.buffdebuffname}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 영구적으로 방어력과 공격력이 1.5배로 증가합니다.')
             print()

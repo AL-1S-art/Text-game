@@ -187,28 +187,36 @@ class Player:
         slow_print('[설명]')
         self.attack_pick = input()
         self.sk = []
+        self.chosentarget = []
         if '설명' in self.attack_pick:
             self.explanation()
-            self.skillturn()
-        elif self.normalname not in self.attack_pick and self.damageskillname not in self.attack_pick and self.buffdebuffname not in self.attack_pick and self.ultimatename not in self.attack_pick:
-            slow_print('잘못된 입력입니다!')
             self.chooseskill()
+            
+        elif self.normalname in self.attack_pick:
+            self.chosentarget.append(self.settarget(self.normaltarget))
+            self.sk.append('normal')
+        elif self.damageskillname in self.attack_pick:
+            self.chosentarget.append(self.settarget(self.damageskilltarget))
+            self.sk.append('damageskill')
+        elif self.buffdebuffname in self.attack_pick:
+            self.chosentarget.append(self.settarget(self.buffskilltarget))
+            self.sk.append('buff')
+            if self.classname != '보디빌더' or not self.warmingup:
+                slow_print_with_end(f'다시 ')
+                self.chooseskill()
+        elif self.ultimatename in self.attack_pick:
+            self.chosentarget.append(self.settarget(self.ultimatetarget))
+            self.sk.append('ultimate')
         else:
-            if self.normalname in self.attack_pick:
-                self.skilltarget = self.settarget(self.normaltarget)
-                self.sk.append('self.normal('+str(self.skilltarget)+')')
-            elif self.damageskillname in self.attack_pick:
-                self.skilltarget = self.settarget(self.damageskilltarget)
-                self.sk.append('self.damageskill('+str(self.skilltarget)+')')
-            elif self.buffdebuffname in self.attack_pick:
-                self.skilltarget = self.settarget(self.buffskilltarget)
-                self.sk.append('self.buffdebuff('+str(self.skilltarget)+')')
-                if self.classname != '보디빌더' or not self.warmingup:
-                    slow_print_with_end(f'다시 ')
-                    self.chooseskill()
-            elif self.ultimatename in self.attack_pick:
-                self.skilltarget = self.settarget(self.ultimatetarget)
-                self.sk.append('self.ultimate('+str(self.skilltarget)+')')
+            slow_print('잘못된 입력입니다!')    
+            self.chooseskill()
     def skillturn(self):
-        for skills in self.sk:
-            exec(skills)          
+        for x in range(len(self.sk)):
+            if self.sk[x] == 'normal':
+                self.normal(self.chosentarget[x])
+            elif self.sk[x] == 'damageskill':
+                self.damageskill(self.chosentarget[x])
+            elif self.sk[x] == 'buff':
+                self.buffdebuff(self.chosentarget[x])
+            elif self.sk[x] == 'ultimate':
+                self.ultimate(self.chosentarget[x])

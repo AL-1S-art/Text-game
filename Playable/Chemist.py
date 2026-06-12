@@ -78,7 +78,11 @@ class Chemist(Player):
     def buffdebuff(self, target):
         damm = int((self.ad * (100/(100+target.de)))*1.5)
         
-        target.de -= 4
+        if len(list(filter(lambda buff: buff.name == '침식', target.bufflist))) == 0:
+            target.bufflist.append(Buff('부식','statuschange','Null',1,{'de':-4},target))
+        else:
+            list(filter(lambda buff: buff.name == '침식', target.bufflist))[0].stack += 1
+        target.statusrenewal()
         slow_print(f'{self.name}이/가 산소 플라스크를 던집니다!')
         slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다. 또한 {target.name}의 방어력이 4 감소합니다.')
         target.dealdamm(damm)
