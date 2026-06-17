@@ -121,12 +121,3 @@ class Boss(Monster):
             self.mp += self.rmp - 50
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-            
-   
-    def explanation(self):
-        slow_print(f'[{self.passivename}]은/는 매턴 마다 자기 자신에게 피해를 입히는 패시브입니다.')
-        slow_print(f'[{self.damageskillname}]은/는 오토바이로 대상의 발가락을 밟고가 골절 시키는 기본 스킬입니다.')
-        slow_print(f'[{self.buffdebuffname}]은/는 2턴 동안 방어력이 0.5배가 증가하고 공격력을 2배로 증가시키는 (디)버프 스킬입니다.')
-        slow_print(f'[{self.ultimatename}]은/는 속력에 비례해 상대방에게 들이 박고 3턴 동안 휠체어를 타 방어력을 높이는 궁극기 입니다.')
-        slow_print(f'여러 턴에 걸쳐 피해 및 (디)버프를 거는 스킬은 해당 스킬의 효과가 끝날 때 까지 재사용이 불가능 합니다.')
-        print()        
