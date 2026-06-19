@@ -49,7 +49,10 @@ class Engineer(Player):
         target.dealdamm(damm)
         if self.normalname != '평타':
             slow_print(f'{self.name}이/가 스패너에 맞아 방어력이 5 감소합니다!')
-            target.de -= 5
+            if len(list(filter(lambda buff : buff.name == '골절',target.bufflist))) == 0:
+                target.bufflist.append(Buff('골절','statuschange','Null',1,{'de':4},target))
+            else:
+                list(filter(lambda buff : buff.name == '골절',target.bufflist))[3] += 1
         print()
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')

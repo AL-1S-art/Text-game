@@ -106,7 +106,7 @@ class Naturalist(Player):
             print()
             self.normal(target)
         else:
-            target.de = int(target.de * 0.3)
+            target.bufflist.append(Buff('물의 침식','statuschange',1,1,{'de':int(target.de*0.3)},target))
             slow_print(f'{self.name}이/가 {target.name}에게 {self.buffdebuffname}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}의 방어력을 30%를 감소시킵니다.')
             print()
@@ -135,6 +135,7 @@ class Naturalist(Player):
             slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.ultimatename}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 2턴 동안 입힙니다.')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 입힙니다.')
+            target.bufflist.append(Buff('질식','cc',2,1,'Null',target))
             target.dealdamm(damm)
             print()
             self.mp += self.rmp - 100
