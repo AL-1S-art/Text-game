@@ -33,6 +33,7 @@ class Baker(Player):
             slow_print(f'{self.name}이/가 사망하였습니다!')
             return
         print()
+        
     def passive(self, target):
         self.passiveturn += 1
         self.ad += self.passiveturn * 2
