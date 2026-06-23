@@ -117,10 +117,7 @@ while running:
 
 
 
-
-
-
-    # 이벤트로 인한 변화 처리(물리 이동, 공격 hp 감소라든지...)
+    # 이벤트로 인한 변화 처리(프레임 전환)
     if scene == "confirm_program_quit":
         # y = 490
         if is_top_down == True:
