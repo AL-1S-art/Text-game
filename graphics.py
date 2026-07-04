@@ -15,6 +15,7 @@ effect = 'nothing'
 
 # confirm_program_quit
 y_confirm_program_quit = 490
+x_mode_pick = 235
 
 # 키 입력, 마우스 입력 이벤트 처리
 key_down_manager = {chr(i): False for i in range(97, 122 + 1)}
@@ -35,6 +36,9 @@ between_sn = pygame.font.SysFont("malgungothic", 40, bold=True, italic=False)
 normalpen = pygame.font.SysFont("malgungothic", 50, bold=True, italic=False)
 between_nb = pygame.font.SysFont("malgungothic", 75, bold=True, italic=False)
 bigpen = pygame.font.SysFont("malgungothic", 100, bold=True, italic=False)
+
+
+
 backtitle = pygame.image.load(os.path.join(base_path, "Graphics/backtitle.png"))
 backtitle = pygame.transform.scale(backtitle, (1920, 1080))
 black = pygame.image.load(os.path.join(base_path, "Graphics/black.png"))
@@ -92,7 +96,7 @@ while running:
             
         if scene == "intro":
             if event.type == 768:
-                if event.key <= 122 and event.key >= 97 or event.key == 32 or event.key == 13:
+                if event.key <= 122 and event.key >= 97 or event.key == 32:
                     scene = "loading"
 
 
@@ -128,7 +132,7 @@ while running:
 
 
 
-    # 이벤트로 인한 변화 처리(물리 이동, 공격 hp 감소라든지...)
+    # 화면 위에 덮어 씌워지는 효과들
     if effect == "confirm_program_quit":
         if is_top_down == True:
             y_confirm_program_quit = max(490, y_confirm_program_quit - 100)
@@ -154,53 +158,75 @@ while running:
 
         if is_mouse_move == True:
             if 845 < mouse_x and mouse_x < 1383.5:
-                if 590 < mouse_y and mouse_y < 677:
+                if 590 <= mouse_y and mouse_y <= 677:
                     y_confirm_program_quit = 590
-                if 490 < mouse_y and mouse_y < 577:
+                if 490 <= mouse_y and mouse_y <= 577:
                     y_confirm_program_quit = 490
             is_mouse_move = False
     
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #장면에 따른 선택같은 것들
+
     if scene == "mode_pick":
-        if is_top_down == True:
-            y_mode_pick = max(490, y_confirm_program_quit - 100)
-            is_top_down = False
-
-        if is_bottom_down == True:
-            y_mode_pick = min(490, y_confirm_program_quit - 100)
-            is_bottom_down = False
-
-        if is_enter_down == True:
-            if y_mode_pick == 490:
-                running = False
-            elif y_mode_pick == 590:
-                scene = "intro"
-            is_enter_down = False
-        
         if is_right_down == True:
-            y_mode_pick = 490
-            is_top_down = False
+            x_mode_pick = min(1285, x_mode_pick + 525)
+            is_right_down = False
 
         if is_left_down == True:
-            y_mode_pick = 590
-            is_bottom_down = False
-
-        if is_mouse_down == True:
-            if y_mode_pick == 490:
-                running = False
-            elif y_mode_pick == 590:
-                scene = "intro"
-            is_mouse_down = False
+            x_mode_pick = max(235, x_mode_pick - 525)
+            is_left_down = False
 
         if is_mouse_move == True:
-            if 845 < mouse_x and mouse_x < 1383.5:
-                if 590 < mouse_y and mouse_y < 677:
-                    y_mode_pick = 590
-                if 490 < mouse_y and mouse_y < 577:
-                    y_mode_pick = 490
+            if mouse_y >= 212.5 and mouse_y <= 1017.5:
+                if 235 <= mouse_x and mouse_x <= 635:
+                    x_mode_pick = 235
+                if 760 <= mouse_x and mouse_x <= 1160:
+                    x_mode_pick = 760
+                if 1285 <= mouse_x and mouse_x <= 1685:
+                    x_mode_pick = 1285
             is_mouse_move = False
 
+        if is_enter_down == True:
+            if x_mode_pick == 235:
+                scene = ""
+            elif x_mode_pick == 760:
+                scene = ""
+            elif x_mode_pick == 1285:
+                scene = "character_pick"
+            is_enter_down = False
+
+
+        if is_mouse_down == True:
+            if x_mode_pick == 235:
+                scene = ""
+            elif x_mode_pick == 760:
+                scene = ""
+            elif x_mode_pick == 1285:
+                scene = "character_pick"
+            is_mouse_down = False
 
 
 
@@ -251,14 +277,29 @@ while running:
             screen.blit(black, (0, 0))
             loading_ment = smallpen.render("다양한 직업들 모으는 중.", True, (255, 255, 255))
             screen.blit(loading_ment, (789.5, 800))
-        scene = "character_pick"
+        scene = "mode_pick"
+
+
+
 
 
     if scene == "mode_pick":
-        modePVP = normalpen.render("PVP", True, (255, 255, 255))
-        modeBOSS = normalpen.render("제빵사", True, (255, 255, 255))
-        screen.blit(blackdeath, (789.5, 800))
-        screen.blit(blackdeath, (789.5, 800))
+        screen.blit(modeback, (0, 0))
+        pygame.draw.rect(screen, (0, 0, 0), (0, 0, 1920, 150))
+        pygame.draw.rect(screen, (0, 0, 0), (235, 212.5, 400, 805))
+        pygame.draw.rect(screen, (0, 0, 0), (760, 212.5, 400, 805))
+        pygame.draw.rect(screen, (0, 0, 0), (1285, 212.5, 400, 805))
+        pygame.draw.rect(screen, (255, 0, 0), (x_mode_pick, 212.5, 400, 805))
+        modeGAME1 = bigpen.render("게임", True, (255, 255, 255))
+        modeGAME2 = bigpen.render("시작", True, (255, 255, 255))
+        modeSTORY = bigpen.render("스토리", True, (255, 255, 255))
+        modeLIST = bigpen.render("캐릭터", True, (255, 255, 255))
+        screen.blit(modeGAME1, (335, 481))
+        screen.blit(modeGAME2, (335, 615))
+        screen.blit(modeSTORY, (810, 548))
+        screen.blit(modeLIST, (1335, 548))
+
+
 
 
     if scene == "character_pick":
@@ -334,10 +375,6 @@ while running:
 
 pygame.quit()
 
-width = character_list.get_width()
-height = character_list.get_height()
-print(width, height)
-
 
 # 누를때 768 땔때 769인 키들
 # 윗키 1073741906
@@ -347,3 +384,49 @@ print(width, height)
 # 엔터키 13
 # 스페이스바 32
 # ESC키 27
+
+
+
+# 트럼프 카드
+# 도박꾼이 들고 다니는 카드로 카드 게임에 널리 쓰이는 카드의 한 종류입니다.
+# 가프덱, 기믹덱 앞면만 백지인 블랭크 페이스, 뒷면만 백지인 블랭크 백
+# 양면이 백지인 더블 블랭크 등 다양한 종류의 카드가 존재합니다.
+# 과연 도박을 위해 들고 다니는 것이 카드 뿐일까요...?
+
+# 오토바이
+# 라이더가 타고 다니는 이동수단 입니다.
+# 경량화가 가능하여 적은 출력으로도 높은 속도를 얻을 수 있고
+# 구조가 비교적 단순하며, 유지 관리 비용이 적게 든다는 장점이 있지만
+# 차체가 가벼워 경미한 접촉사고에도 크게 파손되고, 상당한 수리 비용이 발생할 수 있습니다.
+# 대회에 참가한 라이더가 타는 기종은 엄청난 속도를 자랑하는 스포츠 바이크라고 합니다.
+
+# 십자가
+# 목수가 들고 다니는 기독교의 상징입니다.
+# 예수 그리스도의 십자가형을 통한 희생 및 완전한 순종과 자격을 상징하며
+# 그리스도의 고난에 동참하고 그 가르침을 따르겠다는 신앙적 고백과 실천의 의미를 담습니다.
+# 이번에는 어떤 용도로 사용하려고 하는걸까요?
+
+# 보디빌더 아령?
+# 
+
+# 엔지니어
+# 음악가
+# 자연술사
+# 정치인
+# 제빵사
+# 체스선수
+# 투수
+# 해리포터 3회 독자
+# 화학자
+# 흑사병 보균자
+
+
+
+
+
+
+
+
+
+
+
