@@ -10,7 +10,7 @@ screen = pygame.display.set_mode([1920, 1080])
 scene = 'intro'
 # scene = 'loading'
 effect = 'nothing'
-
+character_opt = False
 
 
 # confirm_program_quit
@@ -25,6 +25,7 @@ is_top_down = False
 is_bottom_down = False
 is_enter_down = False
 is_space_down = False
+is_esc_down = False
 is_mouse_move = False
 is_mouse_down = False
 
@@ -47,6 +48,12 @@ modeback = pygame.image.load(os.path.join(base_path, "Graphics/modeback.png"))
 modeback = pygame.transform.scale(modeback, (1920, 1080))
 bookback = pygame.image.load(os.path.join(base_path, "Graphics/bookback.png"))
 bookback = pygame.transform.scale(bookback, (1700, 990))
+option_icon1 = pygame.image.load(os.path.join(base_path, "Graphics/opt_icon.png"))
+option_icon1 = pygame.transform.scale(option_icon1, (150, 150))
+home_settingback = pygame.image.load(os.path.join(base_path, "Graphics/settingback.png"))
+home_settingback = pygame.transform.scale(home_settingback, (1920, 1080))
+back_icon = pygame.image.load(os.path.join(base_path, "Graphics/back_icon.png"))
+back_icon = pygame.transform.scale(back_icon, (100, 100))
 # image2 = pygame.image.load("제목 없음.png")
 
 
@@ -61,7 +68,7 @@ while running:
     for event in pygame.event.get():
         if event.type == 768:
             if event.key == 27:  # 27 : ESC key
-                effect = "confirm_program_quit"
+                is_esc_down = True
 
             elif event.key == 13:  # enter
                 is_enter_down = True
@@ -99,7 +106,8 @@ while running:
                 if event.key <= 122 and event.key >= 97 or event.key == 32:
                     scene = "loading"
 
-
+        if event.type == 256:
+            running = False
 
 
 
@@ -150,10 +158,11 @@ while running:
             is_enter_down = False
 
         if is_mouse_down == True:
-            if y_confirm_program_quit == 490:
-                running = False
-            elif y_confirm_program_quit == 590:
-                effect = "nothing"
+            if 845 < mouse_x and mouse_x < 1383.5:
+                if 590 <= mouse_y and mouse_y <= 677:
+                    effect = "nothing"
+                if 490 <= mouse_y and mouse_y <= 577:
+                    running = False
             is_mouse_down = False
 
         if is_mouse_move == True:
@@ -163,7 +172,10 @@ while running:
                 if 490 <= mouse_y and mouse_y <= 577:
                     y_confirm_program_quit = 490
             is_mouse_move = False
-    
+
+        if is_esc_down == True:
+            effect = "nothing"
+            is_esc_down = False
 
 
 
@@ -220,13 +232,60 @@ while running:
 
 
         if is_mouse_down == True:
-            if x_mode_pick == 235:
-                scene = ""
-            elif x_mode_pick == 760:
-                scene = ""
-            elif x_mode_pick == 1285:
-                scene = "character_pick"
+            if mouse_y >= 212.5 and mouse_y <= 1017.5:
+                if 235 <= mouse_x and mouse_x <= 635:
+                    scene = ""
+                if 760 <= mouse_x and mouse_x <= 1160:
+                    scene = ""
+                if 1285 <= mouse_x and mouse_x <= 1685:
+                    scene = "character_pick"
+            if mouse_y <= 150:
+                if mouse_x >= 1770:
+                    scene = "home_setting"
             is_mouse_down = False
+
+        if is_esc_down == True:
+            scene = "home_setting"
+            is_esc_down = False
+
+
+    if scene == "character_pick":
+        if is_esc_down == True:
+            scene = "mode_pick"
+            is_esc_down = False
+
+        if is_mouse_move == True:
+            if mouse_x <= 100:
+                character_opt = True
+            else:
+                character_opt = False
+        
+        if is_mouse_down == True:
+            if mouse_x <= 100:
+                if mouse_y >= 490 and mouse_y <= 590:
+                    scene = "mode_pick"
+
+
+
+    if scene == "home_setting":
+        if is_mouse_down == True:
+            if mouse_y >= 900 and mouse_y <= 1034:
+                if 797 <= mouse_x and mouse_x <= 1123:
+                    effect = "confirm_program_quit"
+            is_mouse_down = False
+
+        if is_esc_down == True:
+            scene = "mode_pick"
+            is_esc_down = False
+
+
+
+
+
+
+
+
+
 
 
 
@@ -250,7 +309,6 @@ while running:
     press_start = smallpen.render("PRESS BUTTON", True, (255, 255, 255))
     pygame.draw.rect(screen, (0, 0, 0), (850, 805, 220, 30))
     screen.blit(press_start, (850, 800))
-
 
     
 
@@ -280,7 +338,12 @@ while running:
         scene = "mode_pick"
 
 
-
+    if scene == "home_setting":
+        screen.blit(home_settingback, (0, 0))
+        quit = between_nb.render("게임 종료", True, (255, 255, 255))
+        opt = bigpen.render("설정", True, (255, 255, 255))
+        screen.blit(quit, (797, 900))
+        screen.blit(opt, (860, 50))
 
 
     if scene == "mode_pick":
@@ -289,6 +352,7 @@ while running:
         pygame.draw.rect(screen, (0, 0, 0), (235, 212.5, 400, 805))
         pygame.draw.rect(screen, (0, 0, 0), (760, 212.5, 400, 805))
         pygame.draw.rect(screen, (0, 0, 0), (1285, 212.5, 400, 805))
+        screen.blit(option_icon1, (1770, 0))
         pygame.draw.rect(screen, (255, 0, 0), (x_mode_pick, 212.5, 400, 805))
         modeGAME1 = bigpen.render("게임", True, (255, 255, 255))
         modeGAME2 = bigpen.render("시작", True, (255, 255, 255))
@@ -298,7 +362,6 @@ while running:
         screen.blit(modeGAME2, (335, 615))
         screen.blit(modeSTORY, (810, 548))
         screen.blit(modeLIST, (1335, 548))
-
 
 
 
@@ -349,6 +412,9 @@ while running:
         screen.blit(harrypotter, (935.5, 945)) # 249, 15.5
         screen.blit(chemist, (1295, 945)) # 90, 95
         screen.blit(blackdeath, (1524.5, 945)) # 191, 44.5
+        if character_opt == True:
+            pygame.draw.rect(screen, (0, 0, 0), (0, 0, 100, 1080))
+            screen.blit(back_icon, (0, 490))
 
 
 
@@ -389,8 +455,8 @@ pygame.quit()
 
 # 트럼프 카드
 # 도박꾼이 들고 다니는 카드로 카드 게임에 널리 쓰이는 카드의 한 종류입니다.
-# 가프덱, 기믹덱 앞면만 백지인 블랭크 페이스, 뒷면만 백지인 블랭크 백
-# 양면이 백지인 더블 블랭크 등 다양한 종류의 카드가 존재합니다.
+# '가프덱', '기믹덱', 앞면만 백지인 '블랭크 페이스', 뒷면만 백지인 '블랭크 백',
+# 양면이 백지인 '더블 블랭크' 등 다양한 종류의 카드가 존재합니다.
 # 과연 도박을 위해 들고 다니는 것이 카드 뿐일까요...?
 
 # 오토바이
@@ -398,7 +464,7 @@ pygame.quit()
 # 경량화가 가능하여 적은 출력으로도 높은 속도를 얻을 수 있고
 # 구조가 비교적 단순하며, 유지 관리 비용이 적게 든다는 장점이 있지만
 # 차체가 가벼워 경미한 접촉사고에도 크게 파손되고, 상당한 수리 비용이 발생할 수 있습니다.
-# 대회에 참가한 라이더가 타는 기종은 엄청난 속도를 자랑하는 스포츠 바이크라고 합니다.
+# 대회에 참가한 라이더가 타는 기종은 엄청난 속도를 자랑하는 '스포츠 바이크'라고 합니다.
 
 # 십자가
 # 목수가 들고 다니는 기독교의 상징입니다.
@@ -406,10 +472,21 @@ pygame.quit()
 # 그리스도의 고난에 동참하고 그 가르침을 따르겠다는 신앙적 고백과 실천의 의미를 담습니다.
 # 이번에는 어떤 용도로 사용하려고 하는걸까요?
 
-# 보디빌더 아령?
-# 
+# 아령
+# 보디빌더가 주로 들고 다니는 스포츠 용품의 일종입니다.
+# 근비대, 근력 향상 등을 목적으로 무게를 통해 훈련하는 방법인 웨이트 트레이닝을 할 때
+# 결코 빼놓을 수 없는 중요한 운동 기구입니다.
+# '덤벨 컬'을 할때 쓰던 50kg짜리 아령은 두고 왔다고 하네요.
 
-# 엔지니어
+# 스패너/렌치
+# 엔지니어가 들고 다니는 공구 중 하나입니다.
+# 영국, 호주, 뉴질랜드 같은 나라들은 스패너, 미국식 영어로는 렌치라고 한답니다.
+# 너트와 볼트를 죄고 풀며 물체를 조립하고 분해할 때 사용하는 도구로
+# 단어가 가진 뜻은 '비틀다'라고 하네요.
+
+# 용접용 레이저
+# 엔지니어가 들고 다니는 공구 중 하나입니다.
+
 # 음악가
 # 자연술사
 # 정치인
