@@ -1,19 +1,19 @@
-
 from Util import *
 from character import Buff, Player
+
 class Baker(Player):
     def __init__(self,name):
         super().__init__(name)
         self.shield = 0
-        self.hhp = 3000
+        self.hhp = 2503
         self.hp = self.hhp
-        self.ad = 100
-        self.de = 130
+        self.ad = 120
+        self.de = 124
         self.originalde = self.de
         self.originalad = self.ad
-        self.hmp = 295
+        self.hmp = 317
         self.mp = self.hmp
-        self.rmp = 8
+        self.rmp = 7
         self.bdbturn = 0
         self.uturn = 0
         self.turn = 0
