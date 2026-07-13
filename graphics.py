@@ -586,5 +586,13 @@ print(width, height)
 
 
 # scene
-# loading_to_main   시작화면에서 메인화면으로
-# home_setting, main, character_pick
+# loading_to_main   시작화면에서 메인화면으로 갈 때 생기는 로딩 화면
+# home_setting     main화면에서 설정화면 열 때 생기는 설정 화면
+# main     character_dict,game_mode_pick, story_mode_pick 등 선택하여 가는 메인 로비 화면
+# character_dict     캐릭터 사전으로 메인화면에서 갈 수 있으며, 각 캐릭터의 세부스탯을 살펴볼 수 있는 창
+# character_pick     게임 시작 시 캐릭터 선택 리스트를 보여주며, 각 캐릭터의 간단한 스탯을 볼 수 있는 창
+# game_mode_pick     PVP, BOSS 같은 게임 모드를 선택하는 화면
+# story_mode_pick     메인 스토리, 사이드 스토리 같은 스토리 모드를 선택하는 화면
+# side_story_pick     각 직업끼리의 사소한 서사 등을 담은 스토리 중 하나를 고르는 화면
+# main_story_pick     주 스토리 중 하나를 고르는 화면
+# PVP_
