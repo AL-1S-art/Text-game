@@ -138,6 +138,7 @@ class Fighter(Player):
             
             self.passive()
 
+    
     def explanation(self):
         slow_print(f'[{self.passivename}]은/는 턴이 지날수록 공격력이 증가하는 패시브입니다.')
         slow_print(f'[{self.normalname}]은/는 기본 공격입니다.')
