@@ -4,16 +4,15 @@ from character import Buff, Player
 
 class Engineer(Player):
     def __init__(self,name):
-        
-        self.hhp = 2400
+        self.hhp = 2343
         self.hp = self.hhp
-        self.ad = 120
-        self.de = 100
+        self.ad = 101
+        self.de = 90
         self.originalde = self.de
         self.originalad = self.ad
-        self.hmp = 200
+        self.hmp = 385
         self.mp = self.hmp
-        self.rmp = 20
+        self.rmp = 8
         self.passiveturn = 0
         self.bdbturn = 0
         self.shield = 0
