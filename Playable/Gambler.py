@@ -223,5 +223,5 @@ class Gambler(Player):
         print()
         
     def explanation(self):
-        slow_print('모든걸 운에 거세요!')
+        slow_print('운에 모든걸 거세요')
         print()
