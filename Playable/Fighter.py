@@ -4,10 +4,10 @@ from character import Buff, Player
 
 class Fighter(Player):
     def __init__(self,name):
-        self.hhp = 4908
+        self.hhp = 2608
         self.hp = self.hhp
-        self.ad = 407
-        self.de = 163
+        self.ad = 128
+        self.de = 113
         self.originalde = self.de
         self.originalad = self.ad
         self.hmp = 295
@@ -65,7 +65,7 @@ class Fighter(Player):
                 target.dealdamm(damm)
             elif a == 'l':
                 b = random.randint(1, 100)
-                if b < 90:
+                if b <= 90:
                     damm = int((self.ad + 50 + (target.hp/100)*(1+(self.ad*0.03))) * (100/(100+target.de)))
                     
                     slow_print(f'{self.name}이/가 [왼손]으로 강력한 훅을 날렸습니다!')
