@@ -37,10 +37,10 @@ class Gambler(Player):
         print()
     
     def normal(self, target):
-        damm = random.randint(1, 2000)
+        damm = random.randint(1, 3000)
         
         slow_print(f'{self.name}이/가  ??? 를  사용합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 고정피해를 {damm}만큼 피해를 입힙니다.')
         target.dealdamm(damm)
 
         
@@ -84,10 +84,10 @@ class Gambler(Player):
         
             
     def damageskill(self, target):
-        damm = random.randint(1, 2000)
+        damm = random.randint(1, 3000)
         
         slow_print(f'{self.name}이/가  ??? 를  사용합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 고정피해를 {damm}만큼 피해를 입힙니다.')
         target.dealdamm(damm)
     
 
@@ -131,10 +131,10 @@ class Gambler(Player):
 
     
     def buffdebuff(self, target):
-        damm = random.randint(1, 2000)
+        damm = random.randint(1, 3000)
         
         slow_print(f'{self.name}이/가  ??? 를  사용합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 고정피해를 {damm}만큼 피해를 입힙니다.')
         target.dealdamm(damm)
     
 
@@ -178,10 +178,10 @@ class Gambler(Player):
         
     
     def ultimate(self, target):
-        damm = random.randint(1, 2000)
+        damm = random.randint(1, 3000)
         
         slow_print(f'{self.name}이/가  ??? 를  사용합니다!')
-        slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다.')
+        slow_print(f'{self.name}이/가 {target.name}에게 고정피해를 {damm}만큼 피해를 입힙니다.')
         target.dealdamm(damm)
 
         moreslow_print(f'료이키텐카이... [ 좌 살 박 도 ]')
