@@ -4,7 +4,7 @@ from character import Buff, Player
 
 
 class Blackdeath(Player):
-    def __init__(self):
+    def __init__(self,name):
         
         self.hhp = 4682
         self.hp = self.hhp
@@ -23,12 +23,14 @@ class Blackdeath(Player):
         self.passivename = '보균' #흑사병에 걸려서 매턴 체력 감소
         self.normalname = '평타'
         self.damageskillname = '찌르기' #자신의 체력을 소비하여 대상을 찌름
-        self.buffdebuffname = '기침' #패시브 보균을 자신의 주변과 대상의 주변으로 옮김
+        self.buffdebuffname = '전염' #패시브 보균을 대상에 옮김
         self.ultimatename = '항생제' #대상을 지정해 흑사병을 치료(최대 3번)
         self.bdbtarget = []
         self.utarget = []
-        super().__init__(self.name)
+        super().__init__(name)
         self.classname = '흑사병 보균자'
+        self.buffskilltarget = 'enemy'
+        self.addbuff('흑사병','dot','Null',10,20,self)
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -38,13 +40,8 @@ class Blackdeath(Player):
             return
         print()
     def passive(self):
-        damm = int((self.ad*2.63)*0.425 + 60)
-        self.hp -= damm
-        if len(self.bdbtarget) != 0:
-            for i in range(len(self.bdbtarget)):
-                self.bdbtarget[i].hp -= damm
-   
-    
+        pass
+        
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
         
@@ -55,7 +52,6 @@ class Blackdeath(Player):
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        self.passive()
 
     
     def damageskill(self, target):
@@ -77,10 +73,9 @@ class Blackdeath(Player):
             print()
             
             self.turn += 1
-            self.passive()
    
    
-    def buffdebuff(self, target, *args):
+    def buffdebuff(self, target):
         if self.mp - 50 < 0:
             slow_print('사용 가능한 마나가 없습니다.')
             slow_print('기본 공격으로 대체됩니다.')
@@ -92,13 +87,23 @@ class Blackdeath(Player):
             print()
             self.normal(target)
         else:
+            global playerorder
             slow_print(f'{self.name}이/가 {self.buffdebuffname}을/를 사용했습니다!')
-            slow_print(f'흑사병이 퍼져서 시전자의 앞, 뒤 플레이어 및 {target.name}의 앞, 뒤 플레이어가 {self.name}의 패시브를 가집니다.')
+            
+            
+            if len(list(filter(lambda x: x.name == '흑사병',target.bufflist))) > 0:
+                slow_print(f'{target.name}은/는 이미 흑사병에 걸렸습니다!')
+                slow_print(f'{target.name} 주위로 흑사병이 퍼집니다!')
+                if playerorder.index[target] != 0:
+                    playerorder[playerorder.index[target]-1].addbuff('흑사병','dot','Null',10,20,playerorder[playerorder.index[target]-1])
+                if playerorder.index[self] != len(playerorder)-1:
+                    playerorder[playerorder.index[target]+1].addbuff('흑사병','dot','Null',10,20,playerorder[playerorder.index[target]+1])
+            else:    
+                slow_print(f'흑사병이 전염돼 {target.name}이/가 흑사병에 걸립니다.')
+                target.addbuff('흑사병','dot','Null',10,20,target)
             print()
             slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-            self.bdbtarget.append(target)
-            self.bdbtarget.append(args)
             self.bdbturn += 999999999999999999999999999999999999999999999999999999999999999
             
    
@@ -119,9 +124,13 @@ class Blackdeath(Player):
             print()
             self.normal(target)
         else:
-            self.bdbtarget.remove(target)
             slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.ultimatename}를 사용합니다!')
-            slow_print(f'{target.name}에게 부여된 {self.passivename} 상태를 해제했습니다.')
+            if len(list(filter(lambda x: x.name == '흑사병',target.bufflist))) > 0:
+                slow_print(f'{target.name}에게 부여된 {self.passivename} 상태를 해제했습니다.')
+                target.bufflist.remove(Buff('흑사병','dot','Null',10,20,target))
+            else:
+                slow_print(f'{target.name}은/는 흑사병에 감염되지 않았었습니다!')
+                slow_print('아무 일도 일어나지 않습니다....')
             print()
             self.mp += self.rmp - 150
             slow_print(f'{self.name}의 마나가 150 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
@@ -130,7 +139,6 @@ class Blackdeath(Player):
             self.usturn -= 1
             if self.usturn == 0:
                 self.uturn += 3
-            self.passive()
    
     def explanation(self):
         slow_print(f'[{self.passivename}]은/는 자신의 턴마다 자기 자신에게 고정 피해를 입히는 패시브입니다.')

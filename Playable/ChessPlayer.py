@@ -31,7 +31,7 @@ class ChessPlayer(Player):
         super().__init__(name)
         self.normaltarget = 'self'
         self.damageskilltarget = 'self'
-        self.bufflist.append(Buff('전진!','stack','Null',3,'Null',self))
+        self.addbuff('전진!','stack','Null',3,'Null',self)
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -44,7 +44,7 @@ class ChessPlayer(Player):
     def passive(self, target):
         if list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack == 8 and len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0:
             self.bufflist.remove(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0])
-            self.bufflist.append(Buff('체스판 위의 퀸','statuschange','Null',1,{'ad':self.ad,'de':int(self.de*0.5),'hhp':2000}))
+            self.addbuff('체스판 위의 퀸','statuschange','Null',1,{'ad':self.ad,'de':int(self.de*0.5),'hhp':2000})
             self.hp += 2000
             self.statusrenewal()
             self.passivename = '체크메이트'
@@ -131,7 +131,7 @@ class ChessPlayer(Player):
             print()
             self.normal(target)
         else:
-            self.bufflist.append(Buff('캐슬링','statuschange','Null',1,{'de':50},self))
+            self.addbuff('캐슬링','statuschange','Null',1,{'de':50},self)
             self.hp += int((self.hhp-self.hp)*0.3)
             if self.hp > self.hhp:
                 self.hp = self.hhp

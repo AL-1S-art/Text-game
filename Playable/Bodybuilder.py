@@ -34,12 +34,10 @@ class Bodybuilder(Player):
         self.ultimatetarget = 'self'
         self.classname = '보디빌더'
         self.onstartpassive = True
-        self.bufflist.append(Buff('체력이 곧 힘!', 'statuschange','Null',1,{'ad':1},self))
+        self.addbuff('체력이 곧 힘!', 'statuschange','Null',1,{'ad':1},self)
     def addhhpbuff(self,target,amount):
         for player in target:
-            if len(list(filter(lambda buff : buff.name == '트레이닝의 결실',player.bufflist))) == 0:
-                player.bufflist.append(Buff('트레이닝의 결실','statuschange','Null',0,{'hhp':1},player))
-            list(filter(lambda buff : buff.name == '트레이닝의 결실',player.bufflist))[0].stack += amount
+            player.addbuff('트레이닝의 결실','statuschange','Null',0,{'hhp':1},player)
             self.hp += amount
             if player == self:
                 self.updatead()
@@ -186,7 +184,7 @@ class Bodybuilder(Player):
                 time.sleep(0.04)
             time.sleep(0.7)
             print()
-            self.bufflist.append(Buff('벌크업!','statuschange',3,1,{'hhp':3000},self))
+            self.addbuff('벌크업!','statuschange',3,1,{'hhp':3000},self)
             self.hp += 3000
             self.passive(0)
             self.mp += self.rmp - 100

@@ -35,11 +35,11 @@ class Buff:
             if self.bufftype != 'statuschange' and self.bufftype != 'stack':
                 slow_print(f'{target.name}이/가 {self.name} 상태입니다!')
             elif self.bufftype == 'dot':
-                slow_print_with_end(f'\r{target.name}이/가 {abs(int(self.value))}만큼 피해를 입습니다!')
+                slow_print_with_end(f'\r{target.name}이/가 {abs(int(self.variation))}만큼 피해를 입습니다!')
                 time.sleep(0.1)
                 for x in range(self.stack):
-                    print(f'\r{target.name}이/가 {abs(int(self.value))} x {x+1} 만큼 피해를 입습니다!', end='', flush=True)
-                    target.dealdamm(self.value)
+                    print(f'\r{target.name}이/가 {abs(int(self.variation))} x {x+1} 만큼 피해를 입습니다!', end='', flush=True)
+                    target.dealdamm(self.variation)
                     time.sleep(0.1)
                 time.sleep(0.3)
                 print()
@@ -74,6 +74,8 @@ class Player:
         self.onstartpassive = False
         self.originalhhp = self.hhp
         self.startturn = True
+        self.sk = []
+        self.chosentarget = []
     def updateteam(self, team,teams,teamlist):
         self.team = team
         self.teams = teams
@@ -169,8 +171,6 @@ class Player:
                 self.skillturn()
             if self.hp <= 0:
                 slow_print(f'축하드립니다! {self.name}의 승리입니다!')
-            if '흑사병 보균자' in self.classname:
-                self.passive()
         self.endingturn()
     
     
@@ -186,8 +186,6 @@ class Player:
             slow_print_with_end(f'[{skill}], ')
         slow_print('[설명]')
         self.attack_pick = input()
-        self.sk = []
-        self.chosentarget = []
         if '설명' in self.attack_pick:
             self.explanation()
             self.chooseskill()
@@ -220,3 +218,9 @@ class Player:
                 self.buffdebuff(self.chosentarget[x])
             elif self.sk[x] == 'ultimate':
                 self.ultimate(self.chosentarget[x])
+    def addbuff(self, name, bufftype, duration, stack, variation,target,*args):
+        if len(list(filter(lambda buff : buff.name == name,self.bufflist))) == 0:
+            self.bufflist.append(Buff(name, bufftype, duration, stack, variation,target))
+        else:
+            list(filter(lambda buff : buff.name == name,self.bufflist))[0].stack += stack
+        self.statusrenewal()

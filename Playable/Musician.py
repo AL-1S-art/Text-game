@@ -148,7 +148,7 @@ class Musician(Player):
                 self.hp = self.hhp
             slow_print(f'{self.name}이/가 조화로운 멜로디를 피아노로 연주합니다! 선율이 조화로워 체력이 {heal}만큼 회복됩니다!')
         elif self.instrument ==  '바이올린':
-            self.bufflist.append(Buff('조화로운 멜로디','statuschange','2',1,{'ad':50},self))
+            self.addbuff('조화로운 멜로디','statuschange','2',1,{'ad':50},self)
             self.bdbtime += 2
             slow_print(f'{self.name}이/가 조화로운 멜로디를 바이올린으로 연주합니다! 선율이 조화로워 공격력이 50 증가하여 {self.ad}가 되었습니다! 공격력 증가는 2턴동안 유지됩니다!')
         print()
@@ -193,7 +193,7 @@ class Musician(Player):
             elif self.instrument == '바이올린':
                 damm = int(target.hhp*0.3)
                 
-                target.bufflist.append(Buff('장송곡','statuschange',1,{'de':int(target.de*0.3)},target))
+                target.addbuff('장송곡','statuschange',1,{'de':int(target.de*0.3)}, target)
                 slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용합니다! 피날레에 들어갑니다! 적의 최대체력의 20%에 해당하는 고정피해를 입히며, 적의 방어력을 영구적으로 10% 감소시킵니다!')
                 slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다!')
                 target.dealdamm(damm)

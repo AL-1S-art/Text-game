@@ -102,7 +102,7 @@ class Fighter(Player):
             print()
             self.normal(target)
         else:
-            self.bufflist.append(Buff('배면기','statuschange','Null','1',{'ad':int(self.ad*0.5),'de':int(self.de*0.5)},self))
+            self.addbuff('배면기','statuschange','Null','1',{'ad':int(self.ad*0.5),'de':int(self.de*0.5)},self)
             self.statusrenewal()
             slow_print(f'{self.name}이/가 {self.buffdebuffname}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 영구적으로 방어력과 공격력이 1.5배로 증가합니다.')

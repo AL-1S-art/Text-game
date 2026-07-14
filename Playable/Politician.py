@@ -149,7 +149,7 @@ class Politician(Player):
             print()
             self.normal(target)
         else:
-            self.bufflist.append(Buff('당의 지원','statuschange','Null',1,{'de':30},self))
+            self.addbuff('당의 지원','statuschange','Null',1,{'de':30},self)
             if self.popularity >= 50:
                 heal = int((self.hhp-self.hp)*0.2)
                 self.hp += heal

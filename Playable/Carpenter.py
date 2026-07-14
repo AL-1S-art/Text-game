@@ -46,7 +46,7 @@ class Carpenter(Player):
                 self.hp = 2
                 slow_print(f'{self.name}이/가 사망하였습니다...?')
                 self.bufflist.clear()
-                self.bufflist.append(Buff('그리스도의 부활','resurraction',2,1,'Null',self))
+                self.addbuff('그리스도의 부활','resurraction',2,1,'Null',self)
                 self.passivecool += 8
                 self.damageskillname = '못 박기'
                 self.passivename = '고된 업무'
@@ -156,7 +156,7 @@ class Carpenter(Player):
             slow_print(f'{self.name}이/가 예수로 각성합니다!')
             slow_print(f'{self.name}의 최대체력과 방어력이 절반으로 감소하지만, 공격력이 3배로 증가하며, 매 턴마다 보호막을 얻습니다!')
             self.passive(target)
-            self.bufflist.append(Buff('하나님의 아들', 'statuschange','Null',1,{'de':(-1*self.de//2),'ad':(self.ad*2),'hhp':-1*(self.hhp//2)},self))
+            self.addbuff('하나님의 아들', 'statuschange','Null',1,{'de':(-1*self.de//2),'ad':(self.ad*2),'hhp':-1*(self.hhp//2)},self)
             self.passivename = '재림'
             self.damageskillname = '역지사지'
             print()

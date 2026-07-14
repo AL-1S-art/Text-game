@@ -2,7 +2,7 @@ import random
 from Util import *
 
 from Playable.Baker import *
-from Playable.Blackdeath import *
+
 from Playable.Bodybuilder import *
 from Playable.Carpenter import *
 from Playable.Chemist import *
@@ -16,7 +16,7 @@ from Playable.Musician import *
 from Playable.Naturalist import *
 from Playable.Pitcher import *
 from Playable.Politician import *
-
+from Playable.Blackdeath import *
 
 slow_print('플레이어 1의 이름을 입력해 주세요.')
 player1_name = input()
