@@ -23,6 +23,10 @@ class Main:
         if event.type == 1024:
             if self.game.handle_event(event) == "next":
                 self.next_scene = "game_mode_pick"
+            if self.story.handle_event(event) == "next":
+                self.next_scene = "story_mode_pick"
+            if self.character.handle_event(event) == "next":
+                self.next_scene = "character_dict"
     
             
     def update(self):
