@@ -5,6 +5,8 @@ from Scenes.main import Main
 from Scenes.game_mode_pick import Game_mode_pick
 from Scenes.story_mode_pick import Story_mode_pick
 from Scenes.character_dict import Character_dict
+from Scenes.home_setting import Home_setting
+from Scenes.confirm_quit import Confirm_quit
 
 
 class SceneManager:
@@ -18,6 +20,8 @@ class SceneManager:
             "game_mode_pick": Game_mode_pick(screen),
             "story_mode_pick": Story_mode_pick(screen),
             "character_dict": Character_dict(screen),
+            "home_setting": Home_setting(screen),
+            "confirm_quit": Confirm_quit(screen)
         }
 
     def set_scene(self, name):
