@@ -38,7 +38,23 @@ class Story_mode_pick:
     
             
     def update(self):
-        pass
+        self.fighter_name.update()
+        self.gambler_name.update()
+        self.rider_name.update()
+        self.carpenter_name.update()
+        self.bodybuilder_name.update()
+      
+        self.engineer_name.update()
+        self.musician_name.update()
+        self.naturalist_name.update()
+        self.politician_name.update()
+        self.baker_name.update()
+
+        self.chessplayer_name.update()
+        self.pitcher_name.update()
+        self.harrypotter_name.update()
+        self.chemist_name.update()
+        self.blackdeath_name.update()
 
     def draw(self):
         self.screen.blit(self.characterback, (0,0))
