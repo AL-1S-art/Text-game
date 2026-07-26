@@ -2,7 +2,7 @@ import pygame
 from Components.button import Button
 import os
 
-class Story_mode_pick:
+class Character_dict:
     def __init__(self, screen):
         self.screen = screen
         self.next_scene = None
