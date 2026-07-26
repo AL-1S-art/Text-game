@@ -3,7 +3,8 @@ from Scenes.intro import IntroScene
 from Scenes.loading_to_main import Loading_To_Main
 from Scenes.main import Main
 from Scenes.game_mode_pick import Game_mode_pick
-
+from Scenes.story_mode_pick import Story_mode_pick
+from Scenes.character_dict import Character_dict
 
 
 class SceneManager:
@@ -15,6 +16,8 @@ class SceneManager:
             "loading_to_main": Loading_To_Main(screen),
             "main": Main(screen),
             "game_mode_pick": Game_mode_pick(screen),
+            "story_mode_pick": Story_mode_pick(screen),
+            "character_dict": Character_dict(screen),
         }
 
     def set_scene(self, name):
