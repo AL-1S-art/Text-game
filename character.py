@@ -34,13 +34,15 @@ class Buff:
         else:
             if self.bufftype != 'statuschange' and self.bufftype != 'stack':
                 slow_print(f'{target.name}이/가 {self.name} 상태입니다!')
-            elif self.bufftype == 'dot':
-                slow_print_with_end(f'\r{target.name}이/가 {abs(int(self.variation))}만큼 피해를 입습니다!')
+            if self.bufftype == 'dot':
+                slow_print_with_end(f'{target.name}이/가 \r')
                 time.sleep(0.1)
                 for x in range(self.stack):
-                    print(f'\r{target.name}이/가 {abs(int(self.variation))} x {x+1} 만큼 피해를 입습니다!', end='', flush=True)
-                    target.dealdamm(self.variation)
+                    print(f'\r{target.name}이/가 {abs(int(self.variation))} x {x+1}', end='', flush=True)
+                    
                     time.sleep(0.1)
+                slow_print(f'만큼 피해를 입습니다!')
+                target.dealdamm(self.variation)
                 time.sleep(0.3)
                 print()
             elif self.bufftype == 'statuschange':
@@ -178,7 +180,7 @@ class Player:
         self.statusrenewal()
         slow_print(f'다음 스킬들 중 하나를 선택하십시오.')
         self.skills = [self.normalname, self.damageskillname, self.buffdebuffname, self.ultimatename]
-        if self.bdbturn > 0:
+        if self.bdbturn > 0 or len(self.sk) > 0:
             self.skills.remove(self.buffdebuffname)
         if self.uturn > 0:
             self.skills.remove(self.ultimatename)
@@ -219,7 +221,7 @@ class Player:
             elif self.sk[x] == 'ultimate':
                 self.ultimate(self.chosentarget[x])
     def addbuff(self, name, bufftype, duration, stack, variation,target,*args):
-        if len(list(filter(lambda buff : buff.name == name,self.bufflist))) == 0:
+        if len(list(filter(lambda buff : buff.name == name, self.bufflist))) == 0:
             self.bufflist.append(Buff(name, bufftype, duration, stack, variation,target))
         else:
             list(filter(lambda buff : buff.name == name,self.bufflist))[0].stack += stack

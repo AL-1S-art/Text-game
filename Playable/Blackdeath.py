@@ -95,16 +95,20 @@ class Blackdeath(Player):
                 slow_print(f'{target.name}은/는 이미 흑사병에 걸렸습니다!')
                 slow_print(f'{target.name} 주위로 흑사병이 퍼집니다!')
                 if playerorder.index[target] != 0:
-                    playerorder[playerorder.index[target]-1].addbuff('흑사병','dot','Null',10,20,playerorder[playerorder.index[target]-1])
-                if playerorder.index[self] != len(playerorder)-1:
-                    playerorder[playerorder.index[target]+1].addbuff('흑사병','dot','Null',10,20,playerorder[playerorder.index[target]+1])
+                    targetplayer = playerorder[playerorder.index[target]-1]
+                    targetplayer.addbuff('흑사병','dot','Null',10,20,playerorder[playerorder.index[target]-1])
+                    slow_print(f'{targetplayer.name}이/가 흑사병에 걸립니다')
+                if playerorder.index[target] != len(playerorder)-1:
+                    targetplayer = playerorder[playerorder.index[target]+1]
+                    targetplayer.addbuff('흑사병','dot','Null',10,20,playerorder[playerorder.index[target]+1])
+                    slow_print(f'{targetplayer.name}이/가 흑사병에 걸립니다')
             else:    
-                slow_print(f'흑사병이 전염돼 {target.name}이/가 흑사병에 걸립니다.')
+                slow_print(f'{target.name}이/가 흑사병에 걸립니다.')
                 target.addbuff('흑사병','dot','Null',10,20,target)
             print()
             slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-            self.bdbturn += 999999999999999999999999999999999999999999999999999999999999999
+            self.bdbturn += 3
             
    
     def ultimate(self, target):
@@ -118,7 +122,7 @@ class Blackdeath(Player):
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
-        elif target not in self.bdbtarget:
+        elif target.bufflist.count('흑사병') == 0:
             slow_print('대상은 현재 병을 가지고 있지 않습니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()

@@ -120,7 +120,7 @@ class Fighter(Player):
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
-        if self.uturn > 0:
+        elif self.uturn > 0:
             slow_print('궁극기 쿨타임 입니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
