@@ -33,13 +33,14 @@ class Button:
         if self.text_color_yes == "y":
             if self.rect.collidepoint(event.pos):
                 self.color_change = True
-            else:
-                self.color_change = False
+                if event.type == 1025:
+                    return "next"
 
 
     def update(self):
         if self.text_color_yes == "y":
             self.color_change = self.rect.collidepoint(pygame.mouse.get_pos())
+
 
     def draw(self):
         if self.color_change:
