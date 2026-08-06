@@ -72,7 +72,6 @@ class Blackdeath(Player):
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             
-            self.turn += 1
    
    
     def buffdebuff(self, target):
@@ -122,7 +121,7 @@ class Blackdeath(Player):
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
-        elif target.bufflist.count('흑사병') == 0:
+        elif len(list(filter(lambda x: x.name == '흑사병',target.bufflist))) == 0:
             slow_print('대상은 현재 병을 가지고 있지 않습니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
@@ -139,10 +138,6 @@ class Blackdeath(Player):
             self.mp += self.rmp - 150
             slow_print(f'{self.name}의 마나가 150 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-            self.turn += 1
-            self.usturn -= 1
-            if self.usturn == 0:
-                self.uturn += 3
    
     def explanation(self):
         slow_print(f'[{self.passivename}]은/는 자신의 턴마다 자기 자신에게 고정 피해를 입히는 패시브입니다.')

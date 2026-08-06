@@ -28,7 +28,6 @@ class Politician(Player):
         self.prevhp = self.hp
         self.mytotaldamm = 0
         self.opptotaldamm = 0
-        self.ultimateturn = 0
         self.supportused = False
         self.classname = '정치인'
         super().__init__(name)
@@ -43,10 +42,9 @@ class Politician(Player):
     
     def passive(self, target):
         self.prevhp = self.hp
-        if self.ultimateturn > 0:
-            self.ultimateturn -= 1
+        if len(list(filter(lambda buff : buff.name == '대선토론',self.bufflist))) != 0:
             self.opptotaldamm += self.prevhp - self.hp
-            if self.ultimateturn == 0:
+            if list(filter(lambda buff : buff.name == '대선토론',self.bufflist))[0].duration == 0:
                 self.passivename = '대중의 지지'
                 self.normalname = '평타' 
                 self.damageskillname = '후보 공격'
@@ -164,11 +162,6 @@ class Politician(Player):
             print()
             
             self.supportused = True
-            if self.uturn > 0:
-                self.uturn -= 1
-            if self.bdbturn > 0:
-                self.bdbturn -= 1
-            self.turn += 1
     def ultimate(self, target):
         if self.mp - 100 < 0:
             slow_print('사용 가능한 마나가 없습니다.')

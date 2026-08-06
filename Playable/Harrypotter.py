@@ -40,8 +40,7 @@ class Harrypotter(Player):
                 return
         print()
     def passive(self, target):
-        self.passiveturn += 1
-        self.ad += self.passiveturn * 2
+        pass
         
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
@@ -53,11 +52,7 @@ class Harrypotter(Player):
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        if self.uturn > 0:
-            self.uturn -= 1
-        if self.bdbturn > 0:
-            self.bdbturn -= 1
-        self.turn += 1
+
         self.passive()
    
     def damageskill(self, target):
@@ -77,9 +72,7 @@ class Harrypotter(Player):
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             
-            if self.uturn > 0:
-                self.uturn -= 1
-   
+
     def buffdebuff(self, target):
         if self.mp - 80 < 0 :
             slow_print('사용 가능한 마나가 없습니다.')
@@ -100,7 +93,6 @@ class Harrypotter(Player):
             slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             self.bdbturn += 4
-            self.turn += 1
             self.passive()
    
     def ultimate(self, target):

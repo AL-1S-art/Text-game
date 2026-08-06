@@ -1,6 +1,6 @@
 from Util import *
 from character import Buff, Player
-
+import random
 
 class Baker(Player):
     def __init__(self,name):
@@ -18,7 +18,7 @@ class Baker(Player):
         self.bdbturn = 0
         self.uturn = 0
         self.turn = 0
-        self.passivename = '빵 데우기'
+        self.passivename = '빵데우기'
         self.normalname = '평타'
         self.damageskillname = '프랑스식 전술'
         self.buffdebuffname = '반죽'
@@ -36,8 +36,7 @@ class Baker(Player):
         print()
         
     def passive(self, target):
-        self.passiveturn += 1
-        self.ad += self.passiveturn * 2
+        pass
         
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
@@ -53,12 +52,6 @@ class Baker(Player):
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        if self.uturn > 0:
-            self.uturn -= 1
-        if self.bdbturn > 0:
-            self.bdbturn -= 1
-        self.turn += 1
-        self.passive()
    
     def damageskill(self, target):
         if self.mp - 50 < 0:
@@ -76,8 +69,6 @@ class Baker(Player):
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             
-            if self.uturn > 0:
-                self.uturn -= 1
    
     def buffdebuff(self, target):
         if self.mp - 80 < 0 :
@@ -100,8 +91,6 @@ class Baker(Player):
             slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             self.bdbturn += 2
-            self.turn += 1
-            self.passive()
    
     def ultimate(self, target):
         if self.mp - 50 < 0:

@@ -68,10 +68,6 @@ class Bodybuilder(Player):
         if not self.warmingup:
             self.buffdebuffname = '웨이트 트레이닝'
             self.buffskilltarget = 'teamall'
-        if self.bdbturn > 0:
-            self.bdbturn -= 1
-        if self.uturn > 0:
-            self.uturn -= 1
         self.updatead()
     def updatead(self):
         list(filter(lambda buff : buff.name == '체력이 곧 힘!',self.bufflist))[0].buffdo(self)

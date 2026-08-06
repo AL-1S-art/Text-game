@@ -71,19 +71,6 @@ class Carpenter(Player):
             if self.hp >= self.hhp:
                 self.hp = self.hhp
             slow_print(f'{self.name}이가 고된 업무 후에 휴식을 취하며 체력을 30 재생했습니다.')
-            if self.uturn > 0:
-                self.uturn -= 1
-            if self.bdbturn > 0:
-                self.bdbturn -= 1
-            if self.bdbtime == 1:
-                self.de -= 50
-                self.bdbtime = 0
-            elif self.bdbtime == 2:
-                target.de += 30
-                target.ad += 30
-                self.bdbtime = 0
-            else:
-                self.bdbtime -= 2
     def normal(self, target):
         if len(list(filter(lambda x: x.name == '하나님의 아들',self.bufflist))) == 0:
             slow_print(f'{self.name}이/가 {target.name}을/를 공격합니다.')
@@ -99,7 +86,6 @@ class Carpenter(Player):
         self.mp += self.rmp
         slow_print(f'{self.name}의 마나가 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        self.turn += 1
     def damageskill(self, target):
         if len(list(filter(lambda x: x.name == '하나님의 아들',self.bufflist))) == 0:
             slow_print(f'{self.name}이/가 망치로 못을 박습니다!')
@@ -116,7 +102,6 @@ class Carpenter(Player):
         self.mp += self.rmp - 60
         slow_print(f'{self.name}의 마나가 60만큼 소모되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        self.turn += 1
     def buffdebuff(self, target):
         if self.bdbturn > 0:
             slow_print('버프/디버프스킬이 아직 쿨타임입니다.')
@@ -128,13 +113,11 @@ class Carpenter(Player):
             if self.ultimateon == 0:
                 self.de += 50
                 slow_print(f'{self.name}이/가 마음을 가다듬습니다! 방어력이 2턴동안 50 상승합니다.')
-                self.bdbtime = 5
+                self.addbuff('경건한 마음','statuschange',2,1,{'de':50},self)
             else:
                 moreslow_print('“화 있을진저, 외식하는 서기관들과 바리새인들이여”')
                 slow_print(f'{self.name}이/가 {target.name}에게 설교를 해 공격력과 방어력을 2턴동안 30 감소시킵니다.')
-                target.ad -= 30
-                target.de -= 30
-                self.bdbtime = 6
+                target.addbuff('설교당함','statuschange',2,1,{'ad':-30,'de':-30},target)
             print()
             self.mp += self.rmp - 40
             slow_print(f'{self.name}의 마나가 40 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')

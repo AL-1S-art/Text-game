@@ -53,8 +53,6 @@ class Pitcher(Player):
             self.strikelist[target] = 0
             self.out += 1
             slow_print(f'{self.out} 아웃!')
-        if self.bdbturn > 0:
-            self.bdbturn -= 1
 
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*1)
@@ -86,7 +84,6 @@ class Pitcher(Player):
             self.mp += self.rmp - 50
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-            self.turn += 1
 
     def buffdebuff(self, target):
         if self.mp - 80 < 0 :

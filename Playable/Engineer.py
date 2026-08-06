@@ -53,9 +53,6 @@ class Engineer(Player):
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        if self.uturn > 0: 
-            self.uturn -= 1
-        self.turn += 1
         self.passive(target)
     def damageskill(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2.5)
@@ -72,9 +69,6 @@ class Engineer(Player):
         self.mp += self.rmp - 40
         slow_print(f'{self.name}의 마나가 40 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        if self.uturn > 0: 
-            self.uturn -= 1
-        self.turn += 1
         self.passive(target)
     def buffdebuff(self, target):
         if self.parts < 1:
@@ -149,7 +143,6 @@ class Engineer(Player):
             print()
             
             self.uturn += 3
-        self.turn += 1
         self.passive(target)
     def explanation(self):
         slow_print(f'[{self.passivename}]은/는 3턴마다 부품을 획득하는 패시브입니다. 부품은 버프스킬을 사용해 스탯 또는 스킬 업그레이드에 사용할 수 있습니다.')

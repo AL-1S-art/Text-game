@@ -37,7 +37,7 @@ class Naturalist(Player):
         print()
     def passive(self):
         if self.turn%2 == 0:
-            self.hp += self.hhp*(23/1000)
+            self.hp += int(self.hhp*(23/1000))
     
     def normal(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2)
@@ -79,18 +79,6 @@ class Naturalist(Player):
             self.mp += self.rmp - 60
             slow_print(f'{self.name}의 마나가 60 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-            
-            if self.uturn > 0:
-                self.utarget[0].hp -= int((((self.ad*8.98) * 0.9) + 400) * (100/(100+target.de)))
-                self.uturn -= 1
-                if self.uturn == 0:
-                    self.utarget[0].remove()
-            if self.bdbturn > 0:
-                self.bdbturn -= 1
-                if self.bdbturn == 0:
-                    self.bdbtarget[0].de = self.bdbtarget[0].de / 0.3
-                    self.bdbtarget[0].remove()
-            self.turn += 1
             self.passive()
 
     
@@ -114,7 +102,6 @@ class Naturalist(Player):
             slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             self.bdbturn += 1
-            self.turn += 1
             self.passive()
 
     
@@ -136,19 +123,12 @@ class Naturalist(Player):
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 2턴 동안 입힙니다.')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 입힙니다.')
             target.addbuff('질식','cc',2,1,'Null',target)
-            target.dealdamm(damm)
+            target.addbuff('퇴적','dot',2,10,damm//10,target)
             print()
             self.mp += self.rmp - 100
             slow_print(f'{self.name}의 마나가 100 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             
-            if self.bdbturn > 0:
-                self.bdbturn -= 1
-                if self.bdbturn == 0:
-                    self.bdbtarget[0].de = self.bdbtarget[0].de / 0.3
-                    self.bdbtarget[0].remove()
-            self.turn += 1
-            self.uturn += 1
             self.passive()
 
     

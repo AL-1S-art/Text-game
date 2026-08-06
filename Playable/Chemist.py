@@ -52,11 +52,7 @@ class Chemist(Player):
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        if self.uturn > 0:
-            self.uturn -= 1
-        if self.bdbturn > 0:
-            self.bdbturn -= 1
-        self.turn += 1
+
         self.passive(target)
     def damageskill(self, target):
         damm = int((self.ad * (100/(100+target.de)))*2.5)
@@ -69,11 +65,7 @@ class Chemist(Player):
         self.mp += self.rmp - 40
         slow_print(f'{self.name}의 마나가 40 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        if self.uturn > 0:
-            self.uturn -= 1
-        if self.bdbturn > 0:
-            self.bdbturn -= 1
-        self.turn += 1
+
         self.passive(target)
     def buffdebuff(self, target):
         damm = int((self.ad * (100/(100+target.de)))*1.5)
@@ -88,10 +80,7 @@ class Chemist(Player):
         self.mp += self.rmp - 40
         slow_print(f'{self.name}의 마나가 40 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        if self.uturn > 0:
-            self.uturn -= 1
-        self.bdbturn += 1
-        self.turn += 1
+        self.bdbturn += 2
         self.passive(target)
     def ultimate(self, target, *args):
         if self.mp - 100 < 0:

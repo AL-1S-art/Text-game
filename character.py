@@ -91,6 +91,11 @@ class Player:
                     self.hp = self.hhp
             self.statusrenewal()
         self.turn += 1
+        if self.bdbturn > 0:
+            self.bdbturn -= 1
+        if self.uturn > 0:
+            self.uturn -= 1
+        self.sk = []
                 
     def statusrenewal(self):
         

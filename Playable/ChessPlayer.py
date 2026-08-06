@@ -89,11 +89,6 @@ class ChessPlayer(Player):
             self.mp += self.rmp
             slow_print(f'{self.name}의 마나가 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-        if self.uturn > 0:
-            self.uturn -= 1
-        if self.bdbturn > 0:
-            self.bdbturn -= 1
-        self.turn += 1
     def damageskill(self, target):
         if len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0:
             slow_print(f'{self.name}이/가 폰을 1칸 전진시킵니다!')
@@ -119,11 +114,6 @@ class ChessPlayer(Player):
             self.mp += self.rmp - 60
             slow_print(f'{self.name}의 마나가 60만큼 소모되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-        if self.uturn > 0:
-            self.uturn -= 1
-        if self.bdbturn > 0:
-            self.bdbturn -= 1
-        self.turn += 1
     def buffdebuff(self, target):
         if len(list(filter(lambda buff: buff.name == '캐슬링',self.bufflist))) != 0:
             slow_print('캐슬링은 최대 1회 사용 가능합니다.')
@@ -142,9 +132,6 @@ class ChessPlayer(Player):
             slow_print(f'{self.name}의 마나가 40 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             
-            if self.uturn > 0:
-                self.uturn -= 1
-            self.turn += 1
     def ultimate(self, target):
         if len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0:
             slow_print('퀸 기물이 존재할 때만 사용할 수 있습니다.')

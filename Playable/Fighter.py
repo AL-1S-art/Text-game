@@ -82,7 +82,6 @@ class Fighter(Player):
             slow_print(f'{self.name}의 마나가 50 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             
-            self.turn += 1
             self.passive()
 
     def buffdebuff(self, target):

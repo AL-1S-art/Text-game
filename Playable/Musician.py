@@ -101,11 +101,6 @@ class Musician(Player):
         self.mp += self.rmp
         slow_print(f'{self.name}의 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
         print()
-        if self.uturn > 0: 
-            self.uturn -= 1
-        if self.bdbturn > 0:
-            self.bdbturn -= 1
-        self.turn += 1
         self.passive()
     def damageskill(self, target):
         if self.instrument == '피아노':
@@ -134,11 +129,6 @@ class Musician(Player):
             slow_print(f'{target.name}이/가 사망하였습니다!')
             return
         print()
-        if self.uturn > 0: 
-            self.uturn -= 1
-        if self.bdbturn > 0:
-            self.bdbturn -= 1
-        self.turn += 1
         self.passive()
     def buffdebuff(self, target):
         if self.instrument == '피아노':
@@ -161,9 +151,6 @@ class Musician(Player):
             slow_print(f'{target.name}이/가 사망하였습니다!')
             return
         print()
-        if self.uturn > 0: 
-            self.uturn -= 1
-        self.turn += 1
         self.bdbturn += 10000000000
     def ultimate(self, target):
         if self.mp - 100 < 0:
@@ -204,7 +191,6 @@ class Musician(Player):
             
             self.uturn += 10000000000
             self.ultimateused = True
-        self.turn += 1
         self.passive()
     def explanation(self):
         if self.instrument == '피아노':
