@@ -31,8 +31,8 @@ while running:
         sceneManager.handle_event(event)
 
     # update
-    sceneManager.update()
-    if sceneManager.update == "False":
+    result = sceneManager.update()
+    if result == "False":
         running = False
 
     # draw
