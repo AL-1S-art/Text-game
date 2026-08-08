@@ -34,3 +34,4 @@ class PVP_Game:
         self.screen.blit(self.characterback, (0,0))
         self.storyMAIN.draw()
         self.storySIDE.draw()
+        self.menu.draw()
