@@ -11,7 +11,7 @@ class Home_setting:
         self.home_settingback = pygame.image.load(os.path.join(self.base_path, "Graphics/scene_home_setting/home_settingback.png"))
         self.home_settingback = pygame.transform.scale(self.home_settingback, (1920, 1080))
         self.menu = Button(self.screen, 960, 117, 0, 0, (0,0,0), "설정", "b", (255,255,255),"n")
-        self.quit = Button(self.screen, 960, 950, 0, 0, (0,0,0), "게임 종료", "nb", (255,255,255),"y")
+        self.quit = Button(self.screen, 800, 900, 320, 120, (0,0,0), "게임종료", "nb", (255,255,255),"y")
 
 
     def handle_event(self, event: pygame.event):
@@ -30,3 +30,5 @@ class Home_setting:
         self.screen.blit(self.home_settingback, (0,0))
         self.menu.draw()
         self.quit.draw()
+#326
+#300
