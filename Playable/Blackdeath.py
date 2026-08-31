@@ -30,7 +30,7 @@ class Blackdeath(Player):
         super().__init__(name)
         self.classname = '흑사병 보균자'
         self.buffskilltarget = 'enemy'
-        self.addbuff('흑사병','dot','Null',10,20,self)
+        self.addbuff('보균','dot','Null',10,20,self)
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -90,20 +90,20 @@ class Blackdeath(Player):
             slow_print(f'{self.name}이/가 {self.buffdebuffname}을/를 사용했습니다!')
             
             
-            if len(list(filter(lambda x: x.name == '흑사병',target.bufflist))) > 0:
+            if len(list(filter(lambda x: x.name == '보균',target.bufflist))) > 0:
                 slow_print(f'{target.name}은/는 이미 흑사병에 걸렸습니다!')
                 slow_print(f'{target.name} 주위로 흑사병이 퍼집니다!')
                 if playerorder.index[target] != 0:
                     targetplayer = playerorder[playerorder.index[target]-1]
-                    targetplayer.addbuff('흑사병','dot','Null',10,20,playerorder[playerorder.index[target]-1])
+                    targetplayer.addbuff('보균','dot','Null',10,20,playerorder[playerorder.index[target]-1])
                     slow_print(f'{targetplayer.name}이/가 흑사병에 걸립니다')
                 if playerorder.index[target] != len(playerorder)-1:
                     targetplayer = playerorder[playerorder.index[target]+1]
-                    targetplayer.addbuff('흑사병','dot','Null',10,20,playerorder[playerorder.index[target]+1])
+                    targetplayer.addbuff('보균','dot','Null',10,20,playerorder[playerorder.index[target]+1])
                     slow_print(f'{targetplayer.name}이/가 흑사병에 걸립니다')
             else:    
                 slow_print(f'{target.name}이/가 흑사병에 걸립니다.')
-                target.addbuff('흑사병','dot','Null',10,20,target)
+                target.addbuff('보균','dot','Null',10,20,target)
             print()
             slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
@@ -121,16 +121,16 @@ class Blackdeath(Player):
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
-        elif len(list(filter(lambda x: x.name == '흑사병',target.bufflist))) == 0:
+        elif len(list(filter(lambda x: x.name == '보균',target.bufflist))) == 0:
             slow_print('대상은 현재 병을 가지고 있지 않습니다.')
             slow_print('기본 공격으로 대체됩니다.')
             print()
             self.normal(target)
         else:
             slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.ultimatename}를 사용합니다!')
-            if len(list(filter(lambda x: x.name == '흑사병',target.bufflist))) > 0:
+            if len(list(filter(lambda x: x.name == '보균',target.bufflist))) > 0:
                 slow_print(f'{target.name}에게 부여된 {self.passivename} 상태를 해제했습니다.')
-                target.bufflist.remove(Buff('흑사병','dot','Null',10,20,target))
+                target.bufflist.remove(list(filter(lambda x: x.name == '보균',target.bufflist))[0])
             else:
                 slow_print(f'{target.name}은/는 흑사병에 감염되지 않았었습니다!')
                 slow_print('아무 일도 일어나지 않습니다....')

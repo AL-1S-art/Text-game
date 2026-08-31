@@ -101,7 +101,7 @@ class Naturalist(Player):
             self.mp += self.rmp - 80
             slow_print(f'{self.name}의 마나가 80 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-            self.bdbturn += 1
+            self.bdbturn += 3
             self.passive()
 
     
@@ -122,13 +122,13 @@ class Naturalist(Player):
             slow_print(f'{self.name}이/가 {target.name}에게 궁극기 {self.ultimatename}을/를 사용합니다!')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 2턴 동안 입힙니다.')
             slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼의 피해를 입힙니다.')
-            target.addbuff('질식','cc',2,1,'Null',target)
-            target.addbuff('퇴적','dot',2,10,damm//10,target)
+            target.addbuff('질식','cc',3,1,'Null',target)
+            target.addbuff('퇴적','dot',3,10,damm//10,target)
             print()
             self.mp += self.rmp - 100
             slow_print(f'{self.name}의 마나가 100 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-            
+            self.uturn += 4
             self.passive()
 
     

@@ -31,7 +31,7 @@ class ChessPlayer(Player):
         super().__init__(name)
         self.normaltarget = 'self'
         self.damageskilltarget = 'self'
-        self.addbuff('전진!','stack','Null',3,'Null',self)
+        self.addbuff('전진!','stack','Null',2,'Null',self)
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:
@@ -42,9 +42,9 @@ class ChessPlayer(Player):
         print()
     
     def passive(self, target):
-        if list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack == 8 and len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0:
+        if len(list(filter(lambda buff: buff.name == '전진!', self.bufflist))) == 0 or (list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack == 8 and len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0):
             self.bufflist.remove(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0])
-            self.addbuff('체스판 위의 퀸','statuschange','Null',1,{'ad':self.ad,'de':int(self.de*0.5),'hhp':2000})
+            self.addbuff('체스판 위의 퀸','statuschange','Null',1,{'ad':self.ad,'de':int(self.de*0.5),'hhp':2000},self)
             self.hp += 2000
             self.statusrenewal()
             self.passivename = '체크메이트'
@@ -69,7 +69,7 @@ class ChessPlayer(Player):
         if len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0:
             slow_print(f'{self.name}이/가 폰을 1칸 전진시킵니다!')
             list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack += 1
-            self.squarename = str(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack-2)+'. d'+str(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack)
+            self.squarename = str(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack-1)+'. d'+str(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack+1)
             self.normalname = self.squarename
             self.damageskillname = self.squarename
             self.passive(target)

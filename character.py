@@ -104,7 +104,7 @@ class Player:
         for buff in self.bufflist:
             if buff.name != '체력이 곧 힘!':
                 buff.applybuff()
-        if self.classname == '보디빌더':
+        if self.classname == '파워리프터':
             list(filter(lambda buff : buff.name == '체력이 곧 힘!',self.bufflist))[0].stack = self.hhp// 30
             list(filter(lambda buff : buff.name == '체력이 곧 힘!',self.bufflist))[0].buffdo(self)
     def settarget(self, targetrange):
@@ -171,7 +171,6 @@ class Player:
                 slow_print(f'{self.name}이/가 군중 제어 상태로 인해 행동할 수 없습니다!')
                 slow_print(f'{self.name}의 턴이 넘어갑니다...')
                 print()
-                return
             
             
             else:
@@ -206,7 +205,7 @@ class Player:
         elif self.buffdebuffname in self.attack_pick:
             self.chosentarget.append(self.settarget(self.buffskilltarget))
             self.sk.append('buff')
-            if self.classname != '보디빌더' or not self.warmingup:
+            if self.classname != '파워리프터' or not self.warmingup:
                 slow_print_with_end(f'다시 ')
                 self.chooseskill()
         elif self.ultimatename in self.attack_pick:

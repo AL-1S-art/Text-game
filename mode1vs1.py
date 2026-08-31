@@ -3,7 +3,7 @@ from Util import *
 
 from Playable.Baker import *
 
-from Playable.Bodybuilder import *
+from Playable.Powerlifter import *
 from Playable.Carpenter import *
 from Playable.Chemist import *
 from Playable.ChessPlayer import *
@@ -47,7 +47,7 @@ player2 = Dummy(f'{player2_name}')
 
 def player1_pick():
     global player1
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]','[목수]', '[보디빌더]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]','[목수]', '[파워리프터]']
     slow_print(f'{player1_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -81,8 +81,8 @@ def player1_pick():
         player1 = Pitcher(f'{player1_name}')
     elif pick == '목수':
         player1 = Carpenter(f'{player1_name}')
-    elif pick == '보디빌더':
-        player1 = Bodybuilder(f'{player1_name}')
+    elif pick == '파워리프터':
+        player1 = Powerlifter(f'{player1_name}')
     print()
 
 
@@ -91,7 +91,7 @@ def player1_pick():
 
 def player2_pick():
     global player2
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]', '[목수]', '[보디빌더]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]', '[목수]', '[파워리프터]']
     slow_print(f'{player2_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -115,8 +115,11 @@ def player2_pick():
         player2 = Chemist(f'{player2_name}')
     elif pick == '체스선수':
         player2 = ChessPlayer(f'{player2_name}')
-    elif pick == '정치인':
-        player2 = Politician(f'{player2_name}')
+
+###정치인 비활성화
+###    elif pick == '정치인':
+###        player2 = Politician(f'{player2_name}')
+
     elif pick == '엔지니어':
         player2 = Engineer(f'{player2_name}')
     elif pick == '음악가':
@@ -125,8 +128,8 @@ def player2_pick():
         player2 = Pitcher(f'{player2_name}')
     elif pick == '목수':
         player2 = Carpenter(f'{player2_name}')
-    elif pick == '보디빌더':
-        player2 = Bodybuilder(f'{player2_name}')
+    elif pick == '파워리프터':
+        player2 = Powerlifter(f'{player2_name}')
     print()
 
 
@@ -153,7 +156,6 @@ teams.append(team2)
 
 cnt = 0
 teamlist = []
-random.shuffle(teams)
 for team in teams:
     teamlist.append('team'+str(cnt+1))
     cnt += 1
@@ -196,6 +198,7 @@ slow_print(f'게임을 시작합니다!')
 print()
 random.shuffle(teamlist)
 random.shuffle(teams)
+orderteam = []
 slow_print(f'순서는 {teams} 입니다.')
 print()
 playerorder = []

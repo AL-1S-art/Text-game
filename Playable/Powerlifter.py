@@ -2,7 +2,7 @@ from Util import *
 from character import Buff, Player
 import time
         
-class Bodybuilder(Player):
+class Powerlifter(Player):
     def __init__(self,name):
         
         self.shield = 0
@@ -32,7 +32,7 @@ class Bodybuilder(Player):
         super().__init__(name)
         self.buffskilltarget = 'self'
         self.ultimatetarget = 'self'
-        self.classname = '보디빌더'
+        self.classname = '파워리프터'
         self.onstartpassive = True
         self.addbuff('체력이 곧 힘!', 'statuschange','Null',1,{'ad':1},self)
     def addhhpbuff(self,target,amount):

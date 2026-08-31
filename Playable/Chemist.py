@@ -113,7 +113,7 @@ class Chemist(Player):
                      
             
             slow_print(f'{self.name}이/가 저장된 화합물을 모두 반응시켜 {target.name}에게 총 {totaldamm}만큼 피해를 입힙니다!')
-            target.dealdamm(totaldamm, args)
+            target.dealdamm(totaldamm)
             print()
             self.compoundlist = []
             self.mp += self.rmp - 100
