@@ -96,6 +96,7 @@ class Player:
         if self.uturn > 0:
             self.uturn -= 1
         self.sk = []
+        self.chosentarget = []
                 
     def statusrenewal(self):
         

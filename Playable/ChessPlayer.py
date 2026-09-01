@@ -42,7 +42,7 @@ class ChessPlayer(Player):
         print()
     
     def passive(self, target):
-        if len(list(filter(lambda buff: buff.name == '전진!', self.bufflist))) == 0 or (list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack == 8 and len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0):
+        if not len(list(filter(lambda buff: buff.name == '전진!', self.bufflist))) == 0 and (list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack == 8 and len(list(filter(lambda buff: buff.name == '체스판 위의 퀸', self.bufflist))) == 0):
             self.bufflist.remove(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0])
             self.addbuff('체스판 위의 퀸','statuschange','Null',1,{'ad':self.ad,'de':int(self.de*0.5),'hhp':2000},self)
             self.hp += 2000
@@ -129,6 +129,7 @@ class ChessPlayer(Player):
             slow_print(f'{self.name}이/가 캐슬링을 합니다! 방어력이 50 상승하며, 체력을 잃은 체력에 비례하게 회복합니다.')
             print()
             self.mp += self.rmp - 40
+            self.bdbturn += 99999
             slow_print(f'{self.name}의 마나가 40 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             
