@@ -84,12 +84,13 @@ class Player:
         self.teamlist = teamlist
     def endingturn(self):
         for buff in self.bufflist:
-            if buff.duration != 'Null' and buff.duration <= 0:
-                slow_print(f'{self.name}의 {buff.name} 상태가 해제되었습니다!')
-                self.bufflist.remove(buff)           
-                if self.hp > self.hhp:
-                    self.hp = self.hhp
-            self.statusrenewal()
+            if type(buff.duration) != str:
+                if buff.duration != 'Null' and buff.duration <= 0:
+                    slow_print(f'{self.name}의 {buff.name} 상태가 해제되었습니다!')
+                    self.bufflist.remove(buff)           
+                    if self.hp > self.hhp:
+                        self.hp = self.hhp
+                self.statusrenewal()
         self.turn += 1
         if self.bdbturn > 0:
             self.bdbturn -= 1
@@ -161,7 +162,7 @@ class Player:
             if self.onstartpassive:
                 self.startpassive()
             for buff in self.bufflist:
-                if buff.duration == 'Null' or buff.duration > 0:
+                if buff.duration == 'Null' or (type(buff.duration != str and buff.duration > 0)):
                     if buff.type == 'cc':
                         self.skipturn = True
                     buff.buffdo(self)

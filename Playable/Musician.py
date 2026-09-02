@@ -70,7 +70,7 @@ class Musician(Player):
                 self.normalname = '평타'
                 self.damageskillname = '바이올린 협주곡 제1번'
                 self.buffdebuffname = '조화로운 멜로디'
-                self.ultimatename = '피날레 - 사계'
+                self.ultimatename = '피날레 - 장송곡'
                 slow_print(f'{self.name}이/가 악기 전문가 패시브로 바이올린을 선택하였습니다! 공격력이 100 증가하며, 모든 스킬이 적의 최대체력에 비례한 피해를 입힙니다!')
                 print()
         if self.instrument == '바이올린':
@@ -138,7 +138,7 @@ class Musician(Player):
                 self.hp = self.hhp
             slow_print(f'{self.name}이/가 조화로운 멜로디를 피아노로 연주합니다! 선율이 조화로워 체력이 {heal}만큼 회복됩니다!')
         elif self.instrument ==  '바이올린':
-            self.addbuff('조화로운 멜로디','statuschange','2',1,{'ad':50},self)
+            self.addbuff('조화로운 멜로디','statuschange',2,1,{'ad':50},self)
             self.bdbtime += 2
             slow_print(f'{self.name}이/가 조화로운 멜로디를 바이올린으로 연주합니다! 선율이 조화로워 공격력이 50 증가하여 {self.ad}가 되었습니다! 공격력 증가는 2턴동안 유지됩니다!')
         print()
@@ -178,15 +178,16 @@ class Musician(Player):
                 slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용합니다! 피날레에 들어갑니다! 선율이 절정에 달하여 체력이 {heal}만큼 회복되고, 방어력이 영구적으로 50 증가합니다!')
                 print()
             elif self.instrument == '바이올린':
-                damm = int(target.hhp*0.3)
+                damm = int(target.hhp*0.3 + self.ad * 2 + 500)
                 
-                target.addbuff('장송곡','statuschange',1,{'de':int(target.de*0.3)}, target)
-                slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용합니다! 피날레에 들어갑니다! 적의 최대체력의 20%에 해당하는 고정피해를 입히며, 적의 방어력을 영구적으로 10% 감소시킵니다!')
+                target.addbuff('장송곡','statuschange','Null',1,{'de':int(target.de*0.3)}, target)
+                slow_print(f'{self.name}이/가 궁극기 {self.ultimatename}을/를 사용합니다!')
+                slow_print(f'곡의 피날레에 들어갑니다! 다량의 피해와 더불어 적의 최대체력의 20%에 해당하는 추가 고정피해를 입히며, 적의 방어력을 영구적으로 10% 감소시킵니다!')
                 slow_print(f'{self.name}이/가 {target.name}에게 {damm}만큼 피해를 입힙니다!')
                 target.dealdamm(damm)
                 print()
-            self.mp += self.rmp - 100
-            slow_print(f'{self.name}의 마나가 100 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
+            self.mp += self.rmp - 200
+            slow_print(f'{self.name}의 마나가 200 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
             
             self.uturn += 10000000000
