@@ -78,10 +78,13 @@ class Player:
         self.startturn = True
         self.sk = []
         self.chosentarget = []
+        self.skill_choose_options = 'Null'
     def updateteam(self, team,teams,teamlist):
         self.team = team
         self.teams = teams
         self.teamlist = teamlist
+    def findbuff(self,buffname):
+        return list(filter(lambda buff : buff.name == buffname,self.bufflist))
     def endingturn(self):
         for buff in self.bufflist:
             if type(buff.duration) != str:
@@ -205,6 +208,8 @@ class Player:
             self.chosentarget.append(self.settarget(self.damageskilltarget))
             self.sk.append('damageskill')
         elif self.buffdebuffname in self.attack_pick:
+            if self.skill_choose_options == 'buffdebuffskill':
+                self.optionchoice = self.chooseoption()
             self.chosentarget.append(self.settarget(self.buffskilltarget))
             self.sk.append('buff')
             if self.classname != '파워리프터' or not self.warmingup:
