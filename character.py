@@ -23,7 +23,9 @@ class Buff:
                 if 'ad' in self.variation.keys():
                     self.target.ad += self.variation['ad']
                 if 'hhp' in self.variation.keys():
-                        self.target.hhp += self.variation['hhp']       
+                    self.target.hhp += self.variation['hhp']
+                if 'hmp' in self.variation.keys():
+                    self.target.hmp += self.variation['hmp']   
     def buffdo(self, target):
         if self.bufftype == 'cc':
             pass
@@ -53,7 +55,8 @@ class Buff:
                         self.target.ad += self.variation['ad']
                     if 'hhp' in self.variation.keys():
                         self.target.hhp += self.variation['hhp']
-                        
+                    if 'hmp' in self.variation.keys():
+                        self.target.hmp += self.variation['hmp']   
                         
             elif self.bufftype == 'stack':
                 pass
@@ -209,7 +212,7 @@ class Player:
             self.sk.append('damageskill')
         elif self.buffdebuffname in self.attack_pick:
             if self.skill_choose_options == 'buffdebuffskill':
-                self.optionchoice = self.chooseoption()
+                self.choice = self.chooseoption()
             self.chosentarget.append(self.settarget(self.buffskilltarget))
             self.sk.append('buff')
             if self.classname != '파워리프터' or not self.warmingup:
