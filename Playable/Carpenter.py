@@ -30,6 +30,7 @@ class Carpenter(Player):
         self.ode = 120
         self.oad = 120
         self.bdbtime = 0
+        self.originalhmp = self.hmp
         self.line = ['그리스도께서 우리 죄를 위하여 죽으시고','장사 지낸 바 되셨다가','성경대로 사흘 만에 다시 살아나사']
         super().__init__(name)
         self.ultimatetarget = 'self'
@@ -46,7 +47,7 @@ class Carpenter(Player):
                 self.hp = 2
                 slow_print(f'{self.name}이/가 사망하였습니다...?')
                 self.bufflist.clear()
-                self.addbuff('그리스도의 부활','resurraction',2,1,'Null',self)
+                self.addbuff('그리스도의 부활','resurraction',3,1,'Null',self)
                 self.passivecool += 8
                 self.damageskillname = '못 박기'
                 self.passivename = '고된 업무'

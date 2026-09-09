@@ -22,6 +22,7 @@ class Fighter(Player):
         self.buffdebuffname = '배면기'
         self.classname = '격투가'
         self.ultimatename = '오라러쉬'
+        self.originalhmp = self.hmp
         super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)

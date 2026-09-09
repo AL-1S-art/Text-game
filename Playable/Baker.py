@@ -4,7 +4,7 @@ import random
 
 class Baker(Player):
     def __init__(self,name):
-        super().__init__(name)
+        
         self.shield = 0
         self.hhp = 2503
         self.hp = self.hhp
@@ -25,7 +25,8 @@ class Baker(Player):
         self.ultimatename = '빵 굽기'
         self.classname = '제빵사'
         self.debufflist = []
-        
+        self.originalhmp = self.hmp
+        super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)
         if self.hp > 0:

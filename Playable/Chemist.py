@@ -24,6 +24,7 @@ class Chemist(Player):
         self.buffdebuffname = '산소 투척' #산소 플라스크를 던져 적에게 피해를 입히고 화합물에 산소를 저장합니다. 산소는 상대를 부식시켜 방어력을 영구적으로 4 감소시킵니다.
         self.ultimatename = '연쇄반응' #저장된 화합물을 모두 반응시킵니다. 
         self.compoundlist = []
+        self.originalhmp = self.hmp
         self.reactionlist = ['O2 + H2', 'H2O + Na']
         self.productlist = {'O2 + H2':'H2O', 'H2O + Na':'H2'}
         self.classname = '화학자'

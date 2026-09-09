@@ -18,6 +18,7 @@ class ChessPlayer(Player):
         self.passiveturn = 0
         self.bdbturn = 0
         self.uturn = 99999
+        self.originalhmp = self.hmp
         self.turn = 0
         self.passivename = '프로모션' #체스 플레이어는 공격을 직접 할 수 없으며, 체스 기물을 통해서만 할 수 있습니다. 기물은 폰으로 시작하며, 만약 체스 플레이어가 6회 행동한다면, 퀸으로 승진합니다. 승진 후에는 공격력이 2배로 증가하고 방어력이 1.5배로 증가하며, 체력이 2000 증가하고 모든 스킬이 강화됩니다. (강화된 스킬은 각각의 스킬 설명을 참고해주세요.)
         self.normalname = '1. d3' #폰을 전진시킵니다. 
@@ -72,6 +73,7 @@ class ChessPlayer(Player):
             self.squarename = str(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack-1)+'. d'+str(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack+1)
             self.normalname = self.squarename
             self.damageskillname = self.squarename
+            self.ultimatename = self.squarename
             self.passive(target)
             print()
             self.mp += self.rmp
@@ -96,6 +98,7 @@ class ChessPlayer(Player):
             self.squarename = str(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack-1)+'. d'+str(list(filter(lambda buff: buff.name == '전진!', self.bufflist))[0].stack+1)
             self.normalname = self.squarename
             self.damageskillname = self.squarename
+            self.ultimatename = self.squarename
             self.passive(target)
             print()
             self.mp += self.rmp

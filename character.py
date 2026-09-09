@@ -31,8 +31,7 @@ class Buff:
             pass
         if self.bufftype == 'resurraction':
             target.hp = 2
-            moreslow_print(['성경대로 사흘 만에 다시 살아나사','장사 지낸 바 되셨다가','그리스도께서 우리 죄를 위하여 죽으시고'][self.duration])
-            self.buffrenewal()
+            moreslow_print(['성경대로 사흘 만에 다시 살아나사','장사 지낸 바 되셨다가','그리스도께서 우리 죄를 위하여 죽으시고'][self.duration-1])
         else:
             if self.bufftype != 'statuschange' and self.bufftype != 'stack':
                 slow_print(f'{target.name}이/가 {self.name} 상태입니다!')
@@ -109,12 +108,15 @@ class Player:
         
         self.ad, self.de = self.originalad, self.originalde
         self.hhp = self.originalhhp
+        self.hmp = self.originalhmp
         for buff in self.bufflist:
-            if buff.name != '체력이 곧 힘!':
-                buff.applybuff()
-        if self.classname == '파워리프터':
-            list(filter(lambda buff : buff.name == '체력이 곧 힘!',self.bufflist))[0].stack = self.hhp// 30
-            list(filter(lambda buff : buff.name == '체력이 곧 힘!',self.bufflist))[0].buffdo(self)
+            buff.applybuff()
+        self.ad = round(self.ad)
+        self.de = round(self.de)
+        self.hhp = round(self.hhp)
+        self.hp = round(self.hp)
+        if self.hp > self.hhp:
+            self.hp = self.hhp
     def settarget(self, targetrange):
         targetname = []
         if targetrange == 'self':

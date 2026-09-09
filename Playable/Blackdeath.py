@@ -27,6 +27,7 @@ class Blackdeath(Player):
         self.ultimatename = '항생제' #대상을 지정해 흑사병을 치료(최대 3번)
         self.bdbtarget = []
         self.utarget = []
+        self.originalhmp = self.hmp
         super().__init__(name)
         self.classname = '흑사병 보균자'
         self.buffskilltarget = 'enemy'

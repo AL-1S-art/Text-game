@@ -24,6 +24,7 @@ class Gambler(Player):
         self.damageskillname = '???'
         self.buffdebuffname = '???'
         self.ultimatename = '???'
+        self.originalhmp = self.hmp
         super().__init__(name)
         self.buffskilltarget = 'enemy'
         self.classname = '도박꾼'

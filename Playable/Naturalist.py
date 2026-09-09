@@ -24,6 +24,7 @@ class Naturalist(Player):
         self.ultimatename = '퇴적층 생성'
         self.bdbtarget = []
         self.utarget = []        
+        self.originalhmp = self.hmp
         super().__init__(name)
         self.classname = '자연술사'
         self.buffskilltarget = 'enemy'

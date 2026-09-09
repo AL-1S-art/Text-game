@@ -24,6 +24,7 @@ class Rider(Player):
         self.damageskillname = '발가락 골절' #상대를 밟고 간다
         self.buffdebuffname = '윌리' #앞바퀴를 들어올려 방어력을 낮추고 공격력을 높임
         self.ultimatename = '준자살' #교통사고 속력 비례 대미지 입히고 3턴동안 휠체어를 타서 방어력을 높인다
+        self.originalhmp = self.hmp
         super().__init__(name)
     def dealdamm(self, damage):
         self.hp -= int(damage)

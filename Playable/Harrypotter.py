@@ -24,6 +24,7 @@ class Harrypotter(Player):
         self.ultimatename = '아부다카다브라' #1턴 마비
         self.shield = 0
         self.classname = '해리포터'
+        self.originalhmp = self.hmp
         super().__init__(name)
     def dealdamm(self, damage):
         if self.shield > 0:

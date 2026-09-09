@@ -25,6 +25,7 @@ class Pitcher(Player):
         self.ultimatename = '스타디움의 지배자'
         self.strikelist = {}
         self.out = 0
+        self.originalhmp = self.hmp
         self.ultimateused = False
         super().__init__(name)
         self.buffskilltarget = 'enemy'
