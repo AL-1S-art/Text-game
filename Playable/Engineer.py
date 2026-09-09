@@ -172,7 +172,7 @@ class Engineer(Player):
             self.mp += self.rmp - 40
             slow_print(f'{self.name}의 마나가 40 감소되고 {self.rmp}만큼 재생되어 {self.mp} 남았습니다.')
             print()
-            if not len(self.findbuff('출력 강화'))*len(self.findbuff('장갑 강화'))*len(self.findbuff('스패너 업그레이드'))*len(self.findbuff('레이저 업그레이드'))*len(self.findbuff('로켓 업그레이드')) != 0 and len(self.findbuff('첨단기술의 총집합체')) == 0:
+            if len(self.findbuff('출력 강화'))*len(self.findbuff('장갑 강화'))*len(self.findbuff('스패너 업그레이드'))*len(self.findbuff('레이저 업그레이드'))*len(self.findbuff('로켓 업그레이드')) != 0 and len(self.findbuff('첨단기술의 총집합체')) == 0:
                 moreslow_print('모든 업그레이드를 완료했습니다!')
                 time.sleep(0.3)
                 moreslow_print('마지막 업그레이드를 진행할 수 있습니다.')
