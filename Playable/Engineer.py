@@ -76,7 +76,7 @@ class Engineer(Player):
         if len(self.findbuff('스패너 업그레이드')) == 0:
             slow_print(f'{self.name}이/가 스패너를 적에게 던집니다!')
         else:
-            slow_print_with_end(f'{self.name}이/가 매우 크고 아름다운 스패너를 적에게 던집니다!')
+            slow_print(f'{self.name}이/가 매우 크고 아름다운 스패너를 적에게 던집니다!')
             time.sleep(0.7)
             moreslow_print('깡!')
             slow_print(f'{target.name}의 방어력이 추가로 5 감소합니다!')

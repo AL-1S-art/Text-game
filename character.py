@@ -162,6 +162,7 @@ class Player:
                 self.bufflist.clear()
                 self.startturn = True
                 self.statusrenewal()
+                self.hp = self.hhp
         if self.startturn:
             self.skipturn = False
             self.ad = self.originalad

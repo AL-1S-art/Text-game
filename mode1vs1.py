@@ -47,7 +47,10 @@ player2 = Dummy(f'{player2_name}')
 
 def player1_pick():
     global player1
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]','[목수]', '[파워리프터]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]',
+                      '[엔지니어]', 
+                      #'[정치인]',
+                      '[음악가]', '[투수]','[목수]', '[파워리프터]']
     slow_print(f'{player1_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -71,8 +74,8 @@ def player1_pick():
         player1 = Chemist(f'{player1_name}')
     elif pick == '체스선수':
         player1 = ChessPlayer(f'{player1_name}')
-    elif pick == '정치인':
-        player1 = Politician(f'{player1_name}')
+#    elif pick == '정치인':
+#        player1 = Politician(f'{player1_name}')
     elif pick == '엔지니어':
         player1 = Engineer(f'{player1_name}')
     elif pick == '음악가':
@@ -91,7 +94,9 @@ def player1_pick():
 
 def player2_pick():
     global player2
-    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]','[정치인]','[엔지니어]', '[음악가]', '[투수]', '[목수]', '[파워리프터]']
+    character_list = ['[도박꾼]', '[격투가]', '[자연술사]', '[흑사병 보균자]','[화학자]','[체스선수]',
+                      #'[정치인]',
+                      '[엔지니어]', '[음악가]', '[투수]', '[목수]', '[파워리프터]']
     slow_print(f'{player2_name}의 캐릭터 선택 시간입니다.')
     slow_print(f'캐릭터 리스트에 있는 캐릭터 중 원하는 캐릭터를 고르세요.')
     print()
@@ -199,7 +204,13 @@ print()
 random.shuffle(teamlist)
 random.shuffle(teams)
 orderteam = []
-slow_print(f'순서는 {teams} 입니다.')
+teamlistwithname = []
+for x in range(len(teams)):
+    teamlistwithname.append([])
+for y in teams:
+    for z in y:
+        teamlistwithname[teams.index(y)].append(z.name)
+slow_print(f'순서는 {teamlistwithname} 입니다.')
 print()
 playerorder = []
 for x in range(len(players)):
